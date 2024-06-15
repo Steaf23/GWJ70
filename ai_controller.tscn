@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://debwsgpv33grr"]
+
+[ext_resource type="Script" path="res://ai_controller.gd" id="1_50xct"]
+[ext_resource type="PackedScene" uid="uid://dy1ggyrxrobna" path="res://actor_controller.tscn" id="1_m10rd"]
+
+[node name="AIController" instance=ExtResource("1_m10rd")]
+script = ExtResource("1_50xct")
+target_pos_delta = 625
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="0"]
+avoidance_enabled = true
+debug_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
