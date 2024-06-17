@@ -1,59 +1,37 @@
 [gd_scene load_steps=5 format=3 uid="uid://cne6u00cgn135"]
 
-[ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_o6tbe"]
-[ext_resource type="PackedScene" uid="uid://b74us3123fk2d" path="res://player_controller.tscn" id="2_ront6"]
-[ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="3_qv6wg"]
+[ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
+[ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
+[ext_resource type="PackedScene" uid="uid://d4jnfd2dbgkxf" path="res://enemy.tscn" id="3_5dn3a"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8m2ts"]
-vertices = PackedVector2Array(501, 369, 369, 246, 537, 152, 823, 189, 806, 300, 711, 421, 1104, 155, 1108, 603, 991, 190, 1030, 26, 912, 517, 689, 508, 614, 607, 687, 508, 491, 474, 27, 620, 350, 459, 861, 36, 864, 94, 861, 43, 538, 84, 28, 31, 227, 173, 180, 355, 509, 393)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(10, 8, 7), PackedInt32Array(11, 10, 7, 12, 13), PackedInt32Array(14, 13, 12, 15, 16), PackedInt32Array(17, 9, 8, 18, 19), PackedInt32Array(19, 18, 20, 21), PackedInt32Array(21, 20, 22), PackedInt32Array(15, 21, 22, 23), PackedInt32Array(15, 23, 16), PackedInt32Array(14, 16, 0, 24), PackedInt32Array(24, 0, 5)])
+vertices = PackedVector2Array(703, 399, 529, 374, 534, 372, 403, 249, 540, 173, 800, 206, 787, 292, 350, 482, 487, 399, 467, 490, 1084, 160, 1088, 583, 1014, 182, 1019, 47, 927, 538, 688, 528, 614, 587, 684, 528, 47, 600, 157, 364, 48, 51, 210, 157, 871, 74, 881, 63, 881, 55, 535, 64)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3, 4, 5, 6), PackedInt32Array(7, 8, 9), PackedInt32Array(10, 11, 12, 13), PackedInt32Array(14, 12, 11), PackedInt32Array(15, 14, 11, 16, 17), PackedInt32Array(9, 17, 16, 18, 7), PackedInt32Array(19, 7, 18), PackedInt32Array(19, 18, 20, 21), PackedInt32Array(13, 12, 22, 23), PackedInt32Array(23, 24, 13), PackedInt32Array(23, 22, 25), PackedInt32Array(20, 23, 25), PackedInt32Array(20, 25, 21)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(614, 617, 1119, 613, 1114, 152, 1036, 16, 851, 27, 857, 101, 980, 194, 904, 507, 689, 498, 503, 466, 517, 404, 716, 432, 816, 304, 835, 181, 535, 142, 353, 244, 484, 367, 350, 447, 192, 350, 235, 181, 539, 94, 932, 107, 880, 34, 19, 21, 17, 631)])
 source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 30.0
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
+script = ExtResource("1_8ek23")
 
-[node name="Actor" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("1_o6tbe")]
-position = Vector2(142, 107)
-controller = NodePath("PlayerController")
+[node name="Player" parent="." instance=ExtResource("1_gmgtv")]
+position = Vector2(192, 112)
 
-[node name="PlayerController" parent="Actor" node_paths=PackedStringArray("actor") instance=ExtResource("2_ront6")]
-actor = NodePath("..")
+[node name="Walls" type="StaticBody2D" parent="."]
+scale = Vector2(0.421369, 0.428075)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(244.441, 186.883, 206.47, 345.734, 346.489, 429.832, 460.404, 366.758, 339.37, 242.948, 536.346, 128.482, 847.238, 168.195, 823.505, 310.693, 719.084, 439.176, 529.227, 415.815, 533.973, 455.528, 692.979, 485.897, 892.329, 492.905, 963.525, 198.563, 861.477, 116.802, 543.466, 98.1137)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+scale = Vector2(0.421369, 0.428075)
 navigation_polygon = SubResource("NavigationPolygon_8m2ts")
 
-[node name="Actor2" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("1_o6tbe")]
-position = Vector2(566, 269)
-controller = NodePath("AIController")
-move_speed = 50
+[node name="NavigationLink2D" type="NavigationLink2D" parent="NavigationRegion2D"]
+start_position = Vector2(533.973, 362.086)
+end_position = Vector2(481.763, 404.135)
 
-[node name="AIController" parent="Actor2" node_paths=PackedStringArray("navigation_target", "actor") instance=ExtResource("3_qv6wg")]
-navigation_target = NodePath("../../Actor")
-actor = NodePath("..")
+[node name="Enemies" type="Node2D" parent="."]
 
-[node name="Actor3" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("1_o6tbe")]
-position = Vector2(720, 367)
-controller = NodePath("AIController")
-move_speed = 50
-
-[node name="AIController" parent="Actor3" node_paths=PackedStringArray("navigation_target", "actor") instance=ExtResource("3_qv6wg")]
-navigation_target = NodePath("../../Actor")
-actor = NodePath("..")
-
-[node name="Actor5" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("1_o6tbe")]
-position = Vector2(712, 195)
-controller = NodePath("AIController")
-move_speed = 50
-
-[node name="AIController" parent="Actor5" node_paths=PackedStringArray("navigation_target", "actor") instance=ExtResource("3_qv6wg")]
-navigation_target = NodePath("../../Actor")
-actor = NodePath("..")
-
-[node name="Actor4" parent="." node_paths=PackedStringArray("controller") instance=ExtResource("1_o6tbe")]
-position = Vector2(461, 364)
-controller = NodePath("AIController")
-move_speed = 50
-
-[node name="AIController" parent="Actor4" node_paths=PackedStringArray("navigation_target", "actor") instance=ExtResource("3_qv6wg")]
-navigation_target = NodePath("../../Actor")
-actor = NodePath("..")
+[node name="Enemy" parent="Enemies" instance=ExtResource("3_5dn3a")]
+position = Vector2(294, 126)

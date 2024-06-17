@@ -10,6 +10,9 @@ extends ActorController
 
 
 func _physics_process(delta: float) -> void:
+	if not navigation_target:
+		return
+		
 	var update_target_position = target_position.distance_squared_to(navigation_target.global_position) > target_pos_delta
 	
 	if navigation.is_navigation_finished():

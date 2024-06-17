@@ -9,6 +9,5 @@ target_pos_delta = 625
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="0"]
 avoidance_enabled = true
-debug_enabled = true
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://jbugsth2lvsx"]
+
+[ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_jxv7i"]
+[ext_resource type="PackedScene" uid="uid://b74us3123fk2d" path="res://player_controller.tscn" id="2_002c6"]
+[ext_resource type="Script" path="res://player.gd" id="2_5rjbg"]
+[ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://hit_box.tscn" id="4_k3456"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ddg0o"]
+height = 28.0
+
+[node name="Player" node_paths=PackedStringArray("controller") instance=ExtResource("1_jxv7i")]
+script = ExtResource("2_5rjbg")
+controller = NodePath("PlayerController")
+
+[node name="PlayerController" parent="." index="2" node_paths=PackedStringArray("actor") instance=ExtResource("2_002c6")]
+actor = NodePath("..")
+
+[node name="Pivot" type="Node2D" parent="." index="3"]
+
+[node name="Sword" parent="Pivot" index="0" node_paths=PackedStringArray("damage_source") instance=ExtResource("4_k3456")]
+unique_name_in_owner = true
+collision_layer = 256
+collision_mask = 258
+damage_source = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Sword" index="0"]
+position = Vector2(12, 0)
+shape = SubResource("CapsuleShape2D_ddg0o")

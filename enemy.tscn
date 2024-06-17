@@ -1,0 +1,125 @@
+[gd_scene load_steps=16 format=3 uid="uid://d4jnfd2dbgkxf"]
+
+[ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_30q55"]
+[ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="2_1iady"]
+[ext_resource type="Script" path="res://enemy.gd" id="2_ssdh4"]
+[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://StateMachine/state_machine.tscn" id="4_nuvcx"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://StateMachine/state.tscn" id="5_s0ifi"]
+[ext_resource type="Script" path="res://StateMachine/states/idle_state.gd" id="6_868uq"]
+[ext_resource type="Script" path="res://StateMachine/states/stunned_state.gd" id="7_jb8o2"]
+[ext_resource type="Script" path="res://StateMachine/blocking_state.gd" id="7_lqlff"]
+[ext_resource type="Script" path="res://StateMachine/attacked_state.gd" id="7_vt6gi"]
+
+[sub_resource type="Gradient" id="Gradient_tfkw1"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.175325)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ryl02"]
+gradient = SubResource("Gradient_tfkw1")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_ddquh"]
+resource_name = "block"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_8mqd7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l8w8m"]
+_data = {
+"RESET": SubResource("Animation_8mqd7"),
+"block": SubResource("Animation_ddquh")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_ovwdp"]
+font_size = 8
+
+[node name="Enemy" node_paths=PackedStringArray("controller") instance=ExtResource("1_30q55")]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_ssdh4")
+controller = NodePath("AIController")
+move_speed = 50
+
+[node name="Sprite2D" parent="." index="1"]
+visible = false
+texture = SubResource("GradientTexture2D_ryl02")
+
+[node name="AIController" parent="." index="3" node_paths=PackedStringArray("actor") instance=ExtResource("2_1iady")]
+actor = NodePath("..")
+
+[node name="BlockTimer" type="Timer" parent="." index="4"]
+wait_time = 0.3
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_l8w8m")
+}
+
+[node name="StateStatus" type="Label" parent="." index="6"]
+visible = false
+offset_left = -20.0
+offset_top = 4.0
+offset_right = 20.0
+offset_bottom = 16.0
+text = "dsa"
+label_settings = SubResource("LabelSettings_ovwdp")
+horizontal_alignment = 1
+
+[node name="AttackMachine" parent="." index="7" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("4_nuvcx")]
+actor = NodePath("..")
+current_state = NodePath("IdleState")
+
+[node name="IdleState" parent="AttackMachine" index="0" instance=ExtResource("5_s0ifi")]
+script = ExtResource("6_868uq")
+
+[node name="BlockingState" parent="AttackMachine" index="1" instance=ExtResource("5_s0ifi")]
+script = ExtResource("7_lqlff")
+
+[node name="Timer" type="Timer" parent="AttackMachine/BlockingState" index="0"]
+wait_time = 0.5
+one_shot = true
+
+[node name="AttackedState" parent="AttackMachine" index="2" node_paths=PackedStringArray("shape") instance=ExtResource("5_s0ifi")]
+script = ExtResource("7_vt6gi")
+shape = NodePath("../../CollisionShape2D")
+
+[node name="StunnedState" parent="AttackMachine" index="3" instance=ExtResource("5_s0ifi")]
+script = ExtResource("7_jb8o2")
+
+[node name="Timer" type="Timer" parent="AttackMachine/StunnedState" index="0"]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="damaged" from="." to="AttackMachine/IdleState" method="_on_enemy_damaged"]
+[connection signal="damaged" from="." to="AttackMachine/BlockingState" method="_on_enemy_damaged"]
+[connection signal="timeout" from="BlockTimer" to="." method="_on_block_timer_timeout"]
+[connection signal="timeout" from="AttackMachine/BlockingState/Timer" to="AttackMachine/BlockingState" method="_on_timer_timeout"]
+[connection signal="timeout" from="AttackMachine/StunnedState/Timer" to="AttackMachine/StunnedState" method="_on_timer_timeout"]
