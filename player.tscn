@@ -1,11 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://jbugsth2lvsx"]
+[gd_scene load_steps=29 format=3 uid="uid://jbugsth2lvsx"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_jxv7i"]
 [ext_resource type="PackedScene" uid="uid://b74us3123fk2d" path="res://player_controller.tscn" id="2_002c6"]
 [ext_resource type="Script" path="res://player.gd" id="2_5rjbg"]
-[ext_resource type="Texture2D" uid="uid://dyj7uhejf8kgd" path="res://sprites/mossman-Sheet.png" id="3_i2k62"]
+[ext_resource type="Texture2D" uid="uid://s8tme1744w7j" path="res://sprites/mossman-Sheet.png" id="3_i2k62"]
 [ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://hit_box.tscn" id="4_k3456"]
-[ext_resource type="Texture2D" uid="uid://vn84eupwo4eh" path="res://sprites/slash.png" id="6_dgcrn"]
+[ext_resource type="Texture2D" uid="uid://csvy4jxeitd7o" path="res://sprites/slash.png" id="6_dgcrn"]
+[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://StateMachine/state_machine.tscn" id="6_ru4c1"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://StateMachine/state.tscn" id="7_822vf"]
+[ext_resource type="Script" path="res://player/states/idle_state.gd" id="8_m3ijr"]
+[ext_resource type="Script" path="res://player/states/attack_state.gd" id="9_hau5g"]
 
 [sub_resource type="Animation" id="Animation_kqn56"]
 resource_name = "attack1_left"
@@ -254,12 +258,15 @@ _data = {
 "slash": SubResource("Animation_c8cue")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_5vldc"]
+font_size = 8
+
 [node name="Player" node_paths=PackedStringArray("controller") instance=ExtResource("1_jxv7i")]
 script = ExtResource("2_5rjbg")
 controller = NodePath("PlayerController")
 
 [node name="Sprite2D" parent="." index="1"]
-position = Vector2(1, -12)
+position = Vector2(0, -13)
 texture = ExtResource("3_i2k62")
 flip_h = true
 hframes = 5
@@ -287,14 +294,14 @@ damage_source = NodePath("../..")
 position = Vector2(25, -5.5)
 shape = SubResource("RectangleShape2D_ptif7")
 
-[node name="Sprite2D" type="Sprite2D" parent="Pivot" index="1"]
+[node name="HitSprite" type="Sprite2D" parent="Pivot" index="1"]
 position = Vector2(25.595, -8.35)
 scale = Vector2(-1, 1)
 texture = ExtResource("6_dgcrn")
 hframes = 3
 frame = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/HitSprite" index="0"]
 libraries = {
 "": SubResource("AnimationLibrary_ewnmo")
 }
@@ -302,3 +309,24 @@ libraries = {
 [node name="HealthBar" parent="." index="4"]
 offset_top = 30.0
 offset_bottom = 70.0
+
+[node name="StateDebug" type="Label" parent="." index="5"]
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -28.0
+text = "State"
+label_settings = SubResource("LabelSettings_5vldc")
+horizontal_alignment = 1
+
+[node name="StateMachine" parent="." index="6" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("6_ru4c1")]
+actor = NodePath("..")
+current_state = NodePath("IdleState")
+
+[node name="IdleState" parent="StateMachine" index="0" instance=ExtResource("7_822vf")]
+script = ExtResource("8_m3ijr")
+
+[node name="AttackState" parent="StateMachine" index="1" instance=ExtResource("7_822vf")]
+script = ExtResource("9_hau5g")
+
+[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="StateMachine/AttackState" method="_on_animation_player_animation_finished"]

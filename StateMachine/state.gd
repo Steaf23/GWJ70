@@ -6,7 +6,7 @@ var signals = []
 
 var next_states: Array[String] = []
 
-signal change_state(to_state: String)
+signal request_state_change(to_state: String)
 
 func _entry() -> void:
 	for s in signals:
@@ -29,3 +29,7 @@ func do(delta: float) -> void:
 	
 func exit() -> void:
 	pass
+
+
+func change_state(new_state: StringName) -> void:
+	request_state_change.emit(new_state)	

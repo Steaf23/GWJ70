@@ -11,10 +11,11 @@ func exit() -> void:
 
 
 func _on_timer_timeout() -> void:
-	change_state.emit("IdleState")
+	change_state("IdleState")
 
 
 func _on_enemy_damaged(damage: int, source: Actor) -> void:
-	$"../../AnimationPlayer".play("block")
 	machine.actor.apply_knockback(source.global_position, 250)
-	change_state.emit("BlockingState")
+	change_state("BlockingState")
+	if source is Player:
+		source.combo_count = 0

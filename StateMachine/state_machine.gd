@@ -11,7 +11,7 @@ func _ready() -> void:
 	for c in get_children():
 		if c is State:
 			states[c.name] = c
-			c.change_state.connect(_on_state_change.bind(c))
+			c.request_state_change.connect(_on_state_change.bind(c))
 			c._exit()
 			remove_child(c)
 			
@@ -32,3 +32,8 @@ func _on_state_change(to_state: String, from_state: State) -> void:
 	current_state = states[to_state]
 	add_child(current_state)
 	current_state._entry()	
+
+
+func invoke(method: StringName, args: Array = []) -> void:
+	if current_state.has_method(method):
+		current_state.callv(method, args)

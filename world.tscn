@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cne6u00cgn135"]
+[gd_scene load_steps=6 format=3 uid="uid://cne6u00cgn135"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
 [ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
 [ext_resource type="PackedScene" uid="uid://d4jnfd2dbgkxf" path="res://enemy.tscn" id="3_5dn3a"]
+[ext_resource type="Script" path="res://walls.gd" id="3_xmbh1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8m2ts"]
 vertices = PackedVector2Array(703, 399, 529, 374, 534, 372, 403, 249, 540, 173, 800, 206, 787, 292, 350, 482, 487, 399, 467, 490, 1084, 160, 1088, 583, 1014, 182, 1019, 47, 927, 538, 688, 528, 614, 587, 684, 528, 47, 600, 157, 364, 48, 51, 210, 157, 871, 74, 881, 63, 881, 55, 535, 64)
@@ -20,8 +21,9 @@ position = Vector2(192, 112)
 
 [node name="Walls" type="StaticBody2D" parent="."]
 scale = Vector2(0.421369, 0.428075)
+script = ExtResource("3_xmbh1")
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Walls"]
+[node name="Shape" type="CollisionPolygon2D" parent="Walls"]
 polygon = PackedVector2Array(244.441, 186.883, 206.47, 345.734, 346.489, 429.832, 460.404, 366.758, 339.37, 242.948, 536.346, 128.482, 847.238, 168.195, 823.505, 310.693, 719.084, 439.176, 529.227, 415.815, 533.973, 455.528, 692.979, 485.897, 892.329, 492.905, 963.525, 198.563, 861.477, 116.802, 543.466, 98.1137)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
@@ -33,6 +35,7 @@ start_position = Vector2(533.973, 362.086)
 end_position = Vector2(481.763, 404.135)
 
 [node name="Enemies" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("3_5dn3a")]
 position = Vector2(294, 126)

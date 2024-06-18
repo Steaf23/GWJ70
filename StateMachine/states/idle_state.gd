@@ -7,11 +7,11 @@ func entry() -> void:
 	
 
 func _on_enemy_damaged(damage: int, damage_source: Actor) -> void:
-	if count >= 10:
-		change_state.emit("BlockingState")
+	if count >= 30:
+		change_state("BlockingState")
 	else:
 		machine.actor.damage(damage)
-		change_state.emit("BlockingState")
+		change_state("BlockingState")
 		
 
 func do(delta: float) -> void:

@@ -11,4 +11,4 @@ func exit() -> void:
 
 
 func _on_timer_timeout() -> void:
-	change_state.emit("IdleState")
+	change_state("IdleState")

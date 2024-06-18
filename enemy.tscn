@@ -1,63 +1,14 @@
-[gd_scene load_steps=23 format=3 uid="uid://d4jnfd2dbgkxf"]
+[gd_scene load_steps=19 format=3 uid="uid://d4jnfd2dbgkxf"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_30q55"]
 [ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="2_1iady"]
 [ext_resource type="Script" path="res://enemy.gd" id="2_ssdh4"]
-[ext_resource type="Texture2D" uid="uid://qrcburl7lpn5" path="res://sprites/goblin.png" id="3_v75u7"]
+[ext_resource type="Texture2D" uid="uid://8mv1jfj31l1t" path="res://sprites/goblin.png" id="3_v75u7"]
 [ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://StateMachine/state_machine.tscn" id="4_nuvcx"]
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://StateMachine/state.tscn" id="5_s0ifi"]
 [ext_resource type="Script" path="res://StateMachine/states/idle_state.gd" id="6_868uq"]
 [ext_resource type="Script" path="res://StateMachine/states/stunned_state.gd" id="7_jb8o2"]
-[ext_resource type="Script" path="res://StateMachine/blocking_state.gd" id="7_lqlff"]
-[ext_resource type="Script" path="res://StateMachine/attacked_state.gd" id="7_vt6gi"]
-
-[sub_resource type="Animation" id="Animation_q4tlc"]
-resource_name = "idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_tvg82"]
-resource_name = "block"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [6]
-}
-
-[sub_resource type="Animation" id="Animation_g0u77"]
-resource_name = "walk"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [1, 2, 4, 5]
-}
+[ext_resource type="Script" path="res://StateMachine/states/blocking_state.gd" id="7_lqlff"]
 
 [sub_resource type="Animation" id="Animation_60o48"]
 resource_name = "attack1"
@@ -105,6 +56,21 @@ tracks/0/keys = {
 "values": [15]
 }
 
+[sub_resource type="Animation" id="Animation_tvg82"]
+resource_name = "block"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
 [sub_resource type="Animation" id="Animation_6ogaq"]
 resource_name = "die"
 tracks/0/type = "value"
@@ -120,6 +86,39 @@ tracks/0/keys = {
 "values": [15, 16, 17, 18, 19]
 }
 
+[sub_resource type="Animation" id="Animation_q4tlc"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_g0u77"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 4, 5]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_66mi3"]
 _data = {
 "attack1": SubResource("Animation_60o48"),
@@ -129,43 +128,6 @@ _data = {
 "die": SubResource("Animation_6ogaq"),
 "idle": SubResource("Animation_q4tlc"),
 "walk": SubResource("Animation_g0u77")
-}
-
-[sub_resource type="Animation" id="Animation_8mqd7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_ddquh"]
-resource_name = "block"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_l8w8m"]
-_data = {
-"RESET": SubResource("Animation_8mqd7"),
-"block": SubResource("Animation_ddquh")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_ovwdp"]
@@ -179,17 +141,21 @@ controller = NodePath("AIController")
 move_speed = 50
 
 [node name="Sprite2D" parent="." index="1"]
-visible = false
+position = Vector2(0, -11)
 texture = ExtResource("3_v75u7")
 hframes = 5
 vframes = 4
-frame = 19
+frame = 11
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
 libraries = {
 "": SubResource("AnimationLibrary_66mi3")
 }
 autoplay = "idle"
+
+[node name="HealthBar" parent="." index="2"]
+offset_top = 25.0
+offset_bottom = 65.0
 
 [node name="AIController" parent="." index="3" node_paths=PackedStringArray("actor") instance=ExtResource("2_1iady")]
 actor = NodePath("..")
@@ -198,12 +164,7 @@ actor = NodePath("..")
 wait_time = 0.3
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
-libraries = {
-"": SubResource("AnimationLibrary_l8w8m")
-}
-
-[node name="StateStatus" type="Label" parent="." index="6"]
+[node name="StateStatus" type="Label" parent="." index="5"]
 visible = false
 offset_left = -20.0
 offset_top = 4.0
@@ -213,7 +174,7 @@ text = "dsa"
 label_settings = SubResource("LabelSettings_ovwdp")
 horizontal_alignment = 1
 
-[node name="AttackMachine" parent="." index="7" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("4_nuvcx")]
+[node name="AttackMachine" parent="." index="6" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("4_nuvcx")]
 actor = NodePath("..")
 current_state = NodePath("IdleState")
 
@@ -227,11 +188,7 @@ script = ExtResource("7_lqlff")
 wait_time = 0.5
 one_shot = true
 
-[node name="AttackedState" parent="AttackMachine" index="2" node_paths=PackedStringArray("shape") instance=ExtResource("5_s0ifi")]
-script = ExtResource("7_vt6gi")
-shape = NodePath("../../CollisionShape2D")
-
-[node name="StunnedState" parent="AttackMachine" index="3" instance=ExtResource("5_s0ifi")]
+[node name="StunnedState" parent="AttackMachine" index="2" instance=ExtResource("5_s0ifi")]
 script = ExtResource("7_jb8o2")
 
 [node name="Timer" type="Timer" parent="AttackMachine/StunnedState" index="0"]

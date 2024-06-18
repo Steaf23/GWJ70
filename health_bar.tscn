@@ -12,7 +12,8 @@ width = 16
 height = 4
 
 [sub_resource type="Gradient" id="Gradient_gpv38"]
-colors = PackedColorArray(0.929412, 0.396078, 0.972549, 1, 0.411765, 1, 0.745098, 1)
+offsets = PackedFloat32Array(0, 0.481928, 1)
+colors = PackedColorArray(0.929412, 0, 0.0901961, 1, 0.843137, 0.498039, 0, 1, 0.276422, 0.779914, 3.85046e-07, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pytsk"]
 gradient = SubResource("Gradient_gpv38")
@@ -20,6 +21,7 @@ width = 16
 height = 3
 
 [node name="HealthBar" type="Control"]
+modulate = Color(1, 1, 1, 0.462745)
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
