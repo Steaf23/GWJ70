@@ -4,19 +4,23 @@ func _ready() -> void:
 	%Sword.hide()
 	%Sword.disable(true)
 
+@onready var anim = $Sprite2D/AnimationPlayer
 
 var count = 0
 var attacking = true
+var rightside = true
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
 	if velocity.x < -10.0:
 		$Pivot.scale = Vector2(-1, 1)
-		$Sprite2D.scale = Vector2(-1, 1)
+		#$Sprite2D.scale = Vector2(-1, 1)
+		rightside = true
 	elif velocity.x > 10.0:
 		$Pivot.scale = Vector2(1, 1)
-		$Sprite2D.scale = Vector2(1, 1)
+		#$Sprite2D.scale = Vector2(1, 1)
+		rightside = false
 		
 	if attacking:
 		count += 1
