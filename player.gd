@@ -5,6 +5,7 @@ func _ready() -> void:
 	%Sword.disable(true)
 
 @onready var anim = $Sprite2D/AnimationPlayer
+@onready var slashanim = $Pivot/Sprite2D/AnimationPlayer
 
 var count = 0
 var attacking = true

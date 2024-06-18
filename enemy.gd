@@ -1,6 +1,7 @@
 extends Actor
 
 @onready var block_timer: Timer = $BlockTimer
+@onready var anim = $Sprite2D/AnimationPlayer
 
 signal damaged(damage: int, damage_source: Actor)
 
