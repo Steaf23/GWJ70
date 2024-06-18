@@ -1,6 +1,5 @@
 extends Actor
 
-
 func _ready() -> void:
 	%Sword.hide()
 	%Sword.disable(true)
@@ -9,7 +8,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
-	$Pivot.look_at(get_global_mouse_position())
+	if velocity.x < -10.0:
+		$Pivot.scale = Vector2(-1, 1)
+		$Sprite2D.scale = Vector2(-1, 1)
+	elif velocity.x > 10.0:
+		$Pivot.scale = Vector2(1, 1)
+		$Sprite2D.scale = Vector2(1, 1)
 
 
 func _input(event: InputEvent) -> void:
