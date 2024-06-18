@@ -12,8 +12,8 @@ func _ready() -> void:
 		if c is State:
 			states[c.name] = c
 			c.change_state.connect(_on_state_change.bind(c))
-			remove_child(c)
 			c._exit()
+			remove_child(c)
 			
 	add_child(current_state)
 	current_state._entry()

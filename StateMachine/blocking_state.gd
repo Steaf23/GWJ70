@@ -2,10 +2,12 @@ extends State
 
 func entry() -> void:
 	$Timer.start()
+	$"../../CollisionShape2D".self_modulate = Color.YELLOW
 	
 
 func exit() -> void:
 	$Timer.stop()
+	$"../../CollisionShape2D".self_modulate = Color.WHITE
 
 
 func _on_timer_timeout() -> void:

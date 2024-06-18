@@ -13,11 +13,12 @@ func _entry() -> void:
 		s.signal.connect(s.callable, s.flags)
 	entry()
 
+
 func _exit() -> void:
-	exit()
 	signals = get_incoming_connections()
 	for s in signals:
 		s.signal.disconnect(s.callable)
+	exit()
 
 
 func entry() -> void:
