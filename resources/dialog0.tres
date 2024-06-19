@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3 uid="uid://crotewtdr1jws"]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_ps3gs"]
+
+[resource]
+script = ExtResource("1_ps3gs")
+lines = {
+0: "test",
+1: "c1",
+2: "c2",
+3: "final",
+4: "endio"
+}
+choices = {
+0: [1, 2],
+1: [3],
+2: [1],
+3: [4],
+4: []
+}
+events = {}
+id_counter = 0

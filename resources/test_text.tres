@@ -1,20 +1,18 @@
 [gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3 uid="uid://cfjqqttrghjt1"]
 
-[ext_resource type="Script" path="res://dialog_text.gd" id="1_0pu4r"]
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_v6djh"]
 
 [resource]
-script = ExtResource("1_0pu4r")
-lines = ["start the text or smth", "continue start", "continue second", "add to second", "continue third", "on the bas3e", "on the base", "HEYO"]
+script = ExtResource("1_v6djh")
+lines = ["start the text or smth", "continue start", "continue second", "add to second", "continue third", "on the base"]
 choices = {
-0: [1, 6],
-1: [2, 7],
-2: [3, 4, 8],
+0: [1],
+1: [2, 6],
+2: [3, 4],
 3: [5],
 4: [2],
 5: [],
-6: [],
-7: [],
-8: [4]
+6: []
 }
 events = {}
-id_counter = 8
+id_counter = 6

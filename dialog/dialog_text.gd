@@ -1,7 +1,7 @@
 class_name DialogText
 extends Resource
 
-@export var lines = []
+@export var lines = {}
 @export var choices = {0: []}
 @export var events = {}
 
@@ -10,7 +10,7 @@ extends Resource
 
 func add_line(text: String, parent: int = 0, back_tracks: Array[int] = [], events: Array[StringName] = []) -> int:
 	id_counter += 1
-	lines.append(text)
+	lines[id_counter] = text
 	
 	assert(choices[parent].size() < 3, "text " + str(parent) + " cannot have more than 3 children!")
 	choices[parent].append(id_counter)
@@ -19,26 +19,15 @@ func add_line(text: String, parent: int = 0, back_tracks: Array[int] = [], event
 	choices[id_counter].append_array(back_tracks)
 		
 	return id_counter
-
-
-func _init() -> void:
-	#var first = add_line("start the text or smth")
-	#var second = add_line("continue start", first)
-	#var third = add_line("continue second", second)
-	#var fourth = add_line("add to second", second, [second])
-	#var fifth = add_line("continue third", third)
-	#var sixth = add_line("on the bas3e")
-	#var seventh = add_line("on the base", first)
-	pass
 	
 	
 var printed = []
 func print_text() -> void:
 	printed.clear()
-	print_text_recurse()
+	_print_text_recurse()
 	
 	
-func print_text_recurse(id = 0, tab_level = -1) -> void:
+func _print_text_recurse(id = 0, tab_level = -1) -> void:
 	if id in printed:
 		return
 	
@@ -55,4 +44,8 @@ func print_text_recurse(id = 0, tab_level = -1) -> void:
 		return
 			
 	for choice_id in choices[id]:
-		print_text_recurse(choice_id, tab_level + 1)
+		_print_text_recurse(choice_id, tab_level + 1)
+
+
+func get_line(id: int) -> String:
+	return lines[id]
