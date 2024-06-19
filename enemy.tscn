@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="2_1iady"]
 [ext_resource type="Script" path="res://enemy.gd" id="2_ssdh4"]
 [ext_resource type="Texture2D" uid="uid://8mv1jfj31l1t" path="res://sprites/goblin.png" id="3_v75u7"]
-[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://StateMachine/state_machine.tscn" id="4_nuvcx"]
-[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://StateMachine/state.tscn" id="5_s0ifi"]
-[ext_resource type="Script" path="res://StateMachine/states/idle_state.gd" id="6_868uq"]
-[ext_resource type="Script" path="res://StateMachine/states/stunned_state.gd" id="7_jb8o2"]
-[ext_resource type="Script" path="res://StateMachine/states/blocking_state.gd" id="7_lqlff"]
+[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="4_nuvcx"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="5_s0ifi"]
+[ext_resource type="Script" path="res://state_machine/states/idle_state.gd" id="6_868uq"]
+[ext_resource type="Script" path="res://state_machine/states/stunned_state.gd" id="7_jb8o2"]
+[ext_resource type="Script" path="res://state_machine/states/blocking_state.gd" id="7_lqlff"]
 
 [sub_resource type="Animation" id="Animation_60o48"]
 resource_name = "attack1"
