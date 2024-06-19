@@ -3,6 +3,7 @@ extends State
 func entry() -> void:
 	$Timer.start()
 	$"../../CollisionShape2D".self_modulate = Color.YELLOW
+	machine.actor.play_animation("block")
 	
 
 func exit() -> void:

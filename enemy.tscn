@@ -43,6 +43,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_nje1d"]
 resource_name = "being_hit"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -58,6 +59,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_tvg82"]
 resource_name = "block"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -134,8 +136,8 @@ _data = {
 font_size = 8
 
 [node name="Enemy" node_paths=PackedStringArray("controller") instance=ExtResource("1_30q55")]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("2_ssdh4")
 controller = NodePath("AIController")
 move_speed = 50
@@ -143,9 +145,10 @@ move_speed = 50
 [node name="Sprite2D" parent="." index="1"]
 position = Vector2(0, -11)
 texture = ExtResource("3_v75u7")
+flip_h = true
 hframes = 5
 vframes = 4
-frame = 11
+frame = 15
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
 libraries = {
@@ -191,12 +194,8 @@ one_shot = true
 [node name="StunnedState" parent="AttackMachine" index="2" instance=ExtResource("5_s0ifi")]
 script = ExtResource("7_jb8o2")
 
-[node name="Timer" type="Timer" parent="AttackMachine/StunnedState" index="0"]
-wait_time = 0.5
-one_shot = true
-
 [connection signal="damaged" from="." to="AttackMachine/IdleState" method="_on_enemy_damaged"]
 [connection signal="damaged" from="." to="AttackMachine/BlockingState" method="_on_enemy_damaged"]
+[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="AttackMachine/StunnedState" method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="BlockTimer" to="." method="_on_block_timer_timeout"]
 [connection signal="timeout" from="AttackMachine/BlockingState/Timer" to="AttackMachine/BlockingState" method="_on_timer_timeout"]
-[connection signal="timeout" from="AttackMachine/StunnedState/Timer" to="AttackMachine/StunnedState" method="_on_timer_timeout"]

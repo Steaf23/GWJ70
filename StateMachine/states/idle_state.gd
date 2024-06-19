@@ -11,8 +11,10 @@ func _on_enemy_damaged(damage: int, damage_source: Actor) -> void:
 		change_state("BlockingState")
 	else:
 		machine.actor.damage(damage)
-		change_state("BlockingState")
+		change_state("StunnedState")
 		
 
 func do(delta: float) -> void:
 	count += 1
+	
+	machine.actor.play_moving_animation()

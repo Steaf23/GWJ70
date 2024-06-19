@@ -10,3 +10,7 @@ func do(delta: float) -> void:
 
 func attack(combo: int) -> void:
 	change_state("AttackState")
+
+
+func special_attack() -> void:
+	change_state("SpecialAttackState")

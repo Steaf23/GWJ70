@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://jbugsth2lvsx"]
+[gd_scene load_steps=30 format=3 uid="uid://jbugsth2lvsx"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_jxv7i"]
 [ext_resource type="PackedScene" uid="uid://b74us3123fk2d" path="res://player_controller.tscn" id="2_002c6"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://StateMachine/state.tscn" id="7_822vf"]
 [ext_resource type="Script" path="res://player/states/idle_state.gd" id="8_m3ijr"]
 [ext_resource type="Script" path="res://player/states/attack_state.gd" id="9_hau5g"]
+[ext_resource type="Script" path="res://player/states/special_attack_state.gd" id="11_cmdhg"]
 
 [sub_resource type="Animation" id="Animation_kqn56"]
 resource_name = "attack1_left"
@@ -137,7 +138,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_1y2mu"]
 resource_name = "cast_spell"
-length = 2.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -145,7 +145,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 2),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [20, 21, 22, 21]
@@ -271,7 +271,7 @@ texture = ExtResource("3_i2k62")
 flip_h = true
 hframes = 5
 vframes = 5
-frame = 3
+frame = 20
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
 libraries = {
@@ -296,7 +296,7 @@ shape = SubResource("RectangleShape2D_ptif7")
 
 [node name="HitSprite" type="Sprite2D" parent="Pivot" index="1"]
 z_index = 1
-position = Vector2(25.595, -8.35)
+position = Vector2(17, -8)
 scale = Vector2(-1, 1)
 texture = ExtResource("6_dgcrn")
 hframes = 3
@@ -329,7 +329,8 @@ script = ExtResource("8_m3ijr")
 [node name="AttackState" parent="StateMachine" index="1" instance=ExtResource("7_822vf")]
 script = ExtResource("9_hau5g")
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="7"]
-radius = 20.0
+[node name="SpecialAttackState" parent="StateMachine" index="2" instance=ExtResource("7_822vf")]
+script = ExtResource("11_cmdhg")
 
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="StateMachine/AttackState" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="StateMachine/SpecialAttackState" method="_on_animation_player_animation_finished"]

@@ -21,6 +21,8 @@ position = Vector2(192, 112)
 
 [node name="Walls" type="StaticBody2D" parent="."]
 scale = Vector2(0.421369, 0.428075)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("3_xmbh1")
 
 [node name="Shape" type="CollisionPolygon2D" parent="Walls"]

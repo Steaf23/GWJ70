@@ -2,7 +2,7 @@ class_name Player
 extends Actor
 
 @onready var anim = $Sprite2D/AnimationPlayer
-@onready var slashanim = $Pivot/Sprite2D/AnimationPlayer
+@onready var slashanim = $Sprite2D/AnimationPlayer
 
 var count = 0
 var attacking = true
@@ -47,6 +47,9 @@ func _input(event: InputEvent) -> void:
 		
 		$StateMachine.invoke("attack", [combo_count])
 		combo_count = (combo_count + 1) % 3
+	
+	if %Sword.is_disabled() and event.is_action_pressed("special_attack"):
+		$StateMachine.invoke("special_attack")
 
 
 func play_animation(animation: StringName) -> void:
