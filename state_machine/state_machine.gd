@@ -12,11 +12,12 @@ func _ready() -> void:
 		if c is State:
 			states[c.name] = c
 			c.request_state_change.connect(_on_state_change.bind(c))
-			c._exit()
+			c.disconnect_signals()
 			remove_child(c)
 			
 	add_child(current_state)
-	current_state._entry()
+	current_state.reconnect_signals()
+	current_state.entry()
 	
 	
 func _physics_process(delta: float) -> void:
@@ -26,12 +27,14 @@ func _physics_process(delta: float) -> void:
 func _on_state_change(to_state: String, from_state: State) -> void:
 	assert(from_state == current_state, "Cannot change state from outside the current state!")
 	assert(to_state in states.keys(), "Cannot find state named '" + to_state + "'!")
-
-	current_state._exit()
+	
+	current_state.disconnect_signals()
+	current_state.exit()
 	remove_child(current_state)
 	current_state = states[to_state]
 	add_child(current_state)
-	current_state._entry()	
+	current_state.reconnect_signals()
+	current_state.entry()	
 
 
 func invoke(method: StringName, args: Array = []) -> void:

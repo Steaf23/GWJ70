@@ -5,7 +5,7 @@ extends Actor
 @onready var slashanim = $Sprite2D/AnimationPlayer
 
 var count = 0
-var attacking = true
+var attacking = false
 var rightside = true
 
 var combo_count = 0

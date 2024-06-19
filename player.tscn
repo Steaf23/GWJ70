@@ -262,6 +262,8 @@ _data = {
 font_size = 8
 
 [node name="Player" node_paths=PackedStringArray("controller") instance=ExtResource("1_jxv7i")]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("2_5rjbg")
 controller = NodePath("PlayerController")
 
@@ -271,7 +273,7 @@ texture = ExtResource("3_i2k62")
 flip_h = true
 hframes = 5
 vframes = 5
-frame = 20
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
 libraries = {
@@ -331,6 +333,9 @@ script = ExtResource("9_hau5g")
 
 [node name="SpecialAttackState" parent="StateMachine" index="2" instance=ExtResource("7_822vf")]
 script = ExtResource("11_cmdhg")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="7"]
+radius = 15.0
 
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="StateMachine/AttackState" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="StateMachine/SpecialAttackState" method="_on_animation_player_animation_finished"]
