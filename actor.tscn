@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b7pwuuganpb67"]
 
 [ext_resource type="Script" path="res://actor.gd" id="1_f1gl1"]
-[ext_resource type="PackedScene" uid="uid://ctlc4aihlw0un" path="res://health_bar.tscn" id="2_qfu18"]
+[ext_resource type="PackedScene" uid="uid://ctlc4aihlw0un" path="res://components/health_bar.tscn" id="2_rbteu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxc5f"]
 
@@ -14,7 +14,7 @@ shape = SubResource("CircleShape2D_bxc5f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
-[node name="HealthBar" parent="." instance=ExtResource("2_qfu18")]
+[node name="HealthBar" parent="." instance=ExtResource("2_rbteu")]
 unique_name_in_owner = true
 
 [connection signal="no_health" from="HealthBar" to="." method="_on_health_bar_no_health"]

@@ -16,7 +16,7 @@ func _ready() -> void:
 		button.pressed.connect((func(b): _on_choice_button_pressed(b.get_meta("choice_id"))).bind(button))
 		button.set_meta("choice_id", -1)
 	
-	load_text_from_file("res://resources/dialog0.tres")
+	load_text_from_file("res://resources/dialog1.tres")
 
 
 func load_text_from_file(dialog_path: String) -> void:

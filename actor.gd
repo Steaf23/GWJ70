@@ -7,14 +7,18 @@ extends CharacterBody2D
 var dead = false
 
 signal attacked()
+signal died()
 
 var knockback_velocity: Vector2 = Vector2()
 
+var can_walk = true
+var can_turn = true
 
 func _physics_process(delta: float) -> void:
 	if !controller: return
 	
-	velocity = controller.desired_velocity + knockback_velocity
+	var walk_velocity = controller.desired_velocity if can_walk else Vector2()
+	velocity = walk_velocity + knockback_velocity
 	move_and_slide()
 	
 	knockback_velocity = lerp(knockback_velocity, Vector2(), 0.2)
@@ -22,10 +26,11 @@ func _physics_process(delta: float) -> void:
 
 func _on_health_bar_no_health() -> void:
 	dead = true
+	died.emit()
 	queue_free()
 
 
-func take_damage(amount: int, damage_source: Actor) -> void:
+func take_damage(amount: int, damage_source: Actor, pierce: bool) -> void:
 	attacked.emit()
 	%HealthBar.current_health -= amount
 

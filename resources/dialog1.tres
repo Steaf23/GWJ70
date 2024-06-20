@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3 uid="uid://djelxrx7xhlye"]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_klneh"]
+
+[resource]
+script = ExtResource("1_klneh")
+lines = {
+0: "start",
+1: "one",
+2: "two"
+}
+choices = {
+0: [1],
+1: [2],
+2: [1]
+}
+events = {}
+id_counter = 0

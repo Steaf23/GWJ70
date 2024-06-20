@@ -6,7 +6,7 @@ extends Actor
 
 var count = 0
 var attacking = false
-var rightside = true
+var rightside = false
 
 var combo_count = 0
 
@@ -14,18 +14,20 @@ var combo_count = 0
 func _ready() -> void:
 	%Sword.hide()
 	%Sword.disable(true)
+	$StaffRange/CollisionShape2D.disabled = true
 	$Pivot/HitSprite.hide()
 	
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
-	if velocity.x < -10.0:
-		$Pivot.scale = Vector2(-1, 1)
-		rightside = true
-	elif velocity.x > 10.0:
-		$Pivot.scale = Vector2(1, 1)
-		rightside = false
+	if can_turn:
+		if velocity.x < -10.0:
+			$Pivot.scale = Vector2(-1, 1)
+			rightside = true
+		elif velocity.x > 10.0:
+			$Pivot.scale = Vector2(1, 1)
+			rightside = false
 		
 	if attacking:
 		count += 1
@@ -60,3 +62,16 @@ func play_animation(animation: StringName) -> void:
 		$Pivot/HitSprite/AnimationPlayer.play("slash")
 		await $Pivot/HitSprite/AnimationPlayer.animation_finished
 		$Pivot/HitSprite.hide()
+
+
+func cast_spell() -> void:
+	start_spell()
+	await get_tree().create_timer(0.15).timeout
+	end_spell()
+
+
+func start_spell() -> void:
+	$StaffRange/CollisionShape2D.disabled = false
+
+func end_spell() -> void:
+	$StaffRange/CollisionShape2D.disabled = true

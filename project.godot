@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [debug]
 
+gdscript/warnings/unused_parameter=0
 shapes/navigation/geometry_edge_color=Color(1, 1, 1, 1)
 shapes/navigation/geometry_face_color=Color(1, 1, 1, 0.4)
 
@@ -66,6 +67,7 @@ special_attack={
 [layer_names]
 
 2d_physics/layer_3="enemy"
+2d_physics/layer_4="interaction"
 
 [rendering]
 

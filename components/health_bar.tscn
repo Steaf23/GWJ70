@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ctlc4aihlw0un"]
 
-[ext_resource type="Script" path="res://health_bar.gd" id="1_hwat8"]
+[ext_resource type="Script" path="res://components/health_bar.gd" id="1_gxw2o"]
 
 [sub_resource type="Gradient" id="Gradient_ujdof"]
 offsets = PackedFloat32Array(0)
@@ -27,7 +27,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_hwat8")
+script = ExtResource("1_gxw2o")
 
 [node name="Progress" type="TextureProgressBar" parent="."]
 layout_mode = 1
