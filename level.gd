@@ -7,6 +7,7 @@ signal level_completed()
 
 
 func _ready() -> void:
+	
 	for c in $Enemies.get_children():
 		if c is Actor:
 			c.died.connect(_on_actor_died)
