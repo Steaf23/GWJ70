@@ -24,6 +24,7 @@ func exit() -> void:
 	preparing = true
 	machine.actor.can_walk = true
 	leaping = false
+	machine.actor.finish_attack()
 
 
 func _on_enemy_leaped() -> void:

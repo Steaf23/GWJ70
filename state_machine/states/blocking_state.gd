@@ -18,7 +18,6 @@ func _on_timer_timeout() -> void:
 
 
 func _on_enemy_damaged(damage: int, source: Actor, pierce: bool) -> void:
-	
 	if pierce:
 		machine.actor.apply_knockback(source.global_position, 500)
 		machine.actor.damage(damage)

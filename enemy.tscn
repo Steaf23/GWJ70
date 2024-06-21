@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d4jnfd2dbgkxf"]
+[gd_scene load_steps=26 format=3 uid="uid://d4jnfd2dbgkxf"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_30q55"]
 [ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="2_1iady"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://state_machine/states/blocking_state.gd" id="7_lqlff"]
 [ext_resource type="Script" path="res://state_machine/states/death_state.gd" id="10_foe8f"]
 [ext_resource type="Script" path="res://state_machine/states/leaping_state.gd" id="11_1gr0c"]
+[ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="12_7jhjp"]
+[ext_resource type="Script" path="res://state_machine/states/attacking_state.gd" id="12_756b1"]
 
 [sub_resource type="Curve2D" id="Curve2D_bhbow"]
 _data = {
@@ -20,6 +22,7 @@ point_count = 1
 
 [sub_resource type="Animation" id="Animation_60o48"]
 resource_name = "attack1"
+length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -31,6 +34,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [11, 12, 13, 14]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"attack"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_04ojv"]
@@ -143,12 +160,19 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_ovwdp"]
 font_size = 8
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_p183m"]
+radius = 22.3607
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g24f5"]
+size = Vector2(37, 35)
+
 [node name="Enemy" node_paths=PackedStringArray("controller") instance=ExtResource("1_30q55")]
 collision_layer = 6
 collision_mask = 6
 script = ExtResource("2_ssdh4")
 leap_range = 100
 leap_curve = SubResource("Curve2D_bhbow")
+attack_frame_time = 0.2
 controller = NodePath("AIController")
 move_speed = 50
 
@@ -158,7 +182,7 @@ texture = ExtResource("3_v75u7")
 flip_h = true
 hframes = 5
 vframes = 4
-frame = 15
+frame = 13
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
 unique_name_in_owner = true
@@ -189,7 +213,7 @@ text = "dsa"
 label_settings = SubResource("LabelSettings_ovwdp")
 horizontal_alignment = 1
 
-[node name="LeapCooldown" type="Timer" parent="." index="6"]
+[node name="AttackCooldown" type="Timer" parent="." index="6"]
 wait_time = 3.0
 one_shot = true
 
@@ -220,10 +244,29 @@ script = ExtResource("11_1gr0c")
 wait_time = 0.6
 one_shot = true
 
+[node name="AttackingState" parent="AttackMachine" index="5" instance=ExtResource("5_s0ifi")]
+script = ExtResource("12_756b1")
+
+[node name="LeapLanding" parent="." index="8" node_paths=PackedStringArray("damage_source") instance=ExtResource("12_7jhjp")]
+damage_source = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeapLanding" index="0"]
+shape = SubResource("CircleShape2D_p183m")
+
+[node name="Pivot" type="Node2D" parent="." index="9"]
+
+[node name="AttackBox" parent="Pivot" index="0" node_paths=PackedStringArray("damage_source") instance=ExtResource("12_7jhjp")]
+damage_source = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/AttackBox" index="0"]
+position = Vector2(24, 0)
+shape = SubResource("RectangleShape2D_g24f5")
+
 [connection signal="damaged" from="." to="AttackMachine/IdleState" method="_on_enemy_damaged"]
 [connection signal="damaged" from="." to="AttackMachine/BlockingState" method="_on_enemy_damaged"]
 [connection signal="leaped" from="." to="AttackMachine/LeapingState" method="_on_enemy_leaped"]
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="AttackMachine/StunnedState" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="AttackMachine/DeathState" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="AttackMachine/AttackingState" method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="BlockTimer" to="." method="_on_block_timer_timeout"]
 [connection signal="timeout" from="AttackMachine/BlockingState/Timer" to="AttackMachine/BlockingState" method="_on_timer_timeout"]

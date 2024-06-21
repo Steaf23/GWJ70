@@ -16,7 +16,7 @@ var disabled = false
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body == get_parent():
+	if body == get_parent() or body == damage_source:
 		return
 		
 	if body.is_in_group("damageable"):

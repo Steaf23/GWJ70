@@ -29,10 +29,13 @@ func do(delta: float) -> void:
 	if machine.actor.dead:
 		change_state("DeathState")
 	
-	if machine.actor.leap_precondition() and $"../../LeapCooldown".is_stopped():
-		$"../../LeapCooldown".start()
-		change_state("LeapingState")
+	if machine.actor.can_attack():
+		change_state("AttackingState")
+		return
 
+	if machine.actor.can_leap():
+		change_state("LeapingState")
+		return
 
 func exit() -> void:
 	machine.actor.can_walk = false

@@ -5,12 +5,15 @@ extends Actor
 @onready var anim = $Sprite2D/AnimationPlayer
 @export var leap_range = 100
 @export var leap_curve = Curve2D.new()
+@export var attack_frame_time = 0.2
 
 signal damaged(damage: int, damage_source: Actor, pierce: bool)
 signal leaped()
 
 func _ready() -> void:
 	$AIController.navigation_target = target
+	$LeapLanding.disable(true)
+	$Pivot/AttackBox.disable(true)
 
 func take_damage(_damage: int, damage_source: Actor, pierce: bool) -> void:
 	damaged.emit(_damage, damage_source, pierce)
@@ -61,35 +64,57 @@ func leap_precondition() -> bool:
 	
 
 func leap_to_position(pos: Vector2) -> void:
-	print("LEAPING RN")
-	print(pos)
-	
 	var start_pos = global_position
 	var final_target_pos = start_pos.direction_to(pos)
-	print(final_target_pos)
 	final_target_pos *= leap_range
 	final_target_pos += start_pos
 	
 	var upper_pos = lerp(start_pos, final_target_pos, 0.5)
-	upper_pos.y += 20
-	
-	global_position = final_target_pos
-	#leaped.emit()
-	#return
+	upper_pos.y -= 20
 
-	
 	var curve = Curve2D.new()
-	curve.add_point(start_pos)
-	#curve.add_point(upper_pos)
-	curve.add_point(final_target_pos)
-	print(curve.get_baked_length(), " ", start_pos.distance_to(final_target_pos))
-	print(start_pos, upper_pos, final_target_pos)
+	curve.add_point(Vector2(), Vector2())
+	curve.add_point(upper_pos - start_pos)
+	curve.add_point(final_target_pos - start_pos)
 	
 	var move_to_point_on_curve = func(val): 
-		print(val)
-		global_position = start_pos.slerp(final_target_pos, val)
+		global_position = start_pos + curve.sample_baked(val, false)
 	var tween = create_tween()
-	tween.tween_method(move_to_point_on_curve, 0.0, 1.0, 0.7)
+	tween.tween_method(move_to_point_on_curve, 0.0, curve.get_baked_length(), 0.7)
+	
+	await get_tree().create_timer(0.5).timeout
+	$LeapLanding.disable(false)
 	
 	await tween.finished
 	leaped.emit()
+	$LeapLanding.disable(true)
+	
+	
+func can_attack() -> bool:
+	var target = ($AIController as AIController).navigation_target
+	var distance_to_target = global_position.distance_to(target.global_position)
+	return distance_to_target < 40 and $AttackCooldown.is_stopped()
+
+
+func can_leap() -> bool:
+	var attack_allowed = $AttackCooldown.is_stopped()
+	var target = ($AIController as AIController).navigation_target
+	var distance_to_target = global_position.distance_to(target.global_position)
+	return distance_to_target < leap_range and distance_to_target > 75 and attack_allowed
+
+
+func attack() -> void:
+	var target = ($AIController as AIController).navigation_target
+	if target.global_position.x < global_position.x:
+		$Pivot.scale = Vector2(-1, 1)
+	else:
+		$Pivot.scale = Vector2(1, 1)
+		
+	$Pivot/AttackBox.disable(false)
+	await get_tree().create_timer(attack_frame_time).timeout
+	$Pivot/AttackBox.disable(true)
+
+
+func finish_attack() -> void:
+	$AttackCooldown.start()
+	$Pivot/AttackBox.disable(true)

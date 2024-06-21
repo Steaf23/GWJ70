@@ -14,7 +14,7 @@ var combo_count = 0
 func _ready() -> void:
 	%Sword.hide()
 	%Sword.disable(true)
-	$StaffRange/CollisionShape2D.disabled = true
+	$StaffRange.disable(true)
 	$Pivot/HitSprite.hide()
 	
 
@@ -71,7 +71,17 @@ func cast_spell() -> void:
 
 
 func start_spell() -> void:
-	$StaffRange/CollisionShape2D.disabled = false
+	$StaffRange.disable(false)
 
 func end_spell() -> void:
-	$StaffRange/CollisionShape2D.disabled = true
+	$StaffRange.disable(true)
+
+
+func _on_health_bar_no_health() -> void:
+	print("YOU LOST BOZO")
+
+
+func take_damage(amount: int, damage_source: Actor, pierce: bool) -> void:
+	if $IFrames.is_stopped():
+		super.take_damage(amount, damage_source, pierce)
+		$IFrames.start()

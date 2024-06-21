@@ -8,8 +8,15 @@ extends ActorController
 
 @onready var navigation = $NavigationAgent2D
 
+func _ready() -> void:
+	set_physics_process(false)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	set_physics_process(true)
+
 
 func _physics_process(delta: float) -> void:
+	
 	if not navigation_target:
 		return
 		
@@ -21,7 +28,7 @@ func _physics_process(delta: float) -> void:
 	if update_target_position:
 		target_position = navigation_target.global_position
 		navigation.target_position = target_position
-		
+	
 	var next_pos = navigation.get_next_path_position()
 	
 	var direction = global_position.direction_to(next_pos)
