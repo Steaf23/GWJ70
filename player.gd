@@ -3,6 +3,7 @@ extends Actor
 
 @onready var anim = $Sprite2D/AnimationPlayer
 @onready var slashanim = $Sprite2D/AnimationPlayer
+@onready var hitanim = $Pivot/dmg/AnimationPlayer
 
 var count = 0
 var attacking = false

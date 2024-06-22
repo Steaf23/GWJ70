@@ -1,11 +1,12 @@
-[gd_scene load_steps=32 format=3 uid="uid://jbugsth2lvsx"]
+[gd_scene load_steps=35 format=3 uid="uid://jbugsth2lvsx"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_jxv7i"]
 [ext_resource type="PackedScene" uid="uid://b74us3123fk2d" path="res://player_controller.tscn" id="2_002c6"]
 [ext_resource type="Script" path="res://player.gd" id="2_5rjbg"]
-[ext_resource type="Texture2D" uid="uid://s8tme1744w7j" path="res://sprites/mossman-Sheet.png" id="3_i2k62"]
+[ext_resource type="Texture2D" uid="uid://dyj7uhejf8kgd" path="res://sprites/mossman-Sheet.png" id="3_i2k62"]
 [ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="5_di2d3"]
-[ext_resource type="Texture2D" uid="uid://csvy4jxeitd7o" path="res://sprites/slash.png" id="6_dgcrn"]
+[ext_resource type="Texture2D" uid="uid://vn84eupwo4eh" path="res://sprites/slash.png" id="6_dgcrn"]
+[ext_resource type="Texture2D" uid="uid://2fxsvrxgniy4" path="res://sprites/hit.png" id="6_q4phe"]
 [ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="6_ru4c1"]
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="7_822vf"]
 [ext_resource type="Script" path="res://player/states/idle_state.gd" id="8_m3ijr"]
@@ -38,6 +39,27 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ewnmo"]
 _data = {
 "slash": SubResource("Animation_c8cue")
+}
+
+[sub_resource type="Animation" id="Animation_xi16s"]
+resource_name = "beinghit"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ioh7"]
+_data = {
+"beinghit": SubResource("Animation_xi16s")
 }
 
 [sub_resource type="Animation" id="Animation_kqn56"]
@@ -324,12 +346,24 @@ libraries = {
 "": SubResource("AnimationLibrary_ewnmo")
 }
 
+[node name="dmg" type="Sprite2D" parent="Pivot" index="2"]
+position = Vector2(9.485, -11.58)
+texture = ExtResource("6_q4phe")
+hframes = 4
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/dmg" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_3ioh7")
+}
+
 [node name="Sprite2D" parent="." index="4"]
 position = Vector2(0, -13)
 texture = ExtResource("3_i2k62")
 flip_h = true
 hframes = 5
 vframes = 5
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
 libraries = {
