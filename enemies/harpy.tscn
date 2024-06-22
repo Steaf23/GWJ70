@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bamfipjooybtc"]
+
+[ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_hkver"]
+[ext_resource type="Script" path="res://enemies/harpy.gd" id="2_mw01d"]
+[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="3_xshky"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="4_808u0"]
+
+[node name="Harpy" instance=ExtResource("1_hkver")]
+script = ExtResource("2_mw01d")
+
+[node name="StateMachine" parent="." index="3" instance=ExtResource("3_xshky")]
+
+[node name="HoverState" parent="StateMachine" index="0" instance=ExtResource("4_808u0")]
+script = null
+
+[node name="AttackingState" parent="StateMachine" index="1" instance=ExtResource("4_808u0")]
+script = null
+
+[node name="DeathState" parent="StateMachine" index="2" instance=ExtResource("4_808u0")]
+script = null
+
+[node name="StunnedState" parent="StateMachine" index="3" instance=ExtResource("4_808u0")]
+script = null

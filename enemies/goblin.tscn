@@ -1,24 +1,28 @@
-[gd_scene load_steps=26 format=3 uid="uid://d4jnfd2dbgkxf"]
+[gd_scene load_steps=27 format=3 uid="uid://d4jnfd2dbgkxf"]
 
-[ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_30q55"]
-[ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="2_1iady"]
-[ext_resource type="Script" path="res://enemy.gd" id="2_ssdh4"]
-[ext_resource type="Texture2D" uid="uid://8mv1jfj31l1t" path="res://sprites/goblin.png" id="3_v75u7"]
-[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="4_nuvcx"]
-[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="5_s0ifi"]
-[ext_resource type="Script" path="res://state_machine/states/idle_state.gd" id="6_868uq"]
-[ext_resource type="Script" path="res://state_machine/states/stunned_state.gd" id="7_jb8o2"]
-[ext_resource type="Script" path="res://state_machine/states/blocking_state.gd" id="7_lqlff"]
-[ext_resource type="Script" path="res://state_machine/states/death_state.gd" id="10_foe8f"]
-[ext_resource type="Script" path="res://state_machine/states/leaping_state.gd" id="11_1gr0c"]
-[ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="12_7jhjp"]
-[ext_resource type="Script" path="res://state_machine/states/attacking_state.gd" id="12_756b1"]
+[ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_svqkn"]
+[ext_resource type="Script" path="res://enemies/goblin.gd" id="2_p655y"]
+[ext_resource type="Texture2D" uid="uid://8mv1jfj31l1t" path="res://sprites/goblin.png" id="3_3cn02"]
+[ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="4_uvb7x"]
+[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="5_nw2l3"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="6_os3tr"]
+[ext_resource type="Script" path="res://state_machine/states/idle_state.gd" id="7_k213f"]
+[ext_resource type="Script" path="res://state_machine/states/blocking_state.gd" id="8_vxt47"]
+[ext_resource type="Script" path="res://state_machine/states/stunned_state.gd" id="9_1eqwb"]
+[ext_resource type="Script" path="res://state_machine/states/death_state.gd" id="10_tkb8e"]
+[ext_resource type="Script" path="res://state_machine/states/leaping_state.gd" id="11_v8eqr"]
+[ext_resource type="Script" path="res://state_machine/states/attacking_state.gd" id="12_xy4m5"]
+[ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="13_m5y2e"]
 
 [sub_resource type="Curve2D" id="Curve2D_bhbow"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 0)
 }
 point_count = 1
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s2ocv"]
+radius = 5.0
+height = 22.0
 
 [sub_resource type="Animation" id="Animation_60o48"]
 resource_name = "attack1"
@@ -166,19 +170,27 @@ radius = 22.3607
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g24f5"]
 size = Vector2(37, 35)
 
-[node name="Enemy" node_paths=PackedStringArray("controller") instance=ExtResource("1_30q55")]
+[node name="Goblin" node_paths=PackedStringArray("controller") instance=ExtResource("1_svqkn")]
 collision_layer = 6
 collision_mask = 6
-script = ExtResource("2_ssdh4")
+script = ExtResource("2_p655y")
 leap_range = 100
 leap_curve = SubResource("Curve2D_bhbow")
 attack_frame_time = 0.2
 controller = NodePath("AIController")
 move_speed = 50
 
-[node name="Sprite2D" parent="." index="1"]
+[node name="Shadow" parent="." index="0"]
+position = Vector2(0, 4)
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_s2ocv")
+
+[node name="Sprite2D" parent="." index="2"]
 position = Vector2(0, -11)
-texture = ExtResource("3_v75u7")
+texture = ExtResource("3_3cn02")
 flip_h = true
 hframes = 5
 vframes = 4
@@ -191,12 +203,7 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="HealthBar" parent="." index="2"]
-offset_top = 25.0
-offset_bottom = 65.0
-max_health = 3.0
-
-[node name="AIController" parent="." index="3" node_paths=PackedStringArray("actor") instance=ExtResource("2_1iady")]
+[node name="AIController" parent="." index="3" node_paths=PackedStringArray("actor") instance=ExtResource("4_uvb7x")]
 actor = NodePath("..")
 
 [node name="BlockTimer" type="Timer" parent="." index="4"]
@@ -217,37 +224,37 @@ horizontal_alignment = 1
 wait_time = 3.0
 one_shot = true
 
-[node name="AttackMachine" parent="." index="7" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("4_nuvcx")]
+[node name="AttackMachine" parent="." index="7" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("5_nw2l3")]
 actor = NodePath("..")
 current_state = NodePath("IdleState")
 
-[node name="IdleState" parent="AttackMachine" index="0" instance=ExtResource("5_s0ifi")]
-script = ExtResource("6_868uq")
+[node name="IdleState" parent="AttackMachine" index="0" instance=ExtResource("6_os3tr")]
+script = ExtResource("7_k213f")
 
-[node name="BlockingState" parent="AttackMachine" index="1" instance=ExtResource("5_s0ifi")]
-script = ExtResource("7_lqlff")
+[node name="BlockingState" parent="AttackMachine" index="1" instance=ExtResource("6_os3tr")]
+script = ExtResource("8_vxt47")
 
 [node name="Timer" type="Timer" parent="AttackMachine/BlockingState" index="0"]
 wait_time = 0.5
 one_shot = true
 
-[node name="StunnedState" parent="AttackMachine" index="2" instance=ExtResource("5_s0ifi")]
-script = ExtResource("7_jb8o2")
+[node name="StunnedState" parent="AttackMachine" index="2" instance=ExtResource("6_os3tr")]
+script = ExtResource("9_1eqwb")
 
-[node name="DeathState" parent="AttackMachine" index="3" instance=ExtResource("5_s0ifi")]
-script = ExtResource("10_foe8f")
+[node name="DeathState" parent="AttackMachine" index="3" instance=ExtResource("6_os3tr")]
+script = ExtResource("10_tkb8e")
 
-[node name="LeapingState" parent="AttackMachine" index="4" instance=ExtResource("5_s0ifi")]
-script = ExtResource("11_1gr0c")
+[node name="LeapingState" parent="AttackMachine" index="4" instance=ExtResource("6_os3tr")]
+script = ExtResource("11_v8eqr")
 
 [node name="PrepareTimer" type="Timer" parent="AttackMachine/LeapingState" index="0"]
 wait_time = 0.6
 one_shot = true
 
-[node name="AttackingState" parent="AttackMachine" index="5" instance=ExtResource("5_s0ifi")]
-script = ExtResource("12_756b1")
+[node name="AttackingState" parent="AttackMachine" index="5" instance=ExtResource("6_os3tr")]
+script = ExtResource("12_xy4m5")
 
-[node name="LeapLanding" parent="." index="8" node_paths=PackedStringArray("damage_source") instance=ExtResource("12_7jhjp")]
+[node name="LeapLanding" parent="." index="8" node_paths=PackedStringArray("damage_source") instance=ExtResource("13_m5y2e")]
 damage_source = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeapLanding" index="0"]
@@ -255,12 +262,17 @@ shape = SubResource("CircleShape2D_p183m")
 
 [node name="Pivot" type="Node2D" parent="." index="9"]
 
-[node name="AttackBox" parent="Pivot" index="0" node_paths=PackedStringArray("damage_source") instance=ExtResource("12_7jhjp")]
+[node name="AttackBox" parent="Pivot" index="0" node_paths=PackedStringArray("damage_source") instance=ExtResource("13_m5y2e")]
 damage_source = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/AttackBox" index="0"]
 position = Vector2(24, 0)
 shape = SubResource("RectangleShape2D_g24f5")
+
+[node name="HealthBar" parent="." index="10"]
+offset_top = 25.0
+offset_bottom = 65.0
+max_health = 3.0
 
 [connection signal="damaged" from="." to="AttackMachine/IdleState" method="_on_enemy_damaged"]
 [connection signal="damaged" from="." to="AttackMachine/BlockingState" method="_on_enemy_damaged"]
