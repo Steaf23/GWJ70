@@ -1,23 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://bamfipjooybtc"]
+[gd_scene load_steps=9 format=3 uid="uid://bamfipjooybtc"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_hkver"]
 [ext_resource type="Script" path="res://enemies/harpy.gd" id="2_mw01d"]
+[ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="3_58stw"]
 [ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="3_xshky"]
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="4_808u0"]
+[ext_resource type="Script" path="res://harpy_controller.gd" id="4_cwjpw"]
+[ext_resource type="AnimationLibrary" uid="uid://ccyvfx3ie173x" path="res://resources/harpy_animations.res" id="8_jfh3x"]
 
-[node name="Harpy" instance=ExtResource("1_hkver")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3pxvn"]
+radius = 2.0
+
+[node name="Harpy" node_paths=PackedStringArray("controller") instance=ExtResource("1_hkver")]
 script = ExtResource("2_mw01d")
+controller = NodePath("AIController")
 
-[node name="StateMachine" parent="." index="3" instance=ExtResource("3_xshky")]
+[node name="Sprite2D#AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": ExtResource("8_jfh3x")
+}
+
+[node name="Shadow" parent="." index="2"]
+position = Vector2(0, 25)
+
+[node name="AIController" parent="." index="3" instance=ExtResource("3_58stw")]
+script = ExtResource("4_cwjpw")
+
+[node name="StateMachine" parent="." index="5" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("3_xshky")]
+actor = NodePath("..")
+current_state = NodePath("HoverState")
 
 [node name="HoverState" parent="StateMachine" index="0" instance=ExtResource("4_808u0")]
-script = null
+
+[node name="WanderTarget" type="Node2D" parent="StateMachine/HoverState" index="0"]
 
 [node name="AttackingState" parent="StateMachine" index="1" instance=ExtResource("4_808u0")]
-script = null
 
 [node name="DeathState" parent="StateMachine" index="2" instance=ExtResource("4_808u0")]
-script = null
 
 [node name="StunnedState" parent="StateMachine" index="3" instance=ExtResource("4_808u0")]
-script = null
+
+[node name="CollisionShape2D" parent="." index="6"]
+position = Vector2(0, 24)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_3pxvn")
+
+[node name="HealthBar" parent="." index="7"]
+offset_top = 49.0
+offset_bottom = 89.0
+max_health = 2.0

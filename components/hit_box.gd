@@ -9,26 +9,20 @@ enum DamageType {NORMAL, SPELL}
 
 @export var damage_source: Actor
 
-signal hit_damagable(body, damage, damage_source: Actor, type: DamageType)
-signal hit(body, damage_source: Actor, type: DamageType)
-
 var disabled = false
 
 
-func _on_body_entered(body: Node2D) -> void:
-	if body == get_parent() or body == damage_source:
+func _on_area_entered(area: Area2D) -> void:
+	if area == get_parent() or area == damage_source or area.owner == owner:
 		return
 		
-	if body.is_in_group("damageable"):
+	if area.is_in_group("damageable"):
 		if kill_on_hit:
-			body.kill(damage_source)
+			area.kill(damage_source)
 		else:
 			#SoundManager.play_random_sfx([Sounds.HIT_0, Sounds.HIT_1])
-			body.take_damage(damage, damage_source, type)
-		hit_damagable.emit(body, damage, damage_source, type)
-	else:
-		hit.emit(body, damage_source, type)
-		
+			area.take_damage(damage, damage_source, type)
+
 		
 func disable(value: bool) -> void:
 	disabled = value

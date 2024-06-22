@@ -7,7 +7,7 @@ var leaping = false
 func entry() -> void:
 	machine.actor.can_walk = false
 	preparing = true
-	machine.actor.play_animation("being_hit")
+	machine.actor.play_animation(Enemy.EnemyAnimation.HIT)
 	$PrepareTimer.start()
 	target = machine.actor.controller.navigation_target.global_position
 	
@@ -17,7 +17,7 @@ func do(delta: float) -> void:
 		leaping = true
 		preparing = false
 		machine.actor.leap_to_position(target)
-		machine.actor.play_animation("attack2")
+		machine.actor.play_animation(Enemy.EnemyAnimation.ATTACK2)
 
 	
 func exit() -> void:
@@ -27,5 +27,5 @@ func exit() -> void:
 	machine.actor.finish_attack()
 
 
-func _on_enemy_leaped() -> void:
+func _on_goblin_leaped() -> void:
 	change_state("IdleState")

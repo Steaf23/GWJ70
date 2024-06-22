@@ -2,10 +2,10 @@ extends State
 
 
 func entry() -> void:
-	machine.actor.play_animation("die")
+	machine.actor.play_animation(Enemy.EnemyAnimation.DEATH)
 
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "die":
-		machine.actor.queue_free()
+func _on_enemy_animation_finished(animation: Enemy.EnemyAnimation) -> void:
+	if animation == Enemy.EnemyAnimation.DEATH:
 		machine.actor.died.emit()
+		machine.actor.queue_free()

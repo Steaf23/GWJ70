@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://du0meui038i65"]
+
+[ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_qopmj"]
+[ext_resource type="Texture2D" uid="uid://bppa2ks5t3e6" path="res://sprites/big_shadow.png" id="2_3wuem"]
+[ext_resource type="Texture2D" uid="uid://hkb6q2ynu7tj" path="res://sprites/cyclops-Sheet.png" id="2_pd0as"]
+[ext_resource type="AnimationLibrary" uid="uid://dlgivnmkffuev" path="res://resources/orc_animations.res" id="3_fgyve"]
+
+[node name="Cyclops" instance=ExtResource("1_qopmj")]
+move_speed = 25
+
+[node name="Shadow" parent="." index="1"]
+position = Vector2(0, 6)
+texture = ExtResource("2_3wuem")
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+position = Vector2(-1, -40)
+texture = ExtResource("2_pd0as")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
+libraries = {
+"": ExtResource("3_fgyve")
+}

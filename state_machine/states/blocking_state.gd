@@ -4,7 +4,7 @@ func entry() -> void:
 	machine.actor.can_walk = true
 	$Timer.start()
 	$"../../CollisionShape2D".self_modulate = Color.YELLOW
-	machine.actor.play_animation("block")
+	machine.actor.play_animation(Enemy.EnemyAnimation.BLOCK)
 	
 
 func exit() -> void:

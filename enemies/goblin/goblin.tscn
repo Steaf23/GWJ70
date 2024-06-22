@@ -1,0 +1,81 @@
+[gd_scene load_steps=13 format=3 uid="uid://b473b7pm7fmwd"]
+
+[ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_pqnnx"]
+[ext_resource type="Script" path="res://enemies/goblin/goblin.gd" id="2_cfujs"]
+[ext_resource type="Texture2D" uid="uid://8mv1jfj31l1t" path="res://sprites/goblin.png" id="2_phgmb"]
+[ext_resource type="AnimationLibrary" uid="uid://ccnejx11k41cg" path="res://resources/goblin_animations.res" id="3_cspeo"]
+[ext_resource type="Script" path="res://enemies/goblin/goblin_idle.gd" id="5_17n5l"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="6_6cv1k"]
+[ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="6_qoxid"]
+[ext_resource type="Script" path="res://enemies/goblin/leaping_state.gd" id="7_ysrjb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsngq"]
+size = Vector2(20, 33)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12038"]
+size = Vector2(20, 25.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d80hy"]
+radius = 5.0
+height = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kos0y"]
+radius = 22.3607
+
+[node name="Goblin" instance=ExtResource("1_pqnnx")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_cfujs")
+leap_range = 100
+attack_length_seconds = 0.2
+move_speed = 40
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_jsngq")
+
+[node name="Shadow" parent="." index="1"]
+position = Vector2(0, 4)
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+position = Vector2(0, -12)
+texture = ExtResource("2_phgmb")
+hframes = 5
+vframes = 4
+frame = 15
+
+[node name="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
+libraries = {
+"": ExtResource("3_cspeo")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/AttackHitbox" index="0"]
+position = Vector2(-21, -9.75)
+shape = SubResource("RectangleShape2D_12038")
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2(0, 2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_d80hy")
+
+[node name="IdleState" parent="StateMachine" index="0"]
+script = ExtResource("5_17n5l")
+
+[node name="LeapingState" parent="StateMachine" index="4" instance=ExtResource("6_6cv1k")]
+script = ExtResource("7_ysrjb")
+
+[node name="PrepareTimer" type="Timer" parent="StateMachine/LeapingState" index="0"]
+wait_time = 0.6
+one_shot = true
+
+[node name="HealthBar" parent="." index="6"]
+offset_top = 27.0
+offset_bottom = 67.0
+max_health = 4.0
+
+[node name="LeapLanding" parent="." index="7" instance=ExtResource("6_qoxid")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeapLanding" index="0"]
+shape = SubResource("CircleShape2D_kos0y")
+
+[connection signal="leaped" from="." to="StateMachine/LeapingState" method="_on_goblin_leaped"]

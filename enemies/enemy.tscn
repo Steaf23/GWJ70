@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://2h1r4wgxc121"]
+
+[ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_fw22s"]
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="2_28ed5"]
+[ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="3_45vr8"]
+[ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="3_gfgum"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="4_q3h4t"]
+[ext_resource type="Script" path="res://state_machine/states/idle_state.gd" id="5_2dej2"]
+[ext_resource type="Script" path="res://state_machine/states/stunned_state.gd" id="6_f8ono"]
+[ext_resource type="Script" path="res://state_machine/states/attacking_state.gd" id="7_wppu2"]
+[ext_resource type="Script" path="res://state_machine/states/blocking_state.gd" id="8_bgw5k"]
+[ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="10_j5m6p"]
+[ext_resource type="Script" path="res://state_machine/states/death_state.gd" id="10_qxgk7"]
+
+[node name="Enemy" node_paths=PackedStringArray("controller") instance=ExtResource("1_fw22s")]
+script = ExtResource("2_28ed5")
+attack_length_seconds = 0.3
+attack_range = 50
+has_block = true
+controller = NodePath("AIController")
+
+[node name="HurtBox" parent="." index="0"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
+
+[node name="AttackHitbox" parent="Pivot" index="1" instance=ExtResource("3_gfgum")]
+collision_layer = 16
+collision_mask = 16
+
+[node name="StateMachine" parent="." index="4" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("3_45vr8")]
+actor = NodePath("..")
+current_state = NodePath("IdleState")
+
+[node name="IdleState" parent="StateMachine" index="0" instance=ExtResource("4_q3h4t")]
+script = ExtResource("5_2dej2")
+
+[node name="StunnedState" parent="StateMachine" index="1" instance=ExtResource("4_q3h4t")]
+script = ExtResource("6_f8ono")
+
+[node name="AttackingState" parent="StateMachine" index="2" instance=ExtResource("4_q3h4t")]
+script = ExtResource("7_wppu2")
+
+[node name="BlockingState" parent="StateMachine" index="3" instance=ExtResource("4_q3h4t")]
+script = ExtResource("8_bgw5k")
+
+[node name="Timer" type="Timer" parent="StateMachine/BlockingState" index="0"]
+wait_time = 0.5
+one_shot = true
+
+[node name="DeathState" parent="StateMachine" index="4" instance=ExtResource("4_q3h4t")]
+script = ExtResource("10_qxgk7")
+
+[node name="AttackCooldown" type="Timer" parent="." index="5"]
+wait_time = 3.0
+one_shot = true
+
+[node name="HealthBar" parent="." index="6"]
+offset_top = 34.0
+offset_bottom = 74.0
+
+[node name="AIController" parent="." index="7" node_paths=PackedStringArray("actor") instance=ExtResource("10_j5m6p")]
+actor = NodePath("..")
+
+[node name="StateDebug" type="Label" parent="." index="8"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "State"
+
+[connection signal="animation_finished" from="." to="StateMachine/StunnedState" method="_on_enemy_animation_finished"]
+[connection signal="animation_finished" from="." to="StateMachine/AttackingState" method="_on_enemy_animation_finished"]
+[connection signal="animation_finished" from="." to="StateMachine/DeathState" method="_on_enemy_animation_finished"]
+[connection signal="damaged" from="." to="StateMachine/IdleState" method="_on_enemy_damaged"]
+[connection signal="damaged" from="." to="StateMachine/BlockingState" method="_on_enemy_damaged"]
+[connection signal="animation_finished" from="Pivot/Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="StateMachine/BlockingState/Timer" to="StateMachine/BlockingState" method="_on_timer_timeout"]

@@ -9,7 +9,7 @@ func entry() -> void:
 
 func _on_enemy_damaged(damage: int, damage_source: Actor, type: HitBox.DamageType) -> void:
 	if type == HitBox.DamageType.SPELL:
-		machine.actor.damage(damage)
+		machine.actor.do_damage(damage)
 		machine.actor.apply_knockback(damage_source.global_position, 500)
 		change_state("StunnedState")
 		return
@@ -17,7 +17,7 @@ func _on_enemy_damaged(damage: int, damage_source: Actor, type: HitBox.DamageTyp
 	if count >= 30:
 		change_state("BlockingState")
 	else:
-		machine.actor.damage(damage)
+		machine.actor.do_damage(damage)
 		change_state("StunnedState")
 	
 
@@ -31,10 +31,6 @@ func do(delta: float) -> void:
 	
 	if machine.actor.can_attack():
 		change_state("AttackingState")
-		return
-
-	if machine.actor.can_leap():
-		change_state("LeapingState")
 		return
 
 func exit() -> void:

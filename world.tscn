@@ -1,17 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://cne6u00cgn135"]
+[gd_scene load_steps=12 format=3 uid="uid://cne6u00cgn135"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
 [ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
 [ext_resource type="Texture2D" uid="uid://odnen5j1vrwc" path="res://sprites/go_arrow.png" id="2_h5ove"]
 [ext_resource type="Script" path="res://camera.gd" id="4_hyijd"]
 [ext_resource type="PackedScene" uid="uid://copgkd04i8mow" path="res://components/level_exit.tscn" id="5_vwmi1"]
+[ext_resource type="Texture2D" uid="uid://dcm1r6bm1cn1e" path="res://sprites/bg.png" id="6_iaiu0"]
 [ext_resource type="PackedScene" uid="uid://bp5eur43huh4b" path="res://section.tscn" id="7_22odh"]
-[ext_resource type="Texture2D" uid="uid://bmclsjie3cig8" path="res://sprites/BGimagev1.png" id="7_55k5s"]
+[ext_resource type="PackedScene" uid="uid://du0meui038i65" path="res://enemies/cyclops/cyclops.tscn" id="9_jd563"]
+[ext_resource type="PackedScene" uid="uid://b473b7pm7fmwd" path="res://enemies/goblin/goblin.tscn" id="9_ojc1g"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8m2ts"]
-vertices = PackedVector2Array(1577, 832, 1578, 832, 1147, 839, 567, 579, 565, 579, 1105, 396, 348, 1101, 58, 1104, 60, 791, 428, 1043, 2346, 373, 2052, 809, 2054, 809, 3464, 843, 2991, 834, 2745, 359, 3579, 401, 4683, 798, 4683, 401)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5), PackedInt32Array(6, 7, 8, 3, 9), PackedInt32Array(2, 9, 3, 5, 10), PackedInt32Array(0, 2, 10, 11), PackedInt32Array(12, 11, 10), PackedInt32Array(13, 14, 12, 10, 15, 16, 17), PackedInt32Array(17, 16, 18)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(555.333, 551.305, 1101.17, 366.758, 2344.74, 343.398, 2745.81, 329.382, 3581.18, 371.43, 4713.21, 371.43, 4713.21, 826.958, 3464.9, 873.679, 2990.25, 864.334, 2052.83, 838.638, 1578.19, 861.998, 1151.01, 869.007, 441.418, 1069.91, 358.356, 1130.64, 28.4786, 1135.31, 30.8518, 770.893)])
+vertices = PackedVector2Array(4937, 387, 4934, 387, 6757, 383, 1577, 832, 1578, 832, 1147, 839, 567, 579, 565, 579, 1105, 396, 348, 1101, 58, 1104, 60, 791, 428, 1043, 2346, 373, 2052, 809, 2054, 809, 3464, 843, 2991, 834, 2745, 359, 3598, 406, 4712, 797, 3991, 422, 3992, 422, 4682, 413, 4685, 413, 4715, 797, 6766, 713, 6497, 742, 6213, 691, 6025, 731, 5713, 715, 5349, 829)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 4, 5), PackedInt32Array(6, 7, 8), PackedInt32Array(9, 10, 11, 6, 12), PackedInt32Array(5, 12, 6, 8, 13), PackedInt32Array(3, 5, 13, 14), PackedInt32Array(15, 14, 13), PackedInt32Array(16, 17, 15, 13, 18, 19, 20), PackedInt32Array(20, 19, 21), PackedInt32Array(20, 21, 22), PackedInt32Array(20, 22, 23, 24, 25), PackedInt32Array(0, 2, 26, 27, 28), PackedInt32Array(0, 28, 29, 30), PackedInt32Array(0, 30, 31, 25, 24)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(555.333, 551.305, 1101.17, 366.758, 2344.74, 343.398, 2745.81, 329.382, 3600.17, 376.102, 3991.75, 392.455, 4682.36, 383.11, 4933.92, 357.414, 6787.4, 352.742, 6796.89, 740.524, 6495.49, 773.229, 6213.08, 721.836, 6025.6, 761.549, 5717.08, 745.196, 5353.98, 859.662, 4713.21, 826.958, 3464.9, 873.679, 2990.25, 864.334, 2052.83, 838.638, 1578.19, 861.998, 1151.01, 869.007, 441.418, 1069.91, 358.356, 1130.64, 28.4786, 1135.31, 30.8518, 770.893)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 30.0
 
@@ -46,9 +48,8 @@ horizontal_alignment = 1
 layout_mode = 2
 texture = ExtResource("2_h5ove")
 
-[node name="Player" parent="." instance=ExtResource("1_gmgtv")]
+[node name="Player" parent="." groups=["damageable"] instance=ExtResource("1_gmgtv")]
 position = Vector2(109, 382)
-move_speed = 400
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 process_callback = 0
@@ -70,22 +71,36 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="Shape" type="CollisionPolygon2D" parent="Walls"]
-polygon = PackedVector2Array(0, 749.869, 517.361, 509.257, 1072.69, 327.045, 2323.38, 315.365, 2748.19, 287.333, 3578.81, 338.726, 4746.43, 329.382, 4810.51, 329.382, 4796.27, -179.875, -208.843, -147.17, -194.604, 1329.21, 4822.38, 1361.91, 4810.51, 329.382, 4746.43, 329.382, 4746.43, 861.998, 3455.4, 920.399, 2976.01, 906.383, 2048.09, 871.343, 1561.58, 904.047, 1153.38, 915.727, 450.911, 1104.95, 367.849, 1168.02, 0, 1168.02)
+polygon = PackedVector2Array(0, 749.869, 517.361, 509.257, 1072.69, 327.045, 2323.38, 315.365, 2748.19, 287.333, 3578.81, 338.726, 3965.65, 350.406, 4649.13, 345.734, 4924.42, 310.693, 5384.83, 324.709, 6652.13, 313.029, 6834.86, 315.365, 6967.76, 315.365, 6958.27, -144.834, -208.843, -147.17, -194.604, 1329.21, 6982, 1347.89, 6967.76, 315.365, 6834.86, 315.365, 6834.86, 775.565, 6675.86, 791.917, 6502.61, 815.278, 6205.96, 761.549, 6035.09, 803.597, 5717.08, 784.909, 5356.35, 897.039, 4746.43, 861.998, 3455.4, 920.399, 2976.01, 906.383, 2048.09, 871.343, 1561.58, 904.047, 1153.38, 915.727, 450.911, 1104.95, 367.849, 1168.02, 0, 1168.02)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
 scale = Vector2(0.421369, 0.428075)
 navigation_polygon = SubResource("NavigationPolygon_8m2ts")
 
 [node name="InteractionArea" parent="." instance=ExtResource("5_vwmi1")]
 
-[node name="BGimagev1" type="Sprite2D" parent="."]
+[node name="BackGround" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(1000, 250)
-texture = ExtResource("7_55k5s")
+position = Vector2(1440, 250)
+texture = ExtResource("6_iaiu0")
 
 [node name="Sections" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Section1" parent="Sections" instance=ExtResource("7_22odh")]
+y_sort_enabled = true
+
+[node name="Shape" parent="Sections/Section1" index="0"]
+visible = false
+
+[node name="NewGoblin" parent="Sections/Section1/Enemies" index="0" node_paths=PackedStringArray("target") instance=ExtResource("9_ojc1g")]
+position = Vector2(297, 300)
+target = NodePath("../../../../Player")
+
+[node name="Cyclops" parent="Sections/Section1/Enemies" index="1" node_paths=PackedStringArray("target") instance=ExtResource("9_jd563")]
+position = Vector2(402, 339)
+target = NodePath("../../../../Player")
 
 [node name="Section2" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(480, 0)
@@ -102,6 +117,10 @@ section = 3
 [node name="Section5" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(1920, 0)
 section = 4
+
+[node name="Section6" parent="Sections" instance=ExtResource("7_22odh")]
+position = Vector2(2400, 0)
+section = 5
 
 [node name="SectionExit" parent="." instance=ExtResource("5_vwmi1")]
 
@@ -124,3 +143,5 @@ position = Vector2(490, 250)
 shape = SubResource("RectangleShape2D_v8pbm")
 
 [connection signal="player_entered" from="SectionExit" to="." method="_on_section_exit_player_entered"]
+
+[editable path="Sections/Section1"]

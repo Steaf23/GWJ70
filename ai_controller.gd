@@ -5,7 +5,6 @@ extends ActorController
 @export var target_pos_delta = 25 * 25
 
 @onready var target_position: Vector2 = global_position
-
 @onready var navigation = $NavigationAgent2D
 
 func _ready() -> void:
@@ -16,7 +15,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
 	if not navigation_target:
 		return
 		

@@ -1,3 +1,4 @@
+class_name Section
 extends Area2D
 
 signal section_cleared(section: int)
@@ -25,3 +26,12 @@ func _on_actor_died() -> void:
 			).is_empty():
 		print("Cleared section " + str(section))
 		section_cleared.emit(section)
+
+
+func add_actor(actor: Actor) -> void:
+	var shape_size = $Shape.shape.size / 2
+	var shape_tl = $Shape.global_position - shape_size
+	var shape_br = $Shape.global_position + shape_size
+	actor.global_position.clamp(shape_tl, shape_br)
+	actor.died.connect(_on_actor_died)
+	$Enemies.add_child(actor)

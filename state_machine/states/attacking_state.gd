@@ -1,13 +1,13 @@
 extends State
 
 func entry() -> void:
-	machine.actor.play_animation("attack1")
-
-
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "attack1":
-		change_state("IdleState")
+	machine.actor.play_animation(Enemy.EnemyAnimation.ATTACK)
 
 
 func exit() -> void:
 	machine.actor.finish_attack()
+
+
+func _on_enemy_animation_finished(animation: Enemy.EnemyAnimation) -> void:
+	if animation == Enemy.EnemyAnimation.ATTACK:
+		change_state("IdleState")

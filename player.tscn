@@ -1,21 +1,22 @@
-[gd_scene load_steps=35 format=3 uid="uid://jbugsth2lvsx"]
+[gd_scene load_steps=27 format=3 uid="uid://jbugsth2lvsx"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_jxv7i"]
 [ext_resource type="PackedScene" uid="uid://b74us3123fk2d" path="res://player_controller.tscn" id="2_002c6"]
 [ext_resource type="Script" path="res://player.gd" id="2_5rjbg"]
-[ext_resource type="Texture2D" uid="uid://dyj7uhejf8kgd" path="res://sprites/mossman-Sheet.png" id="3_i2k62"]
+[ext_resource type="Texture2D" uid="uid://s8tme1744w7j" path="res://sprites/mossman-Sheet.png" id="3_i2k62"]
 [ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="5_di2d3"]
-[ext_resource type="Texture2D" uid="uid://vn84eupwo4eh" path="res://sprites/slash.png" id="6_dgcrn"]
-[ext_resource type="Texture2D" uid="uid://2fxsvrxgniy4" path="res://sprites/hit.png" id="6_q4phe"]
+[ext_resource type="Texture2D" uid="uid://csvy4jxeitd7o" path="res://sprites/slash.png" id="6_dgcrn"]
+[ext_resource type="Texture2D" uid="uid://dfahv8d0t7n2k" path="res://sprites/hit.png" id="6_q4phe"]
 [ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="6_ru4c1"]
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="7_822vf"]
 [ext_resource type="Script" path="res://player/states/idle_state.gd" id="8_m3ijr"]
 [ext_resource type="Script" path="res://player/states/attack_state.gd" id="9_hau5g"]
 [ext_resource type="Script" path="res://player/states/special_attack_state.gd" id="11_cmdhg"]
+[ext_resource type="Texture2D" uid="uid://nci3q6c3c783" path="res://sprites/spell-Sheet.png" id="13_7a5ve"]
+[ext_resource type="AnimationLibrary" uid="uid://cfu7gc316r56" path="res://resources/player_animations.res" id="14_xihbr"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j3xel"]
-radius = 5.0
-height = 22.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qk7c0"]
+size = Vector2(20, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ptif7"]
 size = Vector2(24, 41)
@@ -62,167 +63,15 @@ _data = {
 "beinghit": SubResource("Animation_xi16s")
 }
 
-[sub_resource type="Animation" id="Animation_kqn56"]
-resource_name = "attack1_left"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [3, 4, 5]
-}
+[sub_resource type="CircleShape2D" id="CircleShape2D_kcvb7"]
+radius = 34.9857
 
-[sub_resource type="Animation" id="Animation_peq5q"]
-resource_name = "attack1_right"
-length = 0.3
+[sub_resource type="Animation" id="Animation_ir34r"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [13, 14, 15]
-}
-
-[sub_resource type="Animation" id="Animation_gjd7o"]
-resource_name = "attack2_left"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [6, 7, 8]
-}
-
-[sub_resource type="Animation" id="Animation_wve6u"]
-resource_name = "attack2_right"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [16, 17, 18]
-}
-
-[sub_resource type="Animation" id="Animation_7cqc3"]
-resource_name = "attack3_left"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [8, 9, 3, 0]
-}
-
-[sub_resource type="Animation" id="Animation_k25o8"]
-resource_name = "attack3_right"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [18, 19, 13, 12]
-}
-
-[sub_resource type="Animation" id="Animation_hsfm4"]
-resource_name = "being_hit_left"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [23]
-}
-
-[sub_resource type="Animation" id="Animation_2kc4h"]
-resource_name = "being_hit_right"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [24]
-}
-
-[sub_resource type="Animation" id="Animation_1y2mu"]
-resource_name = "cast_spell"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [20, 21, 22, 21]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.7),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"cast_spell"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_karfu"]
-resource_name = "idle_left"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
+tracks/0/path = NodePath("SpellEffect:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -231,79 +80,60 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
-
-[sub_resource type="Animation" id="Animation_6hsgc"]
-resource_name = "idle_right"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpellEffect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [10]
+"values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_0y6lq"]
-resource_name = "walk_left"
-length = 0.8
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_ffven"]
+resource_name = "cast"
+length = 1.125
+step = 0.075
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
+tracks/0/path = NodePath("SpellEffect:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.075, 0.15, 0.225, 0.3, 0.375, 0.45, 0.525, 0.6, 0.675, 0.75, 0.825, 0.9, 0.975, 1.05),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [1, 0, 2, 0]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpellEffect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_opffw"]
-resource_name = "walk_right"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [11, 10, 12, 10]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0cm6w"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_31k7t"]
 _data = {
-"attack1_left": SubResource("Animation_kqn56"),
-"attack1_right": SubResource("Animation_peq5q"),
-"attack2_left": SubResource("Animation_gjd7o"),
-"attack2_right": SubResource("Animation_wve6u"),
-"attack3_left": SubResource("Animation_7cqc3"),
-"attack3_right": SubResource("Animation_k25o8"),
-"being_hit_left": SubResource("Animation_hsfm4"),
-"being_hit_right": SubResource("Animation_2kc4h"),
-"cast_spell": SubResource("Animation_1y2mu"),
-"idle_left": SubResource("Animation_karfu"),
-"idle_right": SubResource("Animation_6hsgc"),
-"walk_left": SubResource("Animation_0y6lq"),
-"walk_right": SubResource("Animation_opffw")
+"RESET": SubResource("Animation_ir34r"),
+"cast": SubResource("Animation_ffven")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_5vldc"]
 font_size = 8
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kcvb7"]
-radius = 34.9857
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j3xel"]
+radius = 5.0
+height = 22.0
 
 [node name="Player" node_paths=PackedStringArray("controller") instance=ExtResource("1_jxv7i")]
 collision_layer = 11
@@ -311,67 +141,86 @@ collision_mask = 11
 script = ExtResource("2_5rjbg")
 controller = NodePath("PlayerController")
 
-[node name="Shadow" parent="." index="0"]
-position = Vector2(0, 6)
+[node name="HurtBox" parent="." index="0"]
+collision_layer = 16
+collision_mask = 16
 
-[node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(0, 3)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_j3xel")
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_qk7c0")
+
+[node name="Shadow" parent="." index="1"]
+position = Vector2(0, 6)
 
 [node name="PlayerController" parent="." index="2" node_paths=PackedStringArray("actor") instance=ExtResource("2_002c6")]
 actor = NodePath("..")
 
-[node name="Pivot" type="Node2D" parent="." index="3"]
+[node name="WeaponPivot" type="Node2D" parent="." index="3"]
 
-[node name="Sword" parent="Pivot" index="0" node_paths=PackedStringArray("damage_source") instance=ExtResource("5_di2d3")]
+[node name="Sword" parent="WeaponPivot" index="0" node_paths=PackedStringArray("damage_source") instance=ExtResource("5_di2d3")]
 unique_name_in_owner = true
-collision_layer = 256
-collision_mask = 258
 damage_source = NodePath("../..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Sword" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPivot/Sword" index="0"]
 position = Vector2(25, -5.5)
 shape = SubResource("RectangleShape2D_ptif7")
 
-[node name="HitSprite" type="Sprite2D" parent="Pivot" index="1"]
+[node name="HitSprite" type="Sprite2D" parent="WeaponPivot" index="1"]
 z_index = 1
 position = Vector2(17, -8)
 scale = Vector2(-1, 1)
 texture = ExtResource("6_dgcrn")
 hframes = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/HitSprite" index="0"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WeaponPivot/HitSprite" index="0"]
 libraries = {
 "": SubResource("AnimationLibrary_ewnmo")
 }
 
-[node name="dmg" type="Sprite2D" parent="Pivot" index="2"]
+[node name="dmg" type="Sprite2D" parent="WeaponPivot" index="2"]
+visible = false
 position = Vector2(9.485, -11.58)
 texture = ExtResource("6_q4phe")
 hframes = 4
-frame = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/dmg" index="0"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WeaponPivot/dmg" index="0"]
 libraries = {
 "": SubResource("AnimationLibrary_3ioh7")
 }
 
-[node name="Sprite2D" parent="." index="4"]
-position = Vector2(0, -13)
+[node name="StaffRange" parent="." index="4" node_paths=PackedStringArray("damage_source") instance=ExtResource("5_di2d3")]
+type = 1
+damage_source = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaffRange" index="0"]
+shape = SubResource("CircleShape2D_kcvb7")
+
+[node name="SpellEffect" type="Sprite2D" parent="StaffRange" index="1"]
+visible = false
+texture = ExtResource("13_7a5ve")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StaffRange/SpellEffect" index="0"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_31k7t")
+}
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+position = Vector2(0, -12)
 texture = ExtResource("3_i2k62")
 flip_h = true
 hframes = 5
 vframes = 5
-frame = 3
+frame = 20
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
 libraries = {
-"": SubResource("AnimationLibrary_0cm6w")
+"": ExtResource("14_xihbr")
 }
-autoplay = "idle_right"
 
-[node name="StateDebug" type="Label" parent="." index="5"]
+[node name="StateDebug" type="Label" parent="." index="6"]
 visible = false
 offset_left = -20.0
 offset_top = -40.0
@@ -381,7 +230,7 @@ text = "State"
 label_settings = SubResource("LabelSettings_5vldc")
 horizontal_alignment = 1
 
-[node name="StateMachine" parent="." index="6" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("6_ru4c1")]
+[node name="StateMachine" parent="." index="7" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("6_ru4c1")]
 actor = NodePath("..")
 current_state = NodePath("IdleState")
 
@@ -397,24 +246,23 @@ script = ExtResource("11_cmdhg")
 [node name="AttackTimer" type="Timer" parent="StateMachine/SpecialAttackState" index="0"]
 wait_time = 0.15
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="7"]
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." index="8"]
 radius = 15.0
-
-[node name="StaffRange" parent="." index="8" node_paths=PackedStringArray("damage_source") instance=ExtResource("5_di2d3")]
-type = 1
-damage_source = NodePath("..")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaffRange" index="0"]
-shape = SubResource("CircleShape2D_kcvb7")
 
 [node name="IFrames" type="Timer" parent="." index="9"]
 wait_time = 0.5
 one_shot = true
 
-[node name="HealthBar" parent="." index="10"]
+[node name="CollisionShape2D" parent="." index="10"]
+position = Vector2(0, 3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_j3xel")
+
+[node name="HealthBar" parent="." index="11"]
 offset_top = 30.0
 offset_bottom = 70.0
 max_health = 5.0
 
-[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="StateMachine/AttackState" method="_on_animation_player_animation_finished"]
-[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="StateMachine/SpecialAttackState" method="_on_animation_player_animation_finished"]
+[connection signal="damaged" from="." to="." method="_on_damaged"]
+[connection signal="animation_finished" from="Pivot/Sprite2D/AnimationPlayer" to="StateMachine/AttackState" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="Pivot/Sprite2D/AnimationPlayer" to="StateMachine/SpecialAttackState" method="_on_animation_player_animation_finished"]

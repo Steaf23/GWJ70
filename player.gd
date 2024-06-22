@@ -1,9 +1,12 @@
 class_name Player
 extends Actor
 
-@onready var anim = $Sprite2D/AnimationPlayer
-@onready var slashanim = $Sprite2D/AnimationPlayer
-@onready var hitanim = $Pivot/dmg/AnimationPlayer
+@onready var anim = $Pivot/Sprite2D/AnimationPlayer
+@onready var slashanim = $WeaponPivot/HitSprite/AnimationPlayer
+@onready var hitanim = $WeaponPivot/dmg/AnimationPlayer
+
+@onready var weapon_pivot = $WeaponPivot
+@onready var hit_sprite = $WeaponPivot/HitSprite
 
 var count = 0
 var attacking = false
@@ -16,7 +19,7 @@ func _ready() -> void:
 	%Sword.hide()
 	%Sword.disable(true)
 	$StaffRange.disable(true)
-	$Pivot/HitSprite.hide()
+	hit_sprite.hide()
 	
 
 func _physics_process(delta: float) -> void:
@@ -24,10 +27,10 @@ func _physics_process(delta: float) -> void:
 	
 	if can_turn:
 		if velocity.x < -10.0:
-			$Pivot.scale = Vector2(-1, 1)
+			weapon_pivot.scale = Vector2(-1, 1)
 			rightside = true
 		elif velocity.x > 10.0:
-			$Pivot.scale = Vector2(1, 1)
+			weapon_pivot.scale = Vector2(1, 1)
 			rightside = false
 		
 	if attacking:
@@ -56,13 +59,13 @@ func _input(event: InputEvent) -> void:
 
 
 func play_animation(animation: StringName) -> void:
-	assert(animation in $Sprite2D/AnimationPlayer.get_animation_list())
-	$Sprite2D/AnimationPlayer.play(animation)
+	assert(animation in anim.get_animation_list())
+	anim.play(animation)
 	if "attack" in animation:
-		$Pivot/HitSprite.show()
-		$Pivot/HitSprite/AnimationPlayer.play("slash")
-		await $Pivot/HitSprite/AnimationPlayer.animation_finished
-		$Pivot/HitSprite.hide()
+		hit_sprite.show()
+		slashanim.play("slash")
+		await slashanim.animation_finished
+		hit_sprite.hide()
 
 
 func cast_spell() -> void:
@@ -82,7 +85,7 @@ func _on_health_bar_no_health() -> void:
 	print("YOU LOST BOZO")
 
 
-func take_damage(amount: int, damage_source: Actor, pierce: bool) -> void:
+func _on_damaged(damage: int, damage_source: Actor, pierce: bool) -> void:
 	if $IFrames.is_stopped():
-		super.take_damage(amount, damage_source, pierce)
+		$HealthBar.current_health -= damage
 		$IFrames.start()

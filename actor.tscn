@@ -1,25 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7pwuuganpb67"]
+[gd_scene load_steps=6 format=3 uid="uid://b7pwuuganpb67"]
 
 [ext_resource type="Script" path="res://actor.gd" id="1_f1gl1"]
+[ext_resource type="PackedScene" uid="uid://bse5hxagknx6x" path="res://components/hurt_box.tscn" id="2_or05t"]
 [ext_resource type="PackedScene" uid="uid://ctlc4aihlw0un" path="res://components/health_bar.tscn" id="2_rbteu"]
 [ext_resource type="Texture2D" uid="uid://ca5tqxtrlfx5f" path="res://sprites/shadow.png" id="3_6tefc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxc5f"]
+radius = 22.0227
 
-[node name="Actor" type="CharacterBody2D" groups=["damageable"]]
+[node name="Actor" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_f1gl1")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_or05t")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0, 10)
 texture = ExtResource("3_6tefc")
 
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot"]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bxc5f")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="HealthBar" parent="." instance=ExtResource("2_rbteu")]
 unique_name_in_owner = true
 
+[connection signal="taken_damage" from="HurtBox" to="." method="_on_hurt_box_taken_damage"]
 [connection signal="no_health" from="HealthBar" to="." method="_on_health_bar_no_health"]
