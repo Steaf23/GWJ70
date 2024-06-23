@@ -18,6 +18,7 @@ signal animation_finished(animation: EnemyAnimation)
 func _ready() -> void:
 	$AIController.navigation_target = target
 	hitbox.disable(true)
+	$Pivot/Block.hide()
 
 
 func _physics_process(delta: float) -> void:
@@ -66,11 +67,14 @@ func play_animation(animation: EnemyAnimation) -> void:
 		EnemyAnimation.ATTACK: anim_name = &"attack"
 		EnemyAnimation.ATTACK2: anim_name = &"attack2"
 	
+	if animation == Enemy.EnemyAnimation.HIT or animation == Enemy.EnemyAnimation.DEATH:
+		$Hit.play("hit")
+		
 	if not anim_name in anim.get_animation_list():
 		animation_finished.emit(animation)
 		#print("Animation " + anim_name + " does not exist for " + name)
 		return
-		
+	
 	anim.play(anim_name)
 	
 	
@@ -105,3 +109,18 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 func _on_health_bar_no_health() -> void:
 	dead = true
+
+
+func start_block() -> void:
+	$Pivot/Block.show()
+	$Pivot/Block.play("default")
+	$CollisionShape2D.self_modulate = Color.YELLOW
+	play_animation(Enemy.EnemyAnimation.BLOCK)
+
+
+func finish_block() -> void:
+	$CollisionShape2D.self_modulate = Color.WHITE
+
+
+func _on_block_animation_finished() -> void:
+	$Pivot/Block.hide()

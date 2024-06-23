@@ -3,14 +3,13 @@ extends State
 func entry() -> void:
 	machine.actor.can_walk = true
 	$Timer.start()
-	$"../../CollisionShape2D".self_modulate = Color.YELLOW
-	machine.actor.play_animation(Enemy.EnemyAnimation.BLOCK)
+	machine.actor.start_block()
 	
 
 func exit() -> void:
 	machine.actor.can_walk = false
 	$Timer.stop()
-	$"../../CollisionShape2D".self_modulate = Color.WHITE
+	machine.actor.finish_block()
 
 
 func _on_timer_timeout() -> void:

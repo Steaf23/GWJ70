@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_3w7kw"]
 [ext_resource type="Script" path="res://enemies/wizard/wizard.gd" id="2_8xbcq"]
-[ext_resource type="Texture2D" uid="uid://cj8loyopkrg8g" path="res://sprites/wizard-Sheet.png" id="2_xx2un"]
+[ext_resource type="Texture2D" uid="uid://dq2q60kmrqp5f" path="res://sprites/wizard-Sheet.png" id="2_xx2un"]
 [ext_resource type="PackedScene" uid="uid://byh8ehdl0hxex" path="res://enemies/ghost/ghost.tscn" id="3_yf4ds"]
 [ext_resource type="Script" path="res://enemies/wizard/wizard_controller.gd" id="6_xmeoi"]
 
@@ -26,7 +26,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_6yha1"]
 resource_name = "attack"
-length = 2.5
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -34,10 +34,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 2, 2.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [3, 4, 5, 4, 3]
+"values": [3, 4, 5]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -56,18 +56,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_c7dpm"]
 resource_name = "block"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [6]
-}
 
 [sub_resource type="Animation" id="Animation_07ao2"]
 resource_name = "death"
@@ -117,7 +105,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_qt8hg"]
 resource_name = "walk"
-length = 1.2
+length = 0.9
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -126,10 +114,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [2, 0, 1, 0]
+"values": [2, 0, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eqx4e"]

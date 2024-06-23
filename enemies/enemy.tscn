@@ -1,16 +1,109 @@
-[gd_scene load_steps=12 format=3 uid="uid://2h1r4wgxc121"]
+[gd_scene load_steps=25 format=3 uid="uid://2h1r4wgxc121"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_fw22s"]
 [ext_resource type="Script" path="res://enemies/enemy.gd" id="2_28ed5"]
 [ext_resource type="PackedScene" uid="uid://bb8su8y6i3usp" path="res://state_machine/state_machine.tscn" id="3_45vr8"]
 [ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="3_gfgum"]
+[ext_resource type="Shader" path="res://enemies/hit.gdshader" id="3_gioi2"]
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="4_q3h4t"]
 [ext_resource type="Script" path="res://state_machine/states/idle_state.gd" id="5_2dej2"]
+[ext_resource type="Texture2D" uid="uid://few2umny840" path="res://sprites/block.png" id="5_jhus7"]
 [ext_resource type="Script" path="res://state_machine/states/stunned_state.gd" id="6_f8ono"]
 [ext_resource type="Script" path="res://state_machine/states/attacking_state.gd" id="7_wppu2"]
 [ext_resource type="Script" path="res://state_machine/states/blocking_state.gd" id="8_bgw5k"]
 [ext_resource type="PackedScene" uid="uid://debwsgpv33grr" path="res://ai_controller.tscn" id="10_j5m6p"]
 [ext_resource type="Script" path="res://state_machine/states/death_state.gd" id="10_qxgk7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uitpn"]
+resource_local_to_scene = true
+shader = ExtResource("3_gioi2")
+shader_parameter/enable = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3u05"]
+atlas = ExtResource("5_jhus7")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3wg0"]
+atlas = ExtResource("5_jhus7")
+region = Rect2(25, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6kpt"]
+atlas = ExtResource("5_jhus7")
+region = Rect2(50, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opfri"]
+atlas = ExtResource("5_jhus7")
+region = Rect2(75, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mn0v"]
+atlas = ExtResource("5_jhus7")
+region = Rect2(100, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uabox"]
+atlas = ExtResource("5_jhus7")
+region = Rect2(125, 0, 25, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cvtof"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3u05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3wg0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6kpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opfri")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mn0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uabox")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="Animation" id="Animation_0qdeb"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_qh85d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Sprite2D:material:shader_parameter/enable")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rhfyj"]
+_data = {
+"RESET": SubResource("Animation_qh85d"),
+"hit": SubResource("Animation_0qdeb")
+}
 
 [node name="Enemy" node_paths=PackedStringArray("controller") instance=ExtResource("1_fw22s")]
 script = ExtResource("2_28ed5")
@@ -23,12 +116,20 @@ controller = NodePath("AIController")
 collision_layer = 4
 collision_mask = 4
 
+[node name="Sprite2D" parent="Pivot" index="0"]
+material = SubResource("ShaderMaterial_uitpn")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
 
 [node name="AttackHitbox" parent="Pivot" index="1" node_paths=PackedStringArray("damage_source") instance=ExtResource("3_gfgum")]
 collision_layer = 16
 collision_mask = 16
 damage_source = NodePath("../..")
+
+[node name="Block" type="AnimatedSprite2D" parent="Pivot" index="2"]
+z_index = 1
+position = Vector2(-17, -3)
+sprite_frames = SubResource("SpriteFrames_cvtof")
 
 [node name="StateMachine" parent="." index="4" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("3_45vr8")]
 actor = NodePath("..")
@@ -70,10 +171,16 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "State"
 
+[node name="Hit" type="AnimationPlayer" parent="." index="9"]
+libraries = {
+"": SubResource("AnimationLibrary_rhfyj")
+}
+
 [connection signal="animation_finished" from="." to="StateMachine/StunnedState" method="_on_enemy_animation_finished"]
 [connection signal="animation_finished" from="." to="StateMachine/AttackingState" method="_on_enemy_animation_finished"]
 [connection signal="animation_finished" from="." to="StateMachine/DeathState" method="_on_enemy_animation_finished"]
 [connection signal="damaged" from="." to="StateMachine/IdleState" method="_on_enemy_damaged"]
 [connection signal="damaged" from="." to="StateMachine/BlockingState" method="_on_enemy_damaged"]
 [connection signal="animation_finished" from="Pivot/Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="Pivot/Block" to="." method="_on_block_animation_finished"]
 [connection signal="timeout" from="StateMachine/BlockingState/Timer" to="StateMachine/BlockingState" method="_on_timer_timeout"]

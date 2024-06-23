@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cne6u00cgn135"]
+[gd_scene load_steps=12 format=3 uid="uid://cne6u00cgn135"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
 [ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://copgkd04i8mow" path="res://components/level_exit.tscn" id="5_vwmi1"]
 [ext_resource type="Texture2D" uid="uid://dcm1r6bm1cn1e" path="res://sprites/bg.png" id="6_iaiu0"]
 [ext_resource type="PackedScene" uid="uid://bp5eur43huh4b" path="res://section.tscn" id="7_22odh"]
+[ext_resource type="PackedScene" uid="uid://rd74i3u70378" path="res://dialog/dialog.tscn" id="9_4omdw"]
 [ext_resource type="PackedScene" uid="uid://by67b3cdt4c6g" path="res://enemies/wizard/wizard.tscn" id="9_qje87"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8m2ts"]
@@ -53,7 +54,6 @@ position = Vector2(109, 382)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 process_callback = 0
 position_smoothing_enabled = true
-drag_horizontal_enabled = true
 script = ExtResource("4_hyijd")
 
 [node name="Node" type="Node" parent="Player/Camera2D"]
@@ -90,20 +90,9 @@ y_sort_enabled = true
 [node name="Section1" parent="Sections" instance=ExtResource("7_22odh")]
 y_sort_enabled = true
 
-[node name="Shape" parent="Sections/Section1" index="0"]
-visible = false
-
 [node name="Wizard" parent="Sections/Section1/Enemies" index="0" node_paths=PackedStringArray("target") instance=ExtResource("9_qje87")]
 position = Vector2(393, 323)
 target = NodePath("../../../../Player")
-
-[node name="Wizard2" parent="Sections/Section1/Enemies" index="1" node_paths=PackedStringArray("target") instance=ExtResource("9_qje87")]
-position = Vector2(270, 277)
-target = NodePath("../../../../Player")
-
-[node name="Wizard3" parent="Sections/Section1/Enemies" index="2" node_paths=PackedStringArray("target") instance=ExtResource("9_qje87")]
-position = Vector2(374, 214)
-target = NodePath("../Wizard")
 
 [node name="Section2" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(480, 0)
@@ -144,6 +133,12 @@ metadata/section = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
 position = Vector2(490, 250)
 shape = SubResource("RectangleShape2D_v8pbm")
+
+[node name="DialogLayer" type="CanvasLayer" parent="."]
+layer = 5
+visible = false
+
+[node name="Dialog" parent="DialogLayer" instance=ExtResource("9_4omdw")]
 
 [connection signal="player_entered" from="SectionExit" to="." method="_on_section_exit_player_entered"]
 

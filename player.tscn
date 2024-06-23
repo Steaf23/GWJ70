@@ -136,8 +136,8 @@ radius = 5.0
 height = 22.0
 
 [node name="Player" node_paths=PackedStringArray("controller") instance=ExtResource("1_jxv7i")]
-collision_layer = 11
-collision_mask = 11
+collision_layer = 523
+collision_mask = 523
 script = ExtResource("2_5rjbg")
 controller = NodePath("PlayerController")
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://byh8ehdl0hxex"]
+[gd_scene load_steps=15 format=3 uid="uid://byh8ehdl0hxex"]
 
 [ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_x0tbc"]
+[ext_resource type="Shader" path="res://enemies/hit.gdshader" id="2_d7s0r"]
 [ext_resource type="Texture2D" uid="uid://6iha0t4w20xc" path="res://sprites/ghost-Sheet.png" id="2_ilxxd"]
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="3_hjjgc"]
 [ext_resource type="Script" path="res://enemies/ghost/ghost_summon_state.gd" id="4_u6xs4"]
@@ -8,6 +9,11 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kscy7"]
 radius = 9.0
 height = 36.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2gg8"]
+resource_local_to_scene = true
+shader = ExtResource("2_d7s0r")
+shader_parameter/enable = false
 
 [sub_resource type="Animation" id="Animation_rmnl4"]
 resource_name = "summon"
@@ -116,7 +122,6 @@ size = Vector2(12, 22)
 
 [node name="Ghost" instance=ExtResource("1_x0tbc")]
 attack_range = 25
-has_block = false
 move_speed = 70
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
@@ -127,6 +132,7 @@ shape = SubResource("CapsuleShape2D_kscy7")
 visible = false
 
 [node name="Sprite2D" parent="Pivot" index="0"]
+material = SubResource("ShaderMaterial_s2gg8")
 position = Vector2(0, -8)
 texture = ExtResource("2_ilxxd")
 hframes = 5

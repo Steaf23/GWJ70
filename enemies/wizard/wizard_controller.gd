@@ -19,7 +19,6 @@ func _physics_process(delta: float) -> void:
 		has_target = true
 		target_position = pick_target()
 		move_target = target_position
-		print(target_position - global_position)
 		navigation.target_position = target_position
 	
 	var next_pos = navigation.get_next_path_position()

@@ -31,6 +31,7 @@ func do(delta: float) -> void:
 	
 	if machine.actor.dead:
 		change_state("DeathState")
+		return
 	
 	if machine.actor.can_attack():
 		change_state("AttackingState")
