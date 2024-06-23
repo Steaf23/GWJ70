@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_d2k8u"]
+
+[resource]
+script = ExtResource("1_d2k8u")
+lines = {
+0: "Only the small swamp seperated the mossman from the goblin's cave.
+A few steps and the hero would enter the enemy's hide out.",
+1: "Suddenly a group of ____ stormed out of the cave to stop him!
+*The names of the opponents of the final battle were erased by a burn mark.
+Through the hole you can see the names of other monsters, that likely stood in this place*"
+}
+choices = {
+0: [1],
+1: []
+}
+events = {
+0: [],
+1: []
+}
+id_counter = 0

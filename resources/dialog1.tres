@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_hw5q2"]
+
+[resource]
+script = ExtResource("1_hw5q2")
+lines = {
+0: "The ill influence of the goblins became visible.
+The trees were dying. ",
+1: "The once cherished home of the mossfolk fell victim to...",
+2: "*Someone crossed out the name of the monster*
+"
+}
+choices = {
+0: [1],
+1: [2],
+2: []
+}
+events = {
+0: [],
+1: [],
+2: []
+}
+id_counter = 0
