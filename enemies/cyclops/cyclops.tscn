@@ -1,14 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://du0meui038i65"]
+[gd_scene load_steps=10 format=3 uid="uid://du0meui038i65"]
 
 [ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_qopmj"]
 [ext_resource type="Texture2D" uid="uid://bppa2ks5t3e6" path="res://sprites/big_shadow.png" id="2_3wuem"]
 [ext_resource type="Texture2D" uid="uid://hkb6q2ynu7tj" path="res://sprites/cyclops-Sheet.png" id="2_pd0as"]
+[ext_resource type="Shader" path="res://enemies/hit.gdshader" id="3_caj8p"]
 [ext_resource type="AnimationLibrary" uid="uid://dlgivnmkffuev" path="res://resources/orc_animations.res" id="3_fgyve"]
 [ext_resource type="Script" path="res://enemies/cyclops/cyclops_attacking_state.gd" id="5_gl38u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y2tsu"]
 radius = 19.0
 height = 64.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1yhyx"]
+resource_local_to_scene = true
+shader = ExtResource("3_caj8p")
+shader_parameter/enable = false
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngqn0"]
 radius = 32.0
@@ -26,6 +32,7 @@ position = Vector2(0, 6)
 texture = ExtResource("2_3wuem")
 
 [node name="Sprite2D" parent="Pivot" index="0"]
+material = SubResource("ShaderMaterial_1yhyx")
 position = Vector2(-1, -40)
 texture = ExtResource("2_pd0as")
 hframes = 4

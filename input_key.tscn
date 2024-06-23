@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://brs0w0oqm6nvb"]
+
+[ext_resource type="Script" path="res://input_key.gd" id="1_4qavv"]
+[ext_resource type="Texture2D" uid="uid://blt7dfh0gg5yt" path="res://InputMapper/key_button.png" id="1_nwvg5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wh0ot"]
+font_size = 8
+font_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[node name="InputKey" type="MarginContainer"]
+mouse_filter = 2
+script = ExtResource("1_4qavv")
+
+[node name="Button" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_nwvg5")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="Key" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "W"
+label_settings = SubResource("LabelSettings_wh0ot")
+horizontal_alignment = 1
+vertical_alignment = 1

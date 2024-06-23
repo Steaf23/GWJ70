@@ -36,7 +36,6 @@ func can_block() -> bool:
 
 
 func start_attack_frames() -> void:
-	var target = ($AIController as AIController).navigation_target
 	if can_turn:
 		if target.global_position.x < global_position.x:
 			pivot.scale = Vector2(1, 1)

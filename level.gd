@@ -11,12 +11,16 @@ signal level_completed()
 @onready var right_wall = $RightWall
 @onready var exit = $SectionExit
 @onready var camera = $Player/Camera2D
+@onready var dialog = $DialogLayer/Dialog
 
 var sections: Array[Section] = []
 
 
 func _ready() -> void:
 	Global.level = self
+	
+	start_dialog("res://resources/prologue.tres")
+	
 	exit.get_node("Collision").disabled = true
 			
 	for s in $Sections.get_children():
@@ -34,14 +38,12 @@ func _ready() -> void:
 func set_left_wall_section(section: int, time: float = 0.01) -> void:
 	left_wall.global_position.x = section * RESOLUTION.x
 	left_wall.set_meta("section", section)
-	queue_redraw()
 	camera.move_left_limit(Global.current_section * RESOLUTION.x, time)
 
 
 func set_right_wall_section(section: int, time: float = 0.01) -> void:
 	right_wall.global_position.x = section * RESOLUTION.x
 	right_wall.set_meta("section", section)
-	queue_redraw()
 	camera.move_right_limit(Global.current_section * RESOLUTION.x + (RESOLUTION.x - 1), time)
 
 
@@ -57,6 +59,9 @@ func _on_section_exit_player_entered() -> void:
 	
 	exit_arrow.hide()
 	
+	$Player.heal()
+	# spawn section enemies
+	
 
 func _on_body_section_exited(body: Node2D) -> void:
 	if not body is Player:
@@ -70,6 +75,10 @@ func _on_section_cleared(section: int) -> void:
 	exit.get_node("Collision").set_deferred("disabled", false)
 
 
-func _draw() -> void:
-	draw_circle(Vector2(Global.current_section * RESOLUTION.x + (RESOLUTION.x - 1), $Player.global_position.y), 10, Color.BLUE)
-	draw_circle(Vector2(Global.current_section * RESOLUTION.x, $Player.global_position.y), 10, Color.RED)
+func start_dialog(filepath: String) -> void:
+	dialog.load_text_from_file(filepath)
+	
+
+func _on_dialog_finished() -> void:
+	var events = dialog.get_events()
+	print(events)

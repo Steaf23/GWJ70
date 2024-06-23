@@ -8,6 +8,9 @@ extends Actor
 @onready var weapon_pivot = $WeaponPivot
 @onready var hit_sprite = $WeaponPivot/HitSprite
 
+@onready var special_attack_bar = $CanvasLayer/MarginContainer/HBoxContainer/SpecialAttackBar
+@onready var special_attack_key = $CanvasLayer/MarginContainer/HBoxContainer/InputKey
+
 var count = 0
 var attacking = false
 var rightside = false
@@ -20,6 +23,10 @@ func _ready() -> void:
 	%Sword.disable(true)
 	$StaffRange.disable(true)
 	hit_sprite.hide()
+	
+	special_attack_bar.max_value = $SpecialAttackCooldown.wait_time
+	special_attack_bar.step = 0.1
+	special_attack_key.set_key(&"special_attack")
 	
 
 func _physics_process(delta: float) -> void:
@@ -43,18 +50,21 @@ func _physics_process(delta: float) -> void:
 			attacking = false
 	
 	$StateDebug.text = $StateMachine.current_state.name
-
+	special_attack_key.set_key(&"special_attack")
+	special_attack_key.visible = $SpecialAttackCooldown.is_stopped()
+	special_attack_bar.value = $SpecialAttackCooldown.wait_time - $SpecialAttackCooldown.time_left
 
 func _input(event: InputEvent) -> void:
-	if %Sword.is_disabled() and event.is_action_pressed("normal_attack"):
+	if %Sword.is_disabled() and event.is_action_pressed("normal_attack") and $AttackCooldown.is_stopped():
 		%Sword.show()
 		%Sword.disable(false)
 		attacking = true
 		
 		$StateMachine.invoke("attack", [combo_count])
 		combo_count = (combo_count + 1) % 3
+		$AttackCooldown.start()
 	
-	if %Sword.is_disabled() and event.is_action_pressed("special_attack"):
+	if %Sword.is_disabled() and event.is_action_pressed("special_attack") and $SpecialAttackCooldown.is_stopped():
 		$StateMachine.invoke("special_attack")
 
 
@@ -89,3 +99,6 @@ func _on_damaged(damage: int, damage_source: Actor, pierce: bool) -> void:
 	if $IFrames.is_stopped():
 		$HealthBar.current_health -= damage
 		$IFrames.start()
+
+func heal() -> void:
+	$HealthBar.current_health = $HealthBar.max_health

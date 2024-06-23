@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://b473b7pm7fmwd"]
+[gd_scene load_steps=15 format=3 uid="uid://b473b7pm7fmwd"]
 
 [ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_pqnnx"]
 [ext_resource type="Script" path="res://enemies/goblin/goblin.gd" id="2_cfujs"]
 [ext_resource type="Texture2D" uid="uid://8mv1jfj31l1t" path="res://sprites/goblin.png" id="2_phgmb"]
 [ext_resource type="AnimationLibrary" uid="uid://ccnejx11k41cg" path="res://resources/goblin_animations.res" id="3_cspeo"]
+[ext_resource type="Shader" path="res://enemies/hit.gdshader" id="3_nvsvj"]
 [ext_resource type="Script" path="res://enemies/goblin/goblin_idle.gd" id="5_17n5l"]
 [ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="6_6cv1k"]
 [ext_resource type="PackedScene" uid="uid://c75vdm6pbi2oy" path="res://components/hit_box.tscn" id="6_qoxid"]
@@ -11,6 +12,11 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsngq"]
 size = Vector2(20, 33)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4t7i7"]
+resource_local_to_scene = true
+shader = ExtResource("3_nvsvj")
+shader_parameter/enable = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_12038"]
 size = Vector2(20, 25.5)
@@ -38,6 +44,7 @@ shape = SubResource("RectangleShape2D_jsngq")
 position = Vector2(0, 4)
 
 [node name="Sprite2D" parent="Pivot" index="0"]
+material = SubResource("ShaderMaterial_4t7i7")
 position = Vector2(0, -12)
 texture = ExtResource("2_phgmb")
 hframes = 5

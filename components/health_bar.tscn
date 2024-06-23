@@ -2,21 +2,21 @@
 
 [ext_resource type="Script" path="res://components/health_bar.gd" id="1_gxw2o"]
 
-[sub_resource type="Gradient" id="Gradient_ujdof"]
+[sub_resource type="Gradient" id="Gradient_jrilq"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0.136826, 0.136826, 0.136826, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5ggqk"]
-gradient = SubResource("Gradient_ujdof")
+gradient = SubResource("Gradient_jrilq")
 width = 16
 height = 4
 
-[sub_resource type="Gradient" id="Gradient_gpv38"]
+[sub_resource type="Gradient" id="Gradient_pl1m2"]
 offsets = PackedFloat32Array(0, 0.481928, 1)
 colors = PackedColorArray(0.929412, 0, 0.0901961, 1, 0.843137, 0.498039, 0, 1, 0.276422, 0.779914, 3.85046e-07, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pytsk"]
-gradient = SubResource("Gradient_gpv38")
+gradient = SubResource("Gradient_pl1m2")
 width = 16
 height = 3
 

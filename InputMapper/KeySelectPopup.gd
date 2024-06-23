@@ -1,0 +1,22 @@
+extends PanelContainer
+
+signal key_selected(keycode)
+
+func _ready():
+	set_process_input(false)
+	
+func _input(event):
+	if !event.is_pressed() || !(event is InputEventKey):
+		return
+	get_viewport().set_input_as_handled()
+	emit_signal("key_selected", event.keycode)
+	close()
+	SoundManager.play_sfx("res://Util/SoundManager/tick.wav")
+
+func close():
+	hide()
+	set_process_input(false)
+	
+func open():
+	show()
+	set_process_input(true)

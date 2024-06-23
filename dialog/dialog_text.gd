@@ -8,7 +8,7 @@ extends Resource
 @export var id_counter = 0
 
 
-func add_line(text: String, parent: int = 0, back_tracks: Array[int] = [], events: Array[StringName] = []) -> int:
+func add_line(text: String, parent: int = 0, back_tracks: Array[int] = [], _events: Array[StringName] = []) -> int:
 	id_counter += 1
 	lines[id_counter] = text
 	

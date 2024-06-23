@@ -1,13 +1,19 @@
-[gd_scene load_steps=16 format=3 uid="uid://by67b3cdt4c6g"]
+[gd_scene load_steps=18 format=3 uid="uid://by67b3cdt4c6g"]
 
 [ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_3w7kw"]
 [ext_resource type="Script" path="res://enemies/wizard/wizard.gd" id="2_8xbcq"]
 [ext_resource type="Texture2D" uid="uid://dq2q60kmrqp5f" path="res://sprites/wizard-Sheet.png" id="2_xx2un"]
 [ext_resource type="PackedScene" uid="uid://byh8ehdl0hxex" path="res://enemies/ghost/ghost.tscn" id="3_yf4ds"]
+[ext_resource type="Shader" path="res://enemies/hit.gdshader" id="4_4vjmi"]
 [ext_resource type="Script" path="res://enemies/wizard/wizard_controller.gd" id="6_xmeoi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ti275"]
 size = Vector2(17, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_srwln"]
+resource_local_to_scene = true
+shader = ExtResource("4_4vjmi")
+shader_parameter/enable = false
 
 [sub_resource type="Animation" id="Animation_4gjor"]
 length = 0.001
@@ -147,6 +153,7 @@ position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_ti275")
 
 [node name="Sprite2D" parent="Pivot" index="0"]
+material = SubResource("ShaderMaterial_srwln")
 position = Vector2(0, -15)
 texture = ExtResource("2_xx2un")
 hframes = 4

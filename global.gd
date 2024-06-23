@@ -6,6 +6,8 @@ var current_section: int = 0
 
 var level: Level
 
+var dialog_shown = false
+
 
 func add_actor_to_game(actor: Actor) -> void:
 	if not level: return

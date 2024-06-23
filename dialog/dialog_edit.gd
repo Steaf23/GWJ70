@@ -61,7 +61,7 @@ func _on_save_pressed(file_path: String) -> void:
 	var id_counter = -1
 	
 	var visited_nodes = {}  # map of DialogEditNode and node_id that are seen
-	var stack: Array[DialogEditNode] = [%Start]
+	var stack: Array[DialogEditNode] = [$Start]
 	while not stack.is_empty():
 		var node = stack.pop_front() as DialogEditNode
 		if node in visited_nodes:
@@ -106,6 +106,7 @@ func _on_load_pressed(file_path: String) -> void:
 	for c in get_children():
 		c.queue_free()
 	
+	await get_tree().process_frame
 	var placed_nodes = {}
 	for line_id in text.lines.keys():
 		var node = node_scn.instantiate() as DialogEditNode
@@ -115,6 +116,8 @@ func _on_load_pressed(file_path: String) -> void:
 		if line_id == 0:
 			node.title = "START"
 			node.disable_remove()
+			node.name = "Start"
+			node.unique_name_in_owner = true
 	
 	var post_idx = 0
 	for node_id in text.choices.keys():

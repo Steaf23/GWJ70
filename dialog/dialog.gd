@@ -5,7 +5,6 @@ signal finished()
 var text: DialogText
 var current = 0
 
-@onready var speaker_lbl = %Speaker
 @onready var text_lbl = %Text
 
 
@@ -13,10 +12,8 @@ func _ready() -> void:
 	for b in 3:
 		var button = get_button(b)
 		button.text = "..."
-		button.pressed.connect((func(b): _on_choice_button_pressed(b.get_meta("choice_id"))).bind(button))
+		button.pressed.connect((func(_button): _on_choice_button_pressed(_button.get_meta("choice_id"))).bind(button))
 		button.set_meta("choice_id", -1)
-	
-	load_text_from_file("res://resources/dialog1.tres")
 
 
 func load_text_from_file(dialog_path: String) -> void:
@@ -28,10 +25,15 @@ func load_text(_text: DialogText) -> void:
 	current = 0
 	update_gui()
 	text.print_text()
+	Global.dialog_shown = true
+	get_tree().paused = true
+	show()
 	
 
 func update_gui() -> void:
-	if text.choices[current].size() == 0:
+	if current >= text.lines.size():
+		Global.dialog_shown = false
+		get_tree().paused = false
 		finished.emit()
 		return
 	
@@ -44,10 +46,12 @@ func update_gui() -> void:
 			button.text = text.get_line(choice_id)
 			button.set_meta("choice_id", choice_id)
 			button.disabled = false
+			button.show()
 			button_idx += 1
+		%Next.disabled = true
 	else:
 		%Next.disabled = false
-		text_lbl.text = text.get_line(text.choices[current][0])
+	text_lbl.text = text.get_line(current)
 		
 		
 func clear_buttons() -> void:
@@ -56,6 +60,7 @@ func clear_buttons() -> void:
 		button.text = "..."
 		button.set_meta("choice_id", -1)
 		button.disabled = true
+		button.hide()
 	
 	%Next.disabled = true
 
@@ -68,11 +73,14 @@ func _on_restart_pressed() -> void:
 func _on_choice_button_pressed(choice_id: int) -> void:
 	if choice_id == -1:
 		if text.choices[current].size() == 0:
+			Global.dialog_shown = false
+			get_tree().paused = false
 			finished.emit()
+			hide()
 			return
 		current = text.choices[current][0]
 	else:
-		current = choice_id
+		current = text.choices[choice_id][0]
 	update_gui()
 
 
@@ -82,3 +90,7 @@ func get_button(number: int) -> Button:
 
 func _on_next_pressed() -> void:
 	_on_choice_button_pressed(-1)
+
+
+func get_events() -> Array[String]:
+	return []

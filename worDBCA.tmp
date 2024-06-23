@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cne6u00cgn135"]
+[gd_scene load_steps=13 format=3 uid="uid://cne6u00cgn135"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
 [ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dcm1r6bm1cn1e" path="res://sprites/bg.png" id="6_iaiu0"]
 [ext_resource type="PackedScene" uid="uid://bp5eur43huh4b" path="res://section.tscn" id="7_22odh"]
 [ext_resource type="PackedScene" uid="uid://rd74i3u70378" path="res://dialog/dialog.tscn" id="9_4omdw"]
+[ext_resource type="PackedScene" uid="uid://by67b3cdt4c6g" path="res://enemies/wizard/wizard.tscn" id="9_qje87"]
 [ext_resource type="PackedScene" uid="uid://d0pwau4w45s2f" path="res://pause_menu.tscn" id="10_nqyhn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8m2ts"]
@@ -90,6 +91,10 @@ y_sort_enabled = true
 [node name="Section1" parent="Sections" instance=ExtResource("7_22odh")]
 y_sort_enabled = true
 
+[node name="Wizard" parent="Sections/Section1/Enemies" index="0" node_paths=PackedStringArray("target") instance=ExtResource("9_qje87")]
+position = Vector2(393, 323)
+target = NodePath("../../../../Player")
+
 [node name="Section2" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(480, 0)
 section = 1
@@ -132,6 +137,7 @@ shape = SubResource("RectangleShape2D_v8pbm")
 
 [node name="DialogLayer" type="CanvasLayer" parent="."]
 layer = 5
+visible = false
 
 [node name="Dialog" parent="DialogLayer" instance=ExtResource("9_4omdw")]
 
@@ -141,4 +147,5 @@ layer = 10
 [node name="PauseMenu" parent="PauseLayer" instance=ExtResource("10_nqyhn")]
 
 [connection signal="player_entered" from="SectionExit" to="." method="_on_section_exit_player_entered"]
-[connection signal="finished" from="DialogLayer/Dialog" to="." method="_on_dialog_finished"]
+
+[editable path="Sections/Section1"]

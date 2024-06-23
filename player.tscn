@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://jbugsth2lvsx"]
+[gd_scene load_steps=32 format=3 uid="uid://jbugsth2lvsx"]
 
 [ext_resource type="PackedScene" uid="uid://b7pwuuganpb67" path="res://actor.tscn" id="1_jxv7i"]
 [ext_resource type="PackedScene" uid="uid://b74us3123fk2d" path="res://player_controller.tscn" id="2_002c6"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://player/states/special_attack_state.gd" id="11_cmdhg"]
 [ext_resource type="Texture2D" uid="uid://nci3q6c3c783" path="res://sprites/spell-Sheet.png" id="13_7a5ve"]
 [ext_resource type="AnimationLibrary" uid="uid://cfu7gc316r56" path="res://resources/player_animations.res" id="14_xihbr"]
+[ext_resource type="PackedScene" uid="uid://brs0w0oqm6nvb" path="res://input_key.tscn" id="15_bajpa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qk7c0"]
 size = Vector2(20, 32)
@@ -134,6 +135,24 @@ font_size = 8
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j3xel"]
 radius = 5.0
 height = 22.0
+
+[sub_resource type="Gradient" id="Gradient_ujdof"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.136826, 0.136826, 0.136826, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aouux"]
+gradient = SubResource("Gradient_ujdof")
+width = 50
+height = 7
+
+[sub_resource type="Gradient" id="Gradient_gpv38"]
+offsets = PackedFloat32Array(0.136842, 0.842105)
+colors = PackedColorArray(0.95, 0.866875, 0.2375, 1, 0.999999, 0.990605, 0.745056, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vhe6e"]
+gradient = SubResource("Gradient_gpv38")
+width = 50
+height = 6
 
 [node name="Player" node_paths=PackedStringArray("controller") instance=ExtResource("1_jxv7i")]
 collision_layer = 523
@@ -256,9 +275,48 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_j3xel")
 
 [node name="HealthBar" parent="." index="10"]
-offset_top = 30.0
-offset_bottom = 70.0
+offset_top = 28.0
+offset_bottom = 68.0
 max_health = 5.0
+
+[node name="AttackCooldown" type="Timer" parent="." index="11"]
+wait_time = 0.2
+one_shot = true
+
+[node name="SpecialAttackCooldown" type="Timer" parent="." index="12"]
+wait_time = 5.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="13"]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" index="0"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_right = 90.0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="SpecialAttackBar" type="TextureProgressBar" parent="CanvasLayer/MarginContainer/HBoxContainer" index="0"]
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 10.0
+step = 0.1
+value = 7.0
+texture_under = SubResource("GradientTexture2D_aouux")
+texture_progress = SubResource("GradientTexture2D_vhe6e")
+
+[node name="InputKey" parent="CanvasLayer/MarginContainer/HBoxContainer" index="1" instance=ExtResource("15_bajpa")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [connection signal="damaged" from="." to="." method="_on_damaged"]
 [connection signal="animation_finished" from="Pivot/Sprite2D/AnimationPlayer" to="StateMachine/AttackState" method="_on_animation_player_animation_finished"]

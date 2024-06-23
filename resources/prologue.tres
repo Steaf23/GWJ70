@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_6t6t0"]
+
+[resource]
+script = ExtResource("1_6t6t0")
+lines = {
+0: "*While cleaning the attic you stumble upon a dusty book on the top shelf*",
+1: "*Out of curiosity you take the book to a table and begin to read*:",
+2: "This is the story of the moss folk, who once lost their home to the goblin army in the forests.",
+3: "And they will have to fight to get it back.",
+4: "The chosen warrior made his way up the metaphorical and literal hill to claim back what was theirs.",
+5: "In his climb he realized he was being followed.",
+6: "He turned to his side and noticed something lurking behind the bushes.",
+7: "And then it jumped out from the forest, a formiddable ____",
+8: "*Thats where the sentence ends. Eager to find out the answer, you notice a few pieces of paper sticking out from the back of the book.*",
+9: "*Yo can only imagine how the story must have gone, so you try to fill in the blanks yourself*",
+10: "*You read the sentence again and look at the pieces of paper you found*
+\"And then it jumped out from the forest, a formiddable ____\"",
+11: "Ghost",
+12: "Cyclops",
+13: "Goblin Soldier",
+14: "but it wasn't alone..",
+15: "It must have been at least thrice his size.",
+16: "but it wasn't alone."
+}
+choices = {
+0: [1],
+1: [2],
+2: [3],
+3: [4],
+4: [5],
+5: [6],
+6: [7],
+7: [8],
+8: [9],
+9: [10],
+10: [11, 12, 13],
+11: [14],
+12: [15],
+13: [16],
+14: [],
+15: [],
+16: []
+}
+events = {}
+id_counter = 0
