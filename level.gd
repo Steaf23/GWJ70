@@ -22,6 +22,8 @@ var next_events = []
 func _ready() -> void:
 	randomize()
 	Global.level = self
+	Global.current_section = 0
+	Global.dialog_shown = false
 	
 	start_dialog("res://resources/prologue.tres")
 	
@@ -46,6 +48,8 @@ func set_left_wall_section(section: int, time: float = 0.01) -> void:
 
 
 func set_right_wall_section(section: int, time: float = 0.01) -> void:
+	if (section == 4):
+		section = 5
 	right_wall.global_position.x = section * RESOLUTION.x
 	right_wall.set_meta("section", section)
 	camera.move_right_limit(Global.current_section * RESOLUTION.x + (RESOLUTION.x - 1), time)
@@ -72,6 +76,7 @@ func _on_section_cleared(section: int) -> void:
 
 func start_dialog(filepath: String) -> void:
 	dialog.load_text_from_file(filepath)
+	SoundManager.play_music(Sounds.MUSIC_DIALOG)
 	
 
 func _on_dialog_finished() -> void:
@@ -90,6 +95,7 @@ func start_next_section() -> void:
 		Global.current_section += 1
 		if (Global.current_section >= 6):
 			game_won()
+			return
 		
 		set_right_wall_section(Global.current_section, 3)
 		exit.global_position.x += RESOLUTION.x
@@ -138,8 +144,21 @@ func _on_player_died() -> void:
 	
 
 func game_won() -> void:
-	pass
-	
+	$WinScreen.show()
+	get_tree().paused = true
+	Global.dialog_shown = true
+	SoundManager.play_music(Sounds.MUSIC_WIN)
+
 
 func section_lost() -> void:
-	pass
+	get_tree().paused = true
+	Global.dialog_shown = true
+	$GameOver.show()
+
+
+func _on_retry_pressed() -> void:
+	get_tree().reload_current_scene()
+
+
+func _on_restart_pressed() -> void:
+	get_tree().change_scene_to_file("res://main_menu.tscn")

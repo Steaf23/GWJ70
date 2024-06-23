@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cne6u00cgn135"]
+[gd_scene load_steps=14 format=3 uid="uid://cne6u00cgn135"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
 [ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://copgkd04i8mow" path="res://components/level_exit.tscn" id="5_vwmi1"]
 [ext_resource type="Texture2D" uid="uid://dcm1r6bm1cn1e" path="res://sprites/bg.png" id="6_iaiu0"]
 [ext_resource type="PackedScene" uid="uid://bp5eur43huh4b" path="res://section.tscn" id="7_22odh"]
-[ext_resource type="PackedScene" uid="uid://by67b3cdt4c6g" path="res://enemies/wizard/wizard.tscn" id="8_wq7xc"]
 [ext_resource type="PackedScene" uid="uid://rd74i3u70378" path="res://dialog/dialog.tscn" id="9_4omdw"]
+[ext_resource type="Texture2D" uid="uid://c57nvkgqhdvf1" path="res://sprites/endingscreen.png" id="9_7pipa"]
 [ext_resource type="PackedScene" uid="uid://d0pwau4w45s2f" path="res://pause_menu.tscn" id="10_nqyhn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8m2ts"]
@@ -20,6 +20,9 @@ agent_radius = 30.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v8pbm"]
 size = Vector2(20, 500)
+
+[sub_resource type="LabelSettings" id="LabelSettings_q22yf"]
+font_color = Color(0.34902, 0.219608, 0.219608, 1)
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -90,9 +93,6 @@ y_sort_enabled = true
 
 [node name="Section1" parent="Sections" instance=ExtResource("7_22odh")]
 y_sort_enabled = true
-
-[node name="Wizard" parent="Sections/Section1/Enemies" index="0" instance=ExtResource("8_wq7xc")]
-position = Vector2(424, 282)
 
 [node name="Marker2D" type="Marker2D" parent="Sections/Section1"]
 position = Vector2(374, 252)
@@ -177,46 +177,39 @@ position = Vector2(1920, 0)
 section = 4
 color = Color(1, 0.301961, 0, 1)
 
-[node name="Marker2D" type="Marker2D" parent="Sections/Section5"]
-position = Vector2(370, 162)
-
-[node name="Marker2D2" type="Marker2D" parent="Sections/Section5"]
-position = Vector2(415, 331)
-
 [node name="Marker2D3" type="Marker2D" parent="Sections/Section5"]
-position = Vector2(338, 241)
+position = Vector2(403, 206)
 
 [node name="Marker2D4" type="Marker2D" parent="Sections/Section5"]
-position = Vector2(266, 203)
-
-[node name="Marker2D5" type="Marker2D" parent="Sections/Section5"]
-position = Vector2(205, 291)
+position = Vector2(363, 281)
 
 [node name="Marker2D6" type="Marker2D" parent="Sections/Section5"]
-position = Vector2(295, 306)
+position = Vector2(242, 251)
+
+[node name="Marker2D7" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(267, 185)
+
+[node name="Marker2D8" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(241, 323)
 
 [node name="Section6" parent="Sections" instance=ExtResource("7_22odh")]
-position = Vector2(2400, 0)
+position = Vector2(2401, 0)
 section = 5
-color = Color(1, 1, 0, 1)
-
-[node name="Marker2D" type="Marker2D" parent="Sections/Section6"]
-position = Vector2(394, 162)
-
-[node name="Marker2D2" type="Marker2D" parent="Sections/Section6"]
-position = Vector2(416, 277)
 
 [node name="Marker2D3" type="Marker2D" parent="Sections/Section6"]
-position = Vector2(314, 212)
+position = Vector2(428, 181)
 
 [node name="Marker2D4" type="Marker2D" parent="Sections/Section6"]
-position = Vector2(211, 192)
-
-[node name="Marker2D5" type="Marker2D" parent="Sections/Section6"]
-position = Vector2(126, 250)
+position = Vector2(388, 256)
 
 [node name="Marker2D6" type="Marker2D" parent="Sections/Section6"]
-position = Vector2(271, 277)
+position = Vector2(267, 226)
+
+[node name="Marker2D7" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(292, 160)
+
+[node name="Marker2D8" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(266, 298)
 
 [node name="SectionExit" parent="." instance=ExtResource("5_vwmi1")]
 
@@ -244,6 +237,65 @@ layer = 5
 [node name="Dialog" parent="DialogLayer" instance=ExtResource("9_4omdw")]
 visible = false
 
+[node name="GameOver" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="GameOver/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/PanelContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameOver/PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "It seems like mossman did not make it out alive. 
+However, this doesn't lend well to a good story. Try again?"
+horizontal_alignment = 1
+
+[node name="Retry" type="Button" parent="GameOver/PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Retry"
+
+[node name="WinScreen" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="WinScreen"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("9_7pipa")
+
+[node name="Label" type="Label" parent="WinScreen"]
+offset_left = 16.0
+offset_top = 23.0
+offset_right = 676.0
+offset_bottom = 218.0
+text = "It was done. The mossman 
+recaptured his home and the 
+mossfolk could return.
+
+The remaining goblins fled 
+deeper into the caves, 
+never to be seen again.
+
+Thanks for Playing!"
+label_settings = SubResource("LabelSettings_q22yf")
+
+[node name="Restart" type="Button" parent="WinScreen"]
+offset_left = 273.0
+offset_top = 242.0
+offset_right = 475.0
+offset_bottom = 265.0
+text = "Read from the beginning.."
+
 [node name="PauseLayer" type="CanvasLayer" parent="."]
 layer = 10
 
@@ -253,5 +305,7 @@ visible = false
 [connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="player_entered" from="SectionExit" to="." method="_on_section_exit_player_entered"]
 [connection signal="finished" from="DialogLayer/Dialog" to="." method="_on_dialog_finished"]
+[connection signal="pressed" from="GameOver/PanelContainer/CenterContainer/VBoxContainer/Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="WinScreen/Restart" to="." method="_on_restart_pressed"]
 
 [editable path="Sections/Section1"]

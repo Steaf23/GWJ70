@@ -131,3 +131,7 @@ func _on_player_finished(player: Node) -> void:
 
 func _on_music_player_finished() -> void:
 	music_ended.emit(_music_player.stream.resource_path)
+
+
+func _ready() -> void:
+	$BG.play()

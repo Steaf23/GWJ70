@@ -1,24 +1,19 @@
 [gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_hw5q2"]
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_fn32w"]
 
 [resource]
-script = ExtResource("1_hw5q2")
+script = ExtResource("1_fn32w")
 lines = {
-0: "The ill influence of the goblins became visible.
-The trees were dying. ",
-1: "The once cherished home of the mossfolk fell victim to...",
-2: "*Someone crossed out the name of the monster*
-"
+0: "\"I don't think hiding is going to be an option\", mumbled the warrior under his breath.",
+1: "Before he could finish that thought, a Cyclops and 2 Goblin Wizards appeared."
 }
 choices = {
 0: [1],
-1: [2],
-2: []
+1: []
 }
 events = {
 0: [],
-1: [],
-2: []
+1: ["cyclops", "wizard_2"]
 }
 id_counter = 0

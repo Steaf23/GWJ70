@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cq3koyw3pjovp"]
+[gd_scene load_steps=3 format=3 uid="uid://cq3koyw3pjovp"]
 
 [ext_resource type="Script" path="res://SoundManager/sound_manager.gd" id="1_l502s"]
+[ext_resource type="AudioStream" uid="uid://bbd2tmmha8d3c" path="res://sounds/Background ambience.wav" id="2_40exk"]
 
 [node name="sound_manager" type="Node"]
 process_mode = 3
@@ -10,5 +11,10 @@ script = ExtResource("1_l502s")
 bus = &"Music"
 
 [node name="SFXPool" type="Node" parent="."]
+
+[node name="BG" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_40exk")
+volume_db = -4.206
+bus = &"Music"
 
 [connection signal="finished" from="MusicPlayer" to="." method="_on_music_player_finished"]

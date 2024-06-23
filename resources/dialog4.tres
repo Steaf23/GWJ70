@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3 uid="uid://dpbmf6ufig10n"]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_liohi"]
+
+[resource]
+script = ExtResource("1_liohi")
+lines = {
+0: "One last dance was about to unfold. ",
+1: "Mossman, no ever closer to his goal, stepped foot into the cave.",
+2: "When he entered a big room, he could not believe his eyes.",
+3: "A Single goblin",
+4: "3 cyclops",
+5: "The wizard circle",
+6: "Almost as if you had already won, a last goblin decided to block the path to victory.",
+7: "Guarding the cave entrance like guard dogs.",
+8: "They must have been the ones orchestrating this master plan.",
+9: "Only much larger.",
+10: "\"Well\" thought mossman, \"Today their reign will come to an end.\""
+}
+choices = {
+0: [1],
+1: [2],
+2: [3, 4, 5],
+3: [6],
+4: [7],
+5: [8],
+6: [],
+7: [9],
+8: [10],
+9: [],
+10: []
+}
+events = {
+0: [],
+1: [],
+2: [],
+3: ["goblin"],
+4: ["cyclops_3"],
+5: ["wizard_3"],
+6: [],
+7: [],
+8: [],
+9: [],
+10: []
+}
+id_counter = 0

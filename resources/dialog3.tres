@@ -1,19 +1,40 @@
-[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3 uid="uid://bx8ndvqb7frvh"]
 
-[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_xir8h"]
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_d2k8u"]
 
 [resource]
-script = ExtResource("1_xir8h")
+script = ExtResource("1_d2k8u")
 lines = {
-0: "It was done. The mossman recaptured his home and the mossfolk could return.",
-1: "The remaining goblins fled deeper into the caves, never to be seen again."
+0: "Only the small swamp separated the mossman from the goblin's cave.
+A few steps and the hero would enter the enemy's hide out.",
+1: "Suddenly a group of ____ stormed out of the cave to stop him!
+
+",
+2: "*The names of the opponents of the final battle were erased by a burn mark.*",
+3: "*Through the hole in the parchment you can see the names of other monsters, that likely stood in this place*",
+4: "Ghosts and Goblins",
+5: "Ghosts and a Cyclops",
+6: "A goblin platoon",
+7: "Mossman realized it was about to get real."
 }
 choices = {
 0: [1],
-1: []
+1: [2],
+2: [3],
+3: [4, 5, 6],
+4: [7],
+5: [7],
+6: [7],
+7: []
 }
 events = {
 0: [],
-1: []
+1: [],
+2: [],
+3: [],
+4: ["ghost_2", "goblin_2"],
+5: ["ghost_2", "cyclops"],
+6: ["goblin_4"],
+7: []
 }
 id_counter = 0

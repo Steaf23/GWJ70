@@ -6,14 +6,26 @@
 script = ExtResource("1_0e5wr")
 lines = {
 0: "The hero of the mossfolk ventured deeper into the forest.",
-1: "Before he could hide in the trees, he was spotted by..."
+1: "Before he could hide in the trees, he was spotted by...",
+2: "Goblin soldiers",
+3: "A Wizard",
+4: "They were standing in a circle..",
+5: "Standing inside of a summoning circle no less..."
 }
 choices = {
 0: [1],
-1: []
+1: [2, 3],
+2: [4],
+3: [5],
+4: [],
+5: []
 }
 events = {
 0: [],
-1: []
+1: [],
+2: ["goblin_3"],
+3: ["wizard"],
+4: [],
+5: []
 }
 id_counter = 0

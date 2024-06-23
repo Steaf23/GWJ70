@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctp6jjfwte8yj"]
+[gd_scene load_steps=9 format=3 uid="uid://ctp6jjfwte8yj"]
 
 [ext_resource type="Script" path="res://main_menu.gd" id="1_uyht1"]
 [ext_resource type="PackedScene" uid="uid://rd74i3u70378" path="res://dialog/dialog.tscn" id="2_sn37s"]
 [ext_resource type="Texture2D" uid="uid://cbeiu2ld1phq8" path="res://sprites/titlescreen2.png" id="3_4ql71"]
 [ext_resource type="PackedScene" uid="uid://d0pwau4w45s2f" path="res://pause_menu.tscn" id="4_681tp"]
 [ext_resource type="PackedScene" uid="uid://brs0w0oqm6nvb" path="res://input_key.tscn" id="5_286da"]
+[ext_resource type="AudioStream" uid="uid://byc0xvlhhjvi0" path="res://SoundManager/tick.wav" id="6_xmluk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3co5v"]
 font_color = Color(0.34902, 0.219608, 0.219608, 1)
@@ -80,7 +81,10 @@ layout_mode = 2
 
 [node name="Start" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Start"
+text = " Start "
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_xmluk")
 
 [connection signal="finished" from="CanvasLayer/Dialog" to="." method="_on_dialog_finished"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]

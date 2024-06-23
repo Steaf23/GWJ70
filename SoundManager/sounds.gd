@@ -22,4 +22,10 @@ const HIT = [HIT_1, HIT_2, HIT_3]
 
 const BLOCK: String = "res://sounds/Sword swing with metal.wav"
 
+const SPELL = ["res://sounds/Wizard Summon 01.wav", "res://sounds/Wizard Summon 02.wav", "res://sounds/Wizard Summon 03.wav"]
+
+const PAGE_FLIP = ["res://sounds/Page flip 01.wav", "res://sounds/Page flip 02.wav", "res://sounds/Page flip 03.wav"]
+
+const MUSIC_DIALOG: String = "res://sounds/Song 1 v5 loopable.wav"
 const MUSIC_BATTLE: String = "res://sounds/Battle theme v4.wav"
+const MUSIC_WIN: String = "res://sounds/victory sound.wav"

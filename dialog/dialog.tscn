@@ -69,10 +69,11 @@ size_flags_vertical = 3
 
 [node name="Button0" type="Button" parent="VBoxContainer/Control"]
 layout_mode = 0
-offset_left = 71.0
-offset_top = 40.0
-offset_right = 126.0
-offset_bottom = 95.0
+offset_left = 20.0
+offset_top = 21.0
+offset_right = 75.0
+offset_bottom = 76.0
+theme_override_colors/font_color = Color(0.34902, 0.219608, 0.219608, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_aid4x")
 theme_override_styles/hover = SubResource("StyleBoxTexture_aid4x")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_aid4x")
@@ -82,10 +83,11 @@ text = "..."
 
 [node name="Button1" type="Button" parent="VBoxContainer/Control"]
 layout_mode = 0
-offset_left = 356.0
-offset_top = 30.0
-offset_right = 411.0
-offset_bottom = 85.0
+offset_left = 287.0
+offset_top = 29.0
+offset_right = 342.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(0.34902, 0.219608, 0.219608, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_aid4x")
 theme_override_styles/hover = SubResource("StyleBoxTexture_aid4x")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_aid4x")
@@ -95,10 +97,11 @@ text = "..."
 
 [node name="Button2" type="Button" parent="VBoxContainer/Control"]
 layout_mode = 0
-offset_left = 205.0
-offset_top = 63.0
-offset_right = 260.0
-offset_bottom = 118.0
+offset_left = 154.0
+offset_top = 107.0
+offset_right = 209.0
+offset_bottom = 162.0
+theme_override_colors/font_color = Color(0.34902, 0.219608, 0.219608, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_aid4x")
 theme_override_styles/hover = SubResource("StyleBoxTexture_aid4x")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_aid4x")
@@ -127,7 +130,7 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_prpah")
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/default_color = Color(0.34902, 0.219608, 0.219608, 1)
 text = "(text)dddd"
 fit_content = true
 visible_characters_behavior = 1

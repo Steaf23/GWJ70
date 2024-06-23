@@ -78,6 +78,7 @@ func _on_restart_pressed() -> void:
 
 
 func _on_choice_button_pressed(choice_id: int) -> void:
+	SoundManager.play_random_sfx(Sounds.PAGE_FLIP)
 	if choice_id == -1:
 		if text.choices[current].size() == 0:
 			Global.dialog_shown = false

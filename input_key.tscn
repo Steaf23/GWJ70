@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://blt7dfh0gg5yt" path="res://InputMapper/key_button.png" id="1_nwvg5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wh0ot"]
-font_size = 8
 font_color = Color(0.196078, 0.196078, 0.196078, 1)
 
 [node name="InputKey" type="MarginContainer"]

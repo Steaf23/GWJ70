@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://iv18l3p64uya"]
 
-[ext_resource type="Texture2D" uid="uid://djdu7exdecfah" path="res://sprites/gsummon-Sheet.png" id="1_s73o8"]
+[ext_resource type="Texture2D" uid="uid://hsxscj1kwkmj" path="res://sprites/gsummon-Sheet.png" id="1_s73o8"]
 [ext_resource type="Script" path="res://summon_circle.gd" id="2_x7qe6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_po6e6"]
