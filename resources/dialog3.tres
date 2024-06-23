@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_xir8h"]
+
+[resource]
+script = ExtResource("1_xir8h")
+lines = {
+0: "It was done. The mossman recaptured his home and the mossfolk could return.",
+1: "The remaining goblins fled deeper into the caves, never to be seen again."
+}
+choices = {
+0: [1],
+1: []
+}
+events = {
+0: [],
+1: []
+}
+id_counter = 0
