@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_0e5wr"]
+
+[resource]
+script = ExtResource("1_0e5wr")
+lines = {
+0: "The hero of the mossfolk ventured deeper into the forest.",
+1: "Before he could hide in the trees, he was spotted by..."
+}
+choices = {
+0: [1],
+1: []
+}
+events = {
+0: [],
+1: []
+}
+id_counter = 0
