@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ca5tqxtrlfx5f" path="res://sprites/shadow.png" id="3_6tefc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxc5f"]
-radius = 22.0227
+radius = 7.07107
 
 [node name="Actor" type="CharacterBody2D"]
 motion_mode = 1

@@ -1,7 +1,7 @@
 class_name HitBox
 extends Area2D
 
-enum DamageType {NORMAL, SPELL}
+enum DamageType {NORMAL, PIERCE_BLOCK}
 
 @export var damage = 1
 @export var kill_on_hit = false

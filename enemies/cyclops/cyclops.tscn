@@ -1,12 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://du0meui038i65"]
+[gd_scene load_steps=8 format=3 uid="uid://du0meui038i65"]
 
 [ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_qopmj"]
 [ext_resource type="Texture2D" uid="uid://bppa2ks5t3e6" path="res://sprites/big_shadow.png" id="2_3wuem"]
 [ext_resource type="Texture2D" uid="uid://hkb6q2ynu7tj" path="res://sprites/cyclops-Sheet.png" id="2_pd0as"]
 [ext_resource type="AnimationLibrary" uid="uid://dlgivnmkffuev" path="res://resources/orc_animations.res" id="3_fgyve"]
+[ext_resource type="Script" path="res://enemies/cyclops/cyclops_attacking_state.gd" id="5_gl38u"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y2tsu"]
+radius = 19.0
+height = 64.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ngqn0"]
+radius = 32.0
 
 [node name="Cyclops" instance=ExtResource("1_qopmj")]
 move_speed = 25
+knockback_resist_modifier = 0.5
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -26)
+shape = SubResource("CapsuleShape2D_y2tsu")
 
 [node name="Shadow" parent="." index="1"]
 position = Vector2(0, 6)
@@ -22,3 +35,19 @@ vframes = 4
 libraries = {
 "": ExtResource("3_fgyve")
 }
+
+[node name="AttackHitbox" parent="Pivot" index="1"]
+collision_layer = 20
+collision_mask = 20
+damage = 2
+type = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/AttackHitbox" index="0"]
+position = Vector2(-25, -2)
+shape = SubResource("CircleShape2D_ngqn0")
+
+[node name="AttackingState" parent="StateMachine" index="2"]
+script = ExtResource("5_gl38u")
+
+[connection signal="damaged" from="." to="." method="_on_damaged"]
+[connection signal="damaged" from="." to="StateMachine/AttackingState" method="_on_cyclops_damaged"]

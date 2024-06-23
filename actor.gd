@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 @export var controller: ActorController
 @export var move_speed: int = 100
+@export var knockback_resist_modifier = 1.0
 
 var dead = false
 
@@ -32,6 +33,7 @@ func _on_health_bar_no_health() -> void:
 
 func apply_knockback(from_pos: Vector2, force: float) -> void:
 	knockback_velocity += from_pos.direction_to(global_position) * force
+	knockback_velocity *= knockback_resist_modifier
 
 
 func _on_hurt_box_taken_damage(amount: int, damage_source: Actor, pierce: bool) -> void:

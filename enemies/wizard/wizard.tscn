@@ -1,0 +1,192 @@
+[gd_scene load_steps=16 format=3 uid="uid://by67b3cdt4c6g"]
+
+[ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_3w7kw"]
+[ext_resource type="Script" path="res://enemies/wizard/wizard.gd" id="2_8xbcq"]
+[ext_resource type="Texture2D" uid="uid://dq2q60kmrqp5f" path="res://sprites/wizard-Sheet.png" id="2_xx2un"]
+[ext_resource type="PackedScene" uid="uid://byh8ehdl0hxex" path="res://enemies/ghost/ghost.tscn" id="3_yf4ds"]
+[ext_resource type="Script" path="res://enemies/wizard/wizard_controller.gd" id="6_xmeoi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ti275"]
+size = Vector2(17, 32)
+
+[sub_resource type="Animation" id="Animation_4gjor"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_6yha1"]
+resource_name = "attack"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_attack_frames"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_c7dpm"]
+resource_name = "block"
+
+[sub_resource type="Animation" id="Animation_07ao2"]
+resource_name = "death"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13]
+}
+
+[sub_resource type="Animation" id="Animation_1dpul"]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_cpov1"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qt8hg"]
+resource_name = "walk"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eqx4e"]
+_data = {
+"RESET": SubResource("Animation_4gjor"),
+"attack": SubResource("Animation_6yha1"),
+"block": SubResource("Animation_c7dpm"),
+"death": SubResource("Animation_07ao2"),
+"hit": SubResource("Animation_1dpul"),
+"idle": SubResource("Animation_cpov1"),
+"walk": SubResource("Animation_qt8hg")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8o50s"]
+radius = 5.0
+height = 14.0
+
+[node name="Wizard" instance=ExtResource("1_3w7kw")]
+script = ExtResource("2_8xbcq")
+summon_enemy = ExtResource("3_yf4ds")
+max_move_distance = 200
+has_block = false
+move_speed = 80
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_ti275")
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+position = Vector2(0, -15)
+texture = ExtResource("2_xx2un")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_eqx4e")
+}
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2(0, 6)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_8o50s")
+
+[node name="AttackCooldown" parent="." index="5"]
+wait_time = 10.0
+
+[node name="HealthBar" parent="." index="6"]
+max_health = 3.0
+
+[node name="AIController" parent="." index="7"]
+script = ExtResource("6_xmeoi")
+wander_range = 100
+
+[node name="NavigationAgent2D" parent="AIController" index="0"]
+avoidance_layers = 3
+avoidance_mask = 3
+avoidance_priority = 0.5
+
+[node name="IdleTimeout" type="Timer" parent="AIController" index="1"]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="MoveTimeout" type="Timer" parent="." index="9"]
+wait_time = 0.6
+one_shot = true
+
+[connection signal="navigation_finished" from="AIController/NavigationAgent2D" to="AIController" method="_on_navigation_agent_2d_navigation_finished"]
+[connection signal="timeout" from="AIController/IdleTimeout" to="AIController" method="_on_idle_timeout_timeout"]
+
+[editable path="AIController"]

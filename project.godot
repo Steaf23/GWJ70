@@ -15,6 +15,10 @@ run/main_scene="res://world.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://global.gd"
+
 [debug]
 
 gdscript/warnings/unused_parameter=0
@@ -70,6 +74,7 @@ special_attack={
 2d_physics/layer_4="interaction"
 2d_physics/layer_5="player"
 2d_physics/layer_10="section"
+avoidance/layer_2="wizard"
 
 [rendering]
 

@@ -4,8 +4,6 @@ extends Node
 @onready var machine: StateMachine = get_parent()
 var signals = []
 
-var next_states: Array[String] = []
-
 signal request_state_change(to_state: String)
 
 

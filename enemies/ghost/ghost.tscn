@@ -1,0 +1,153 @@
+[gd_scene load_steps=13 format=3 uid="uid://byh8ehdl0hxex"]
+
+[ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_x0tbc"]
+[ext_resource type="Texture2D" uid="uid://6iha0t4w20xc" path="res://sprites/ghost-Sheet.png" id="2_ilxxd"]
+[ext_resource type="PackedScene" uid="uid://5xvug6s4nooh" path="res://state_machine/state.tscn" id="3_hjjgc"]
+[ext_resource type="Script" path="res://enemies/ghost/ghost_summon_state.gd" id="4_u6xs4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kscy7"]
+radius = 9.0
+height = 36.0
+
+[sub_resource type="Animation" id="Animation_rmnl4"]
+resource_name = "summon"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_q0co6"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16]
+}
+
+[sub_resource type="Animation" id="Animation_yr6r3"]
+resource_name = "idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_ln36k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_owal5"]
+resource_name = "attack"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_attack_frames"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m30qd"]
+_data = {
+"RESET": SubResource("Animation_ln36k"),
+"attack": SubResource("Animation_owal5"),
+"death": SubResource("Animation_q0co6"),
+"idle": SubResource("Animation_yr6r3"),
+"summon": SubResource("Animation_rmnl4")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grvfv"]
+size = Vector2(12, 22)
+
+[node name="Ghost" instance=ExtResource("1_x0tbc")]
+attack_range = 25
+has_block = false
+move_speed = 70
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_kscy7")
+
+[node name="Shadow" parent="." index="1"]
+visible = false
+
+[node name="Sprite2D" parent="Pivot" index="0"]
+position = Vector2(0, -8)
+texture = ExtResource("2_ilxxd")
+hframes = 5
+vframes = 4
+
+[node name="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_m30qd")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/AttackHitbox" index="0"]
+position = Vector2(-16, -10)
+shape = SubResource("RectangleShape2D_grvfv")
+
+[node name="StateMachine" parent="." index="4" node_paths=PackedStringArray("current_state")]
+current_state = NodePath("SummonState")
+
+[node name="SummonState" parent="StateMachine" index="5" instance=ExtResource("3_hjjgc")]
+script = ExtResource("4_u6xs4")
+
+[node name="HealthBar" parent="." index="6"]
+max_health = 2.0
+
+[connection signal="animation_finished" from="." to="StateMachine/SummonState" method="_on_ghost_animation_finished"]

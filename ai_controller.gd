@@ -33,6 +33,5 @@ func _physics_process(delta: float) -> void:
 	var new_velocity = direction * actor.move_speed
 	navigation.velocity = new_velocity
 
-
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	desired_velocity = safe_velocity

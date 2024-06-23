@@ -29,9 +29,6 @@ func _on_actor_died() -> void:
 
 
 func add_actor(actor: Actor) -> void:
-	var shape_size = $Shape.shape.size / 2
-	var shape_tl = $Shape.global_position - shape_size
-	var shape_br = $Shape.global_position + shape_size
-	actor.global_position.clamp(shape_tl, shape_br)
+	actor.global_position = Global.clamp_pos_to_section(actor.global_position)
 	actor.died.connect(_on_actor_died)
 	$Enemies.add_child(actor)

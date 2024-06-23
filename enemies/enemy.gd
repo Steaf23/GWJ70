@@ -36,10 +36,11 @@ func can_block() -> bool:
 
 func start_attack_frames() -> void:
 	var target = ($AIController as AIController).navigation_target
-	if target.global_position.x < global_position.x:
-		pivot.scale = Vector2(1, 1)
-	else:
-		pivot.scale = Vector2(-1, 1)
+	if can_turn:
+		if target.global_position.x < global_position.x:
+			pivot.scale = Vector2(1, 1)
+		else:
+			pivot.scale = Vector2(-1, 1)
 		
 	hitbox.disable(false)
 	await get_tree().create_timer(attack_length_seconds).timeout
@@ -67,7 +68,7 @@ func play_animation(animation: EnemyAnimation) -> void:
 	
 	if not anim_name in anim.get_animation_list():
 		animation_finished.emit(animation)
-		print("Animation " + anim_name + " does not exist for " + name)
+		#print("Animation " + anim_name + " does not exist for " + name)
 		return
 		
 	anim.play(anim_name)
@@ -82,10 +83,11 @@ func play_moving_animation() -> void:
 	
 	play_animation(animation) 
 	
-	if vel.x < -5:
-		pivot.scale = Vector2(1, 1)
-	elif vel.x > 5:
-		pivot.scale = Vector2(-1, 1)
+	if can_turn:
+		if vel.x < -5:
+			pivot.scale = Vector2(1, 1)
+		elif vel.x > 5:
+			pivot.scale = Vector2(-1, 1)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

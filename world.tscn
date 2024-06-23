@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cne6u00cgn135"]
+[gd_scene load_steps=11 format=3 uid="uid://cne6u00cgn135"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
 [ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
@@ -7,8 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://copgkd04i8mow" path="res://components/level_exit.tscn" id="5_vwmi1"]
 [ext_resource type="Texture2D" uid="uid://dcm1r6bm1cn1e" path="res://sprites/bg.png" id="6_iaiu0"]
 [ext_resource type="PackedScene" uid="uid://bp5eur43huh4b" path="res://section.tscn" id="7_22odh"]
-[ext_resource type="PackedScene" uid="uid://du0meui038i65" path="res://enemies/cyclops/cyclops.tscn" id="9_jd563"]
-[ext_resource type="PackedScene" uid="uid://b473b7pm7fmwd" path="res://enemies/goblin/goblin.tscn" id="9_ojc1g"]
+[ext_resource type="PackedScene" uid="uid://by67b3cdt4c6g" path="res://enemies/wizard/wizard.tscn" id="9_qje87"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8m2ts"]
 vertices = PackedVector2Array(4937, 387, 4934, 387, 6757, 383, 1577, 832, 1578, 832, 1147, 839, 567, 579, 565, 579, 1105, 396, 348, 1101, 58, 1104, 60, 791, 428, 1043, 2346, 373, 2052, 809, 2054, 809, 3464, 843, 2991, 834, 2745, 359, 3598, 406, 4712, 797, 3991, 422, 3992, 422, 4682, 413, 4685, 413, 4715, 797, 6766, 713, 6497, 742, 6213, 691, 6025, 731, 5713, 715, 5349, 829)
@@ -81,7 +80,7 @@ navigation_polygon = SubResource("NavigationPolygon_8m2ts")
 [node name="InteractionArea" parent="." instance=ExtResource("5_vwmi1")]
 
 [node name="BackGround" type="Sprite2D" parent="."]
-z_index = -1
+z_index = -2
 position = Vector2(1440, 250)
 texture = ExtResource("6_iaiu0")
 
@@ -94,13 +93,17 @@ y_sort_enabled = true
 [node name="Shape" parent="Sections/Section1" index="0"]
 visible = false
 
-[node name="NewGoblin" parent="Sections/Section1/Enemies" index="0" node_paths=PackedStringArray("target") instance=ExtResource("9_ojc1g")]
-position = Vector2(297, 300)
+[node name="Wizard" parent="Sections/Section1/Enemies" index="0" node_paths=PackedStringArray("target") instance=ExtResource("9_qje87")]
+position = Vector2(393, 323)
 target = NodePath("../../../../Player")
 
-[node name="Cyclops" parent="Sections/Section1/Enemies" index="1" node_paths=PackedStringArray("target") instance=ExtResource("9_jd563")]
-position = Vector2(402, 339)
+[node name="Wizard2" parent="Sections/Section1/Enemies" index="1" node_paths=PackedStringArray("target") instance=ExtResource("9_qje87")]
+position = Vector2(270, 277)
 target = NodePath("../../../../Player")
+
+[node name="Wizard3" parent="Sections/Section1/Enemies" index="2" node_paths=PackedStringArray("target") instance=ExtResource("9_qje87")]
+position = Vector2(374, 214)
+target = NodePath("../Wizard")
 
 [node name="Section2" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(480, 0)

@@ -73,7 +73,8 @@ offset_top = 27.0
 offset_bottom = 67.0
 max_health = 4.0
 
-[node name="LeapLanding" parent="." index="7" instance=ExtResource("6_qoxid")]
+[node name="LeapLanding" parent="." index="7" node_paths=PackedStringArray("damage_source") instance=ExtResource("6_qoxid")]
+damage_source = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeapLanding" index="0"]
 shape = SubResource("CircleShape2D_kos0y")

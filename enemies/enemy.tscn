@@ -25,9 +25,10 @@ collision_mask = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot/Sprite2D" index="0"]
 
-[node name="AttackHitbox" parent="Pivot" index="1" instance=ExtResource("3_gfgum")]
+[node name="AttackHitbox" parent="Pivot" index="1" node_paths=PackedStringArray("damage_source") instance=ExtResource("3_gfgum")]
 collision_layer = 16
 collision_mask = 16
+damage_source = NodePath("../..")
 
 [node name="StateMachine" parent="." index="4" node_paths=PackedStringArray("actor", "current_state") instance=ExtResource("3_45vr8")]
 actor = NodePath("..")
@@ -64,6 +65,7 @@ offset_bottom = 74.0
 actor = NodePath("..")
 
 [node name="StateDebug" type="Label" parent="." index="8"]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 text = "State"
