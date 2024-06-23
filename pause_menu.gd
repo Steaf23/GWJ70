@@ -2,6 +2,7 @@ extends VBoxContainer
 
 var unpaused_mouse_mode
 
+var paused = false
 
 func _ready() -> void:
 	hide()
@@ -13,7 +14,7 @@ func _input(event: InputEvent) -> void:
 
 
 func toggle_pause() -> void:
-	if get_tree().paused:
+	if paused:
 		unpause()
 	else:
 		pause()
@@ -21,6 +22,7 @@ func toggle_pause() -> void:
 
 func pause() -> void:
 	show()
+	paused = true
 	unpaused_mouse_mode = Input.mouse_mode
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	SoundManager.muffle_music(true)
@@ -29,6 +31,7 @@ func pause() -> void:
 	
 func unpause() -> void:
 	hide()
+	paused = false
 	Input.mouse_mode = unpaused_mouse_mode
 	SoundManager.muffle_music(false)
 	if not Global.dialog_shown:

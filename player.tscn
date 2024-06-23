@@ -315,8 +315,6 @@ texture_progress = SubResource("GradientTexture2D_vhe6e")
 
 [node name="InputKey" parent="CanvasLayer/MarginContainer/HBoxContainer" index="1" instance=ExtResource("15_bajpa")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [connection signal="damaged" from="." to="." method="_on_damaged"]
 [connection signal="animation_finished" from="Pivot/Sprite2D/AnimationPlayer" to="StateMachine/AttackState" method="_on_animation_player_animation_finished"]

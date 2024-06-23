@@ -5,7 +5,14 @@ enum EnemyAnimation {IDLE, WALK, DEATH, HIT, ATTACK, BLOCK, ATTACK2}
 
 signal animation_finished(animation: EnemyAnimation) 
 
-@export var target: Node2D
+@export var target: Node2D:
+	set(value):
+		target = value
+		
+		if not is_node_ready():
+			await ready
+		$AIController.navigation_target = target
+		
 @export var attack_length_seconds: float = 0.3
 @export var attack_range: int = 50
 @export var has_block: bool = true
@@ -16,7 +23,6 @@ signal animation_finished(animation: EnemyAnimation)
 
 
 func _ready() -> void:
-	$AIController.navigation_target = target
 	hitbox.disable(true)
 	$Pivot/Block.hide()
 
@@ -28,6 +34,8 @@ func _physics_process(delta: float) -> void:
 	
 
 func can_attack() -> bool:
+	if not target:
+		return false
 	return $AttackCooldown.is_stopped() and global_position.distance_to(target.global_position) < attack_range
 
 
@@ -52,6 +60,7 @@ func finish_attack() -> void:
 	
 	
 func do_damage(num) -> void:
+	SoundManager.play_random_sfx(Sounds.HIT)
 	$HealthBar.current_health -= num	
 
 
@@ -115,6 +124,7 @@ func start_block() -> void:
 	$Pivot/Block.play("default")
 	$CollisionShape2D.self_modulate = Color.YELLOW
 	play_animation(Enemy.EnemyAnimation.BLOCK)
+	SoundManager.play_sfx(Sounds.BLOCK)
 
 
 func finish_block() -> void:
@@ -123,6 +133,7 @@ func finish_block() -> void:
 
 func _on_block_animation_finished() -> void:
 	$Pivot/Block.hide()
+
 
 func play_hit() -> void:
 	$Hit.play("hit")

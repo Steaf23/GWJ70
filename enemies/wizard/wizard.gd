@@ -16,6 +16,9 @@ func finish_attack() -> void:
 
 
 func can_attack() -> bool:
+	if not target:
+		return false
+		
 	return $AttackCooldown.is_stopped() and global_position.distance_to(target.global_position) > attack_range
 
 func start_attack_frames() -> void:

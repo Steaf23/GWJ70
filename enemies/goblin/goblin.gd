@@ -11,8 +11,10 @@ func _ready() -> void:
 	
 
 func can_leap() -> bool:
+	if not target:
+		return false
+		
 	var attack_allowed = $AttackCooldown.is_stopped()
-	var target = ($AIController as AIController).navigation_target
 	var distance_to_target = global_position.distance_to(target.global_position)
 	return distance_to_target < leap_range and distance_to_target > 75 and attack_allowed
 

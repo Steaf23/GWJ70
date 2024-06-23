@@ -2,6 +2,8 @@ extends Control
 
 signal finished()
 
+@onready var backup = preload("res://resources/backup_dialog.tres")
+
 var text: DialogText
 var current = 0
 
@@ -25,6 +27,8 @@ func load_text_from_file(dialog_path: String) -> void:
 func load_text(_text: DialogText) -> void:
 	events_seen = []
 	text = _text
+	if not text:
+		text = backup
 	current = 0
 	update_gui()
 	Global.dialog_shown = true

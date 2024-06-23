@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://du0meui038i65"]
+[gd_scene load_steps=11 format=3 uid="uid://du0meui038i65"]
 
 [ext_resource type="PackedScene" uid="uid://2h1r4wgxc121" path="res://enemies/enemy.tscn" id="1_qopmj"]
+[ext_resource type="Script" path="res://enemies/cyclops/cyclops.gd" id="2_2eu01"]
 [ext_resource type="Texture2D" uid="uid://bppa2ks5t3e6" path="res://sprites/big_shadow.png" id="2_3wuem"]
 [ext_resource type="Texture2D" uid="uid://hkb6q2ynu7tj" path="res://sprites/cyclops-Sheet.png" id="2_pd0as"]
 [ext_resource type="Shader" path="res://enemies/hit.gdshader" id="3_caj8p"]
@@ -20,8 +21,9 @@ shader_parameter/enable = false
 radius = 32.0
 
 [node name="Cyclops" instance=ExtResource("1_qopmj")]
-move_speed = 25
-knockback_resist_modifier = 0.5
+script = ExtResource("2_2eu01")
+move_speed = 30
+knockback_resist_modifier = 0.45
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -26)

@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctp6jjfwte8yj"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_uyht1"]
+[ext_resource type="PackedScene" uid="uid://rd74i3u70378" path="res://dialog/dialog.tscn" id="2_sn37s"]
+[ext_resource type="Texture2D" uid="uid://cbeiu2ld1phq8" path="res://sprites/titlescreen2.png" id="3_4ql71"]
+[ext_resource type="PackedScene" uid="uid://d0pwau4w45s2f" path="res://pause_menu.tscn" id="4_681tp"]
+[ext_resource type="PackedScene" uid="uid://brs0w0oqm6nvb" path="res://input_key.tscn" id="5_286da"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3co5v"]
+font_color = Color(0.34902, 0.219608, 0.219608, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_55651"]
+font_color = Color(0.34902, 0.219608, 0.219608, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uyht1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Dialog" parent="CanvasLayer" instance=ExtResource("2_sn37s")]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_4ql71")
+
+[node name="PauseLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="PauseLayer" instance=ExtResource("4_681tp")]
+visible = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 98.0
+offset_bottom = 23.0
+
+[node name="InputKey2" parent="HBoxContainer" instance=ExtResource("5_286da")]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "/"
+label_settings = SubResource("LabelSettings_3co5v")
+
+[node name="InputKey" parent="HBoxContainer" instance=ExtResource("5_286da")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Pause"
+label_settings = SubResource("LabelSettings_55651")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -43.0
+offset_top = -71.0
+offset_right = 43.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Start" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[connection signal="finished" from="CanvasLayer/Dialog" to="." method="_on_dialog_finished"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]

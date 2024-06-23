@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_c5fkj"]
+
+[resource]
+script = ExtResource("1_c5fkj")
+lines = {
+0: "*It looks like the developer forgot to finish this section, a few ghosts appear instead*"
+}
+choices = {
+0: []
+}
+events = {
+0: ["ghost_4"]
+}
+id_counter = 0

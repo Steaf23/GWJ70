@@ -26,7 +26,6 @@ func _on_actor_died() -> void:
 		func(a): 
 			return a is Actor and not a.dead
 			).is_empty():
-		print("Cleared section " + str(section))
 		section_cleared.emit(section)
 
 
@@ -52,3 +51,6 @@ func spawn_actors(actors: Array[Actor]) -> void:
 			markers_shuffled = markers.duplicate()
 			markers_shuffled.shuffle()
 		actor.global_position = markers_shuffled.pop_back().global_position
+
+func get_actors() -> Array:
+	return $Enemies.get_children()

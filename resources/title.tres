@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_on2en"]
+
+[resource]
+script = ExtResource("1_on2en")
+lines = {
+0: "*While cleaning the attic you stumble upon a dusty book on the top shelf*",
+1: "*Out of curiosity you take the book to a table and begin to read*"
+}
+choices = {
+0: [1],
+1: []
+}
+events = {
+0: [],
+1: []
+}
+id_counter = 0

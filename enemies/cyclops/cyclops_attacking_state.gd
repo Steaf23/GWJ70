@@ -4,6 +4,7 @@ extends "res://state_machine/states/attacking_state.gd"
 func entry() -> void:
 	super.entry()
 	machine.actor.can_turn = false
+	SoundManager.play_random_sfx(Sounds.GOLEM_PUNCH, 0.8)
 	
 
 func exit() -> void:

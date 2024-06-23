@@ -17,6 +17,8 @@ signal level_completed()
 var sections: Array[Section] = []
 var first_time = true
 
+var next_events = []
+
 func _ready() -> void:
 	randomize()
 	Global.level = self
@@ -56,7 +58,10 @@ func _on_section_exit_player_entered() -> void:
 func _on_body_section_exited(body: Node2D) -> void:
 	if not body is Player:
 		return
+	
+	activate_monsters()
 	set_left_wall_section(Global.current_section, 3)
+	
 
 
 func _on_section_cleared(section: int) -> void:
@@ -71,10 +76,11 @@ func start_dialog(filepath: String) -> void:
 
 func _on_dialog_finished() -> void:
 	var events = dialog.get_events()
-	start_next_section(events)
+	next_events = events
+	start_next_section()
 	
 	
-func start_next_section(events: Array) -> void:
+func start_next_section() -> void:
 	exit_arrow.hide()
 	player.heal()
 	exit.get_node("Collision").set_deferred("disabled", true)
@@ -82,16 +88,23 @@ func start_next_section(events: Array) -> void:
 	if not first_time:
 		first_time = false
 		Global.current_section += 1
+		if (Global.current_section >= 6):
+			game_won()
+		
 		set_right_wall_section(Global.current_section, 3)
 		exit.global_position.x += RESOLUTION.x
 		if Global.current_section > 0:
 			$Sections.get_node("Section" + str(Global.current_section + 1)).active = false
 		if Global.current_section < $Sections.get_child_count():
 			$Sections.get_node("Section" + str(Global.current_section + 1)).active = true
+		spawn_monsters(next_events)	
 	else:
 		first_time = false
-		
-	spawn_monsters(events)
+		spawn_monsters(next_events)
+		activate_monsters()
+	
+	SoundManager.play_music(Sounds.MUSIC_BATTLE)
+
 
 func spawn_monsters(events: Array) -> void:
 	var actors: Array[Actor] = []
@@ -110,7 +123,23 @@ func spawn_monsters(events: Array) -> void:
 			"wizard": actor_scene =preload("res://enemies/wizard/wizard.tscn")
 		for i in count:
 			var actor = actor_scene.instantiate() as Enemy
-			actor.target = player
 			actors.append(actor)
 		
 	sections[Global.current_section].spawn_actors(actors)
+
+
+func activate_monsters() -> void:
+	for a in sections[Global.current_section].get_actors():
+		a.target = player
+
+
+func _on_player_died() -> void:
+	section_lost()
+	
+
+func game_won() -> void:
+	pass
+	
+
+func section_lost() -> void:
+	pass

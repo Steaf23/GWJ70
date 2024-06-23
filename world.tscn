@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cne6u00cgn135"]
+[gd_scene load_steps=13 format=3 uid="uid://cne6u00cgn135"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_8ek23"]
 [ext_resource type="PackedScene" uid="uid://jbugsth2lvsx" path="res://player.tscn" id="1_gmgtv"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://copgkd04i8mow" path="res://components/level_exit.tscn" id="5_vwmi1"]
 [ext_resource type="Texture2D" uid="uid://dcm1r6bm1cn1e" path="res://sprites/bg.png" id="6_iaiu0"]
 [ext_resource type="PackedScene" uid="uid://bp5eur43huh4b" path="res://section.tscn" id="7_22odh"]
+[ext_resource type="PackedScene" uid="uid://by67b3cdt4c6g" path="res://enemies/wizard/wizard.tscn" id="8_wq7xc"]
 [ext_resource type="PackedScene" uid="uid://rd74i3u70378" path="res://dialog/dialog.tscn" id="9_4omdw"]
 [ext_resource type="PackedScene" uid="uid://d0pwau4w45s2f" path="res://pause_menu.tscn" id="10_nqyhn"]
 
@@ -89,6 +90,9 @@ y_sort_enabled = true
 
 [node name="Section1" parent="Sections" instance=ExtResource("7_22odh")]
 y_sort_enabled = true
+
+[node name="Wizard" parent="Sections/Section1/Enemies" index="0" instance=ExtResource("8_wq7xc")]
+position = Vector2(424, 282)
 
 [node name="Marker2D" type="Marker2D" parent="Sections/Section1"]
 position = Vector2(374, 252)
@@ -246,5 +250,8 @@ layer = 10
 [node name="PauseMenu" parent="PauseLayer" instance=ExtResource("10_nqyhn")]
 visible = false
 
+[connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="player_entered" from="SectionExit" to="." method="_on_section_exit_player_entered"]
 [connection signal="finished" from="DialogLayer/Dialog" to="." method="_on_dialog_finished"]
+
+[editable path="Sections/Section1"]

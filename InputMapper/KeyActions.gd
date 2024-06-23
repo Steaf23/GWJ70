@@ -54,6 +54,7 @@ func get_key_string_from_code(code: Key) -> String:
 		KEY_UP: key_string = "UP"
 		KEY_ENTER: key_string = "ENTER"
 		KEY_SHIFT: key_string = "SHIFT"
+		KEY_ESCAPE: key_string = "ESC"
 		
 	if key_string == " ":
 		key_string = "SPACE"

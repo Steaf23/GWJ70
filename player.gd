@@ -1,6 +1,8 @@
 class_name Player
 extends Actor
 
+signal player_died()
+
 @onready var anim = $Pivot/Sprite2D/AnimationPlayer
 @onready var slashanim = $WeaponPivot/HitSprite/AnimationPlayer
 @onready var hitanim = $WeaponPivot/dmg/AnimationPlayer
@@ -92,12 +94,13 @@ func end_spell() -> void:
 
 
 func _on_health_bar_no_health() -> void:
-	print("YOU LOST BOZO")
+	player_died.emit()
 
 
 func _on_damaged(damage: int, damage_source: Actor, pierce: bool) -> void:
 	if $IFrames.is_stopped():
 		$HealthBar.current_health -= damage
+		SoundManager.play_random_sfx(Sounds.HIT)
 		$IFrames.start()
 
 func heal() -> void:

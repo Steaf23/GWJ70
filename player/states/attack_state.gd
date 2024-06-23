@@ -9,7 +9,7 @@ func entry() -> void:
 		machine.actor.play_animation("attack" + str(combo) + "_left")
 	else:
 		machine.actor.play_animation("attack" + str(combo) + "_right")
-		
+	SoundManager.play_random_sfx(Sounds.SWORD_SWING)
 
 func attack(combo: int) -> void:
 	change_state("AttackState")

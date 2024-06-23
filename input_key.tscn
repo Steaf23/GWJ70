@@ -8,6 +8,8 @@ font_size = 8
 font_color = Color(0.196078, 0.196078, 0.196078, 1)
 
 [node name="InputKey" type="MarginContainer"]
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
 script = ExtResource("1_4qavv")
 
