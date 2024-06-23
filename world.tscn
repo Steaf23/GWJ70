@@ -49,7 +49,7 @@ layout_mode = 2
 texture = ExtResource("2_h5ove")
 
 [node name="Player" parent="." groups=["damageable"] instance=ExtResource("1_gmgtv")]
-position = Vector2(109, 382)
+position = Vector2(64, 420)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 process_callback = 0
@@ -61,7 +61,7 @@ script = ExtResource("4_hyijd")
 [node name="TL" type="Marker2D" parent="Player/Camera2D/Node"]
 
 [node name="BR" type="Marker2D" parent="Player/Camera2D/Node"]
-position = Vector2(2000, 500)
+position = Vector2(2880, 500)
 
 [node name="Walls" type="StaticBody2D" parent="."]
 visible = false
@@ -90,25 +90,129 @@ y_sort_enabled = true
 [node name="Section1" parent="Sections" instance=ExtResource("7_22odh")]
 y_sort_enabled = true
 
+[node name="Marker2D" type="Marker2D" parent="Sections/Section1"]
+position = Vector2(374, 252)
+
+[node name="Marker2D2" type="Marker2D" parent="Sections/Section1"]
+position = Vector2(362, 366)
+
+[node name="Marker2D3" type="Marker2D" parent="Sections/Section1"]
+position = Vector2(278, 273)
+
 [node name="Section2" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(480, 0)
 section = 1
+color = Color(0.231373, 1, 1, 1)
+
+[node name="Marker2D" type="Marker2D" parent="Sections/Section2"]
+position = Vector2(261, 160)
+
+[node name="Marker2D2" type="Marker2D" parent="Sections/Section2"]
+position = Vector2(306, 329)
+
+[node name="Marker2D3" type="Marker2D" parent="Sections/Section2"]
+position = Vector2(229, 239)
+
+[node name="Marker2D4" type="Marker2D" parent="Sections/Section2"]
+position = Vector2(120, 169)
+
+[node name="Marker2D5" type="Marker2D" parent="Sections/Section2"]
+position = Vector2(106, 346)
+
+[node name="Marker2D6" type="Marker2D" parent="Sections/Section2"]
+position = Vector2(186, 304)
 
 [node name="Section3" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(960, 0)
 section = 2
+color = Color(0.466667, 0.109804, 1, 1)
+
+[node name="Marker2D" type="Marker2D" parent="Sections/Section3"]
+position = Vector2(370, 162)
+
+[node name="Marker2D2" type="Marker2D" parent="Sections/Section3"]
+position = Vector2(415, 331)
+
+[node name="Marker2D3" type="Marker2D" parent="Sections/Section3"]
+position = Vector2(338, 241)
+
+[node name="Marker2D4" type="Marker2D" parent="Sections/Section3"]
+position = Vector2(229, 171)
+
+[node name="Marker2D5" type="Marker2D" parent="Sections/Section3"]
+position = Vector2(215, 348)
+
+[node name="Marker2D6" type="Marker2D" parent="Sections/Section3"]
+position = Vector2(295, 306)
 
 [node name="Section4" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(1440, 0)
 section = 3
+color = Color(0.164706, 1, 0.333333, 1)
+
+[node name="Marker2D" type="Marker2D" parent="Sections/Section4"]
+position = Vector2(370, 162)
+
+[node name="Marker2D2" type="Marker2D" parent="Sections/Section4"]
+position = Vector2(415, 331)
+
+[node name="Marker2D3" type="Marker2D" parent="Sections/Section4"]
+position = Vector2(338, 241)
+
+[node name="Marker2D4" type="Marker2D" parent="Sections/Section4"]
+position = Vector2(229, 171)
+
+[node name="Marker2D5" type="Marker2D" parent="Sections/Section4"]
+position = Vector2(215, 348)
+
+[node name="Marker2D6" type="Marker2D" parent="Sections/Section4"]
+position = Vector2(295, 306)
 
 [node name="Section5" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(1920, 0)
 section = 4
+color = Color(1, 0.301961, 0, 1)
+
+[node name="Marker2D" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(370, 162)
+
+[node name="Marker2D2" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(415, 331)
+
+[node name="Marker2D3" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(338, 241)
+
+[node name="Marker2D4" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(266, 203)
+
+[node name="Marker2D5" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(205, 291)
+
+[node name="Marker2D6" type="Marker2D" parent="Sections/Section5"]
+position = Vector2(295, 306)
 
 [node name="Section6" parent="Sections" instance=ExtResource("7_22odh")]
 position = Vector2(2400, 0)
 section = 5
+color = Color(1, 1, 0, 1)
+
+[node name="Marker2D" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(394, 162)
+
+[node name="Marker2D2" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(416, 277)
+
+[node name="Marker2D3" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(314, 212)
+
+[node name="Marker2D4" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(211, 192)
+
+[node name="Marker2D5" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(126, 250)
+
+[node name="Marker2D6" type="Marker2D" parent="Sections/Section6"]
+position = Vector2(271, 277)
 
 [node name="SectionExit" parent="." instance=ExtResource("5_vwmi1")]
 
@@ -134,11 +238,13 @@ shape = SubResource("RectangleShape2D_v8pbm")
 layer = 5
 
 [node name="Dialog" parent="DialogLayer" instance=ExtResource("9_4omdw")]
+visible = false
 
 [node name="PauseLayer" type="CanvasLayer" parent="."]
 layer = 10
 
 [node name="PauseMenu" parent="PauseLayer" instance=ExtResource("10_nqyhn")]
+visible = false
 
 [connection signal="player_entered" from="SectionExit" to="." method="_on_section_exit_player_entered"]
 [connection signal="finished" from="DialogLayer/Dialog" to="." method="_on_dialog_finished"]

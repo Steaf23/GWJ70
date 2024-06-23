@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="DialogText" load_steps=2 format=3 uid="uid://bbr1kmcj627uo"]
 
 [ext_resource type="Script" path="res://dialog/dialog_text.gd" id="1_6t6t0"]
 
@@ -14,7 +14,7 @@ lines = {
 6: "He turned to his side and noticed something lurking behind the bushes.",
 7: "And then it jumped out from the forest, a formiddable ____",
 8: "*Thats where the sentence ends. Eager to find out the answer, you notice a few pieces of paper sticking out from the back of the book.*",
-9: "*Yo can only imagine how the story must have gone, so you try to fill in the blanks yourself*",
+9: "*You can only imagine how the story must have gone, so you try to fill in the blanks yourself*",
 10: "*You read the sentence again and look at the pieces of paper you found*
 \"And then it jumped out from the forest, a formiddable ____\"",
 11: "Ghost",
@@ -43,5 +43,23 @@ choices = {
 15: [],
 16: []
 }
-events = {}
+events = {
+0: [],
+1: [],
+2: [],
+3: [],
+4: [],
+5: [],
+6: [],
+7: [],
+8: [],
+9: [],
+10: [],
+11: ["ghost_2"],
+12: ["cyclops"],
+13: ["goblin_2"],
+14: [],
+15: [],
+16: []
+}
 id_counter = 0

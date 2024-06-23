@@ -7,6 +7,8 @@ var current = 0
 
 @onready var text_lbl = %Text
 
+var events_seen = []
+
 
 func _ready() -> void:
 	for b in 3:
@@ -21,10 +23,10 @@ func load_text_from_file(dialog_path: String) -> void:
 
 
 func load_text(_text: DialogText) -> void:
+	events_seen = []
 	text = _text
 	current = 0
 	update_gui()
-	text.print_text()
 	Global.dialog_shown = true
 	get_tree().paused = true
 	show()
@@ -51,6 +53,7 @@ func update_gui() -> void:
 		%Next.disabled = true
 	else:
 		%Next.disabled = false
+	events_seen.append_array(text.events[current])
 	text_lbl.text = text.get_line(current)
 		
 		
@@ -81,6 +84,7 @@ func _on_choice_button_pressed(choice_id: int) -> void:
 		current = text.choices[current][0]
 	else:
 		current = text.choices[choice_id][0]
+		events_seen.append_array(text.events[choice_id])
 	update_gui()
 
 
@@ -92,5 +96,5 @@ func _on_next_pressed() -> void:
 	_on_choice_button_pressed(-1)
 
 
-func get_events() -> Array[String]:
-	return []
+func get_events() -> Array:
+	return events_seen

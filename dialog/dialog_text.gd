@@ -49,3 +49,7 @@ func _print_text_recurse(id = 0, tab_level = -1) -> void:
 
 func get_line(id: int) -> String:
 	return lines[id]
+
+
+func add_event(line_id: int, event: String) -> void:
+	events[line_id] = event

@@ -14,6 +14,7 @@ func exit() -> void:
 func _on_cyclops_damaged(damage: int, damage_source: Actor, pierce: bool) -> void:
 	if machine.actor.hitbox.is_disabled():
 		machine.actor.do_damage(damage)
+		machine.actor.play_hit()
 
 
 func do(delta: float) -> void:

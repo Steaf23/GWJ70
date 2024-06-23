@@ -61,7 +61,14 @@ func _on_save_pressed(file_path: String) -> void:
 	var id_counter = -1
 	
 	var visited_nodes = {}  # map of DialogEditNode and node_id that are seen
-	var stack: Array[DialogEditNode] = [$Start]
+	var start = $Start
+	for x in get_children():
+		if x is DialogEditNode:
+			if x.title == "START":
+				start = x
+				break
+	
+	var stack: Array[DialogEditNode] = [start]
 	while not stack.is_empty():
 		var node = stack.pop_front() as DialogEditNode
 		if node in visited_nodes:
@@ -90,6 +97,7 @@ func _on_save_pressed(file_path: String) -> void:
 			choices[node_id].append(visited_nodes[get_node(str(conn.to_node))])
 		
 		text.lines[node_id] = n.get_text()
+		text.events[node_id] = n.get_events()
 		
 	text.choices = choices
 	ResourceSaver.save(text, file_path)
@@ -111,7 +119,9 @@ func _on_load_pressed(file_path: String) -> void:
 	for line_id in text.lines.keys():
 		var node = node_scn.instantiate() as DialogEditNode
 		node.set_text(text.lines[line_id])
-		add_child(node)
+		add_child(node)		
+		if line_id in text.events.keys():
+			node.set_events(text.events[line_id])
 		placed_nodes[line_id] = node
 		if line_id == 0:
 			node.title = "START"
@@ -125,7 +135,6 @@ func _on_load_pressed(file_path: String) -> void:
 		var port_idx = 0
 		var from_node = placed_nodes[node_id] as DialogEditNode
 		for c in choices:
-			var from_port = port_idx
 			var to_node = placed_nodes[c]
 			connect_node(from_node.name, port_idx, to_node.name, 0)
 			port_idx += 1

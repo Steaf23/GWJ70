@@ -12,11 +12,13 @@ signal level_completed()
 @onready var exit = $SectionExit
 @onready var camera = $Player/Camera2D
 @onready var dialog = $DialogLayer/Dialog
+@onready var player = $Player
 
 var sections: Array[Section] = []
-
+var first_time = true
 
 func _ready() -> void:
+	randomize()
 	Global.level = self
 	
 	start_dialog("res://resources/prologue.tres")
@@ -48,19 +50,7 @@ func set_right_wall_section(section: int, time: float = 0.01) -> void:
 
 
 func _on_section_exit_player_entered() -> void:
-	Global.current_section += 1
-	set_right_wall_section(Global.current_section, 3)
-	exit.get_node("Collision").set_deferred("disabled", true)
-	exit.global_position.x += RESOLUTION.x
-	if Global.current_section > 0:
-		$Sections.get_node("Section" + str(Global.current_section + 1)).active = false
-	if Global.current_section < $Sections.get_child_count():
-		$Sections.get_node("Section" + str(Global.current_section + 1)).active = true
-	
-	exit_arrow.hide()
-	
-	$Player.heal()
-	# spawn section enemies
+	start_dialog("res://resources/dialog" + str(Global.current_section) + ".tres")
 	
 
 func _on_body_section_exited(body: Node2D) -> void:
@@ -81,4 +71,46 @@ func start_dialog(filepath: String) -> void:
 
 func _on_dialog_finished() -> void:
 	var events = dialog.get_events()
-	print(events)
+	start_next_section(events)
+	
+	
+func start_next_section(events: Array) -> void:
+	exit_arrow.hide()
+	player.heal()
+	exit.get_node("Collision").set_deferred("disabled", true)
+	
+	if not first_time:
+		first_time = false
+		Global.current_section += 1
+		set_right_wall_section(Global.current_section, 3)
+		exit.global_position.x += RESOLUTION.x
+		if Global.current_section > 0:
+			$Sections.get_node("Section" + str(Global.current_section + 1)).active = false
+		if Global.current_section < $Sections.get_child_count():
+			$Sections.get_node("Section" + str(Global.current_section + 1)).active = true
+	else:
+		first_time = false
+		
+	spawn_monsters(events)
+
+func spawn_monsters(events: Array) -> void:
+	var actors: Array[Actor] = []
+	for e in events:
+		var split = e.split("_")
+		var mob_name = split[0]
+		var count = 1
+		if split.size() == 2:
+			count = int(split[1])
+			
+		var actor_scene: PackedScene
+		match mob_name:
+			"goblin": actor_scene = preload("res://enemies/goblin/goblin.tscn")
+			"ghost": actor_scene =preload("res://enemies/ghost/ghost.tscn")
+			"cyclops": actor_scene =preload("res://enemies/cyclops/cyclops.tscn")
+			"wizard": actor_scene =preload("res://enemies/wizard/wizard.tscn")
+		for i in count:
+			var actor = actor_scene.instantiate() as Enemy
+			actor.target = player
+			actors.append(actor)
+		
+	sections[Global.current_section].spawn_actors(actors)

@@ -30,12 +30,13 @@ modulate_color = Color(0.352941, 0.352941, 0.352941, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_prpah"]
 texture = ExtResource("3_x7g4s")
-texture_margin_left = 21.0
-texture_margin_top = 14.0
-texture_margin_right = 20.0
-texture_margin_bottom = 18.0
+texture_margin_left = 23.0
+texture_margin_top = 11.0
+texture_margin_right = 19.0
+texture_margin_bottom = 12.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 60, 60)
 
 [node name="Dialog" type="Control"]
 process_mode = 3

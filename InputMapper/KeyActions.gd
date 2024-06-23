@@ -3,20 +3,20 @@ extends Node
 signal keybinds_updated()
 
 var default_actions: Array[RebindableAction] = [
-	RebindableAction.new(&"move_left", KEY_A, &"Move Left"),
-	RebindableAction.new(&"move_right", KEY_D, &"Move Right"),
-	RebindableAction.new(&"move_up", KEY_W, &"Move Up"),
-	RebindableAction.new(&"move_down", KEY_S, &"Move Down"),
+	RebindableAction.new(&"left", KEY_A, &"Move Left"),
+	RebindableAction.new(&"right", KEY_D, &"Move Right"),
+	RebindableAction.new(&"up", KEY_W, &"Move Up"),
+	RebindableAction.new(&"down", KEY_S, &"Move Down"),
 	RebindableAction.new(&"normal_attack", KEY_SPACE, &"Sword Attack"),
 	RebindableAction.new(&"special_attack", KEY_SHIFT, &"Staff Attack"),
 	RebindableAction.new(&"pause", KEY_P, &"Pause Game"),
 	]
 	
 var actions: Array[RebindableAction] = [
-	RebindableAction.new(&"move_left", KEY_A, &"Move Left"),
-	RebindableAction.new(&"move_right", KEY_D, &"Move Right"),
-	RebindableAction.new(&"move_up", KEY_W, &"Move Up"),
-	RebindableAction.new(&"move_down", KEY_S, &"Move Down"),
+	RebindableAction.new(&"left", KEY_A, &"Move Left"),
+	RebindableAction.new(&"right", KEY_D, &"Move Right"),
+	RebindableAction.new(&"up", KEY_W, &"Move Up"),
+	RebindableAction.new(&"down", KEY_S, &"Move Down"),
 	RebindableAction.new(&"normal_attack", KEY_SPACE, &"Sword Attack"),
 	RebindableAction.new(&"special_attack", KEY_SHIFT, &"Staff Attack"),
 	RebindableAction.new(&"pause", KEY_P, &"Pause Game"),

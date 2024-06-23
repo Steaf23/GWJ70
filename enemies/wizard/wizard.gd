@@ -10,9 +10,9 @@ func finish_attack() -> void:
 	super.finish_attack()
 	
 	var enemy = summon_enemy.instantiate() as Enemy
-	enemy.global_position = summon_position
 	enemy.target = target
 	Global.add_actor_to_game(enemy)
+	enemy.global_position = summon_position
 
 
 func can_attack() -> bool:

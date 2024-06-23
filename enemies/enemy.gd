@@ -67,7 +67,7 @@ func play_animation(animation: EnemyAnimation) -> void:
 		EnemyAnimation.ATTACK2: anim_name = &"attack2"
 	
 	if animation == Enemy.EnemyAnimation.HIT or animation == Enemy.EnemyAnimation.DEATH:
-		$Hit.play("hit")
+		play_hit()
 		
 	if not anim_name in anim.get_animation_list():
 		animation_finished.emit(animation)
@@ -123,3 +123,6 @@ func finish_block() -> void:
 
 func _on_block_animation_finished() -> void:
 	$Pivot/Block.hide()
+
+func play_hit() -> void:
+	$Hit.play("hit")
